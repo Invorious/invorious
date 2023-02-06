@@ -1,0 +1,47 @@
+{
+  "name": "example-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/example-api/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/packages/example-api",
+        "main": "packages/example-api/src/main.ts",
+        "tsConfig": "packages/example-api/tsconfig.app.json",
+        "assets": ["packages/example-api/src/assets"],
+        "webpackConfig": "packages/example-api/webpack.config.js"
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/js:node",
+      "options": {
+        "buildTarget": "example-api:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "example-api:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/example-api/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}
