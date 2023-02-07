@@ -1,4 +1,7 @@
-import { AccessControlModule, MetamaskStrategyModule } from '@invorious/access-control';
+import {
+  AccessControlModule,
+  MetamaskStrategy,
+} from '@invorious/access-control';
 import { Module } from '@nestjs/common';
 
 import { AppController } from './app.controller';
@@ -7,7 +10,7 @@ import { AppService } from './app.service';
 @Module({
   imports: [
     AccessControlModule.forRoot({
-      strategies: [MetamaskStrategyModule]
+      strategies: [new MetamaskStrategy()],
     }),
   ],
   controllers: [AppController],
