@@ -6,7 +6,7 @@ export class AccessControlModule {
   static forRoot(config: AccessControlModuleConfig): DynamicModule {
     return { 
       imports: config.strategies,
-      module: AccessControlModule
+      module: AccessControlModule,
     }
   }
 }
