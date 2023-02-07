@@ -1,5 +1,5 @@
-import { DynamicModule, ForwardReference, Type } from "@nestjs/common";
+import { Strategy } from './strategy';
 
 export interface AccessControlModuleConfig {
-  strategies: Array<Type<any> | DynamicModule | Promise<DynamicModule> | ForwardReference>,
+  strategies: Strategy[];
 }

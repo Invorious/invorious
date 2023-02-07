@@ -4,10 +4,11 @@ import { AccessControlModuleConfig } from './core/types/access-control-module-co
 @Module({})
 export class AccessControlModule {
   static forRoot(config: AccessControlModuleConfig): DynamicModule {
-    return { 
-      imports: config.strategies,
-      module: AccessControlModule
-    }
+    const { strategies } = config;
+    const importedModules = strategies.map((strategy) => strategy.getModule());
+    return {
+      imports: importedModules,
+      module: AccessControlModule,
+    };
   }
 }
-
