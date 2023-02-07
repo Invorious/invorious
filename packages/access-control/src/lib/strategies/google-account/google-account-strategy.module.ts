@@ -9,7 +9,6 @@ const configBase = {
   routeInit: '',
 }
 
-@Module({})
 export class GoogleAccountStrategyModule {
   static forRoot(data: GoogleAccountStrategyModuleConfig): DynamicModule {
     return { 
