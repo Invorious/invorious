@@ -5,15 +5,15 @@ import { AuthService } from './auth.service';
 import { jwtConstants } from '../core/jwt-constants';
 import { JwtStrategy } from '../strategies/jwt/jwt.strategy';
 import { LocalStrategy } from '../strategies/local/local.strategy';
-import { UsersModule } from '../users/users.module';
+import { AuthUsersModule } from '../auth-users/auth-users.module';
 
 @Module({
   imports: [
-    UsersModule,
+    AuthUsersModule,
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: jwtConstants.expiration },
     }),
   ],
   providers: [AuthService, JwtStrategy, LocalStrategy],
