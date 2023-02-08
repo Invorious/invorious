@@ -1,5 +1,6 @@
 import {
   AccessControlModule,
+  JwtStrategyModule,
   LocalStrategyModule,
   MetamaskStrategyModule,
 } from '@invorious/access-control';
@@ -11,7 +12,11 @@ import { AppService } from './app.service';
 @Module({
   imports: [
     AccessControlModule.forRoot({
-      strategies: [LocalStrategyModule, MetamaskStrategyModule],
+      strategies: [
+        JwtStrategyModule,
+        LocalStrategyModule,
+        MetamaskStrategyModule,
+      ],
     }),
   ],
   controllers: [AppController],
