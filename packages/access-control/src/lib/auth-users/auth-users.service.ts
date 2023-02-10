@@ -1,9 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { AuthUser } from './types/auth-user';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { AuthUser } from './entities/auth-user.entity';
+// import { AuthUser } from './types/auth-user';
+import { IRegisterUserDto } from '../auth/types/auth.interfaces';
 
 @Injectable()
 export class AuthUsersService {
-  private readonly users: AuthUser[] = [
+  constructor(
+    @InjectRepository(AuthUser)
+    private readonly authUserRepository: Repository<AuthUser>,
+  ) {}
+
+  private readonly users: any[] = [
     {
       id: 1,
       username: 'miguel',
@@ -21,7 +31,24 @@ export class AuthUsersService {
     },
   ];
 
-  async findOne(username: string): Promise<AuthUser | undefined> {
-    return this.users.find((user) => user.username === username);
+  async findByUsername(username: string): Promise<AuthUser | null> {
+    return this.users.find(
+      (authUser: { username: string }) =>
+        authUser.username === username.toLowerCase().trim(),
+    );
   }
+
+  async create(authUserDto: IRegisterUserDto): Promise<AuthUser> {
+    const authUser = new AuthUser(authUserDto.username, authUserDto.password);
+
+    authUserDto.encryptedPassword
+      ? authUser.setEncryptedPassword(authUserDto.password)
+      : authUser.setEncryptedPassword(this.createHash(authUserDto.password));
+
+    const authUserCreated = await this.authUserRepository.save(authUser);
+
+    return authUserCreated;
+  }
+
+  private createHash = (value: string) => bcrypt.hashSync(value, 12);
 }

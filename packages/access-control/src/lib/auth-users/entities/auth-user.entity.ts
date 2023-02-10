@@ -1,21 +1,21 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { UserAttributes } from '../enums/user-attributes.enum';
-import { isEmail } from '../../core/validators/is-email';
+// import { UserAttributes } from '../enums/user-attributes.enum';
+// import { isEmail } from '../../core/validators/is-email';
 
 @Entity()
 export class AuthUser {
   constructor(
     username: string,
     password: string,
-    userAttributes: UserAttributes,
+    // userAttributes: UserAttributes,
   ) {
     this.username = username;
     this.password = password;
-    this.userAttributes = userAttributes;
+    // this.userAttributes = userAttributes;
   }
 
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({
     unique: true,
@@ -27,23 +27,23 @@ export class AuthUser {
   })
   password: string;
 
-  @Column({
-    nullable: true,
-    type: 'jsonb',
-  })
-  userAttributes: UserAttributes;
+  // @Column({
+  //   nullable: true,
+  //   type: 'jsonb',
+  // })
+  // userAttributes: UserAttributes;
 
   setEncryptedPassword(password: string) {
     this.password = password;
   }
 
-  getAttributes(attributeKey: any) {
-    return this.userAttributes[attributeKey];
-  }
+  // getAttributes(attributeKey: any) {
+  //   return this.userAttributes[attributeKey];
+  // }
 
-  getEmail(): string {
-    return isEmail(this.username)
-      ? this.username
-      : this.getAttributes(UserAttributes.Email);
-  }
+  // getEmail(): string {
+  //   return isEmail(this.username)
+  //     ? this.username
+  //     : this.getAttributes(UserAttributes.Email);
+  // }
 }
