@@ -59,8 +59,10 @@
 
 ## About The Project
 
-<img  align="center" src="images/logo.png" alt="Logo" width="120" height="120">
-<p> Invorious besto team </p>
+<div align="center">
+  <img src="images/logo.png" alt="Logo" width="120" height="120">
+  <p> Invorious besto team </p>
+</div>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
