@@ -5,9 +5,9 @@ import { AccessControlModuleConfig } from './core/types/access-control-module-co
 export class AccessControlModule {
   static forRoot(config: AccessControlModuleConfig): DynamicModule {
     const { strategies } = config;
-    const importedModules = strategies.map((strategy) => strategy.getModule());
+    const imports = strategies.map((strat) => strat.module);
     return {
-      imports: importedModules,
+      imports,
       module: AccessControlModule,
     };
   }
