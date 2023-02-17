@@ -76,28 +76,35 @@
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+```
+import { AccessControlModule, MetamaskStrategyModule, GoogleStrategyModule, DiscordStrategyModule } from '@invorious/access-control';
+
+@Module({
+  imports: [
+    AccessControlModule.forRoot({
+      strategies: [MetamaskStrategyModule, GoogleStrategyModule, DiscordStrategyModule],
+    }),
+  ],
+  controllers: [AppController],
+  providers: [AppService],
+})
+```
 
 ### Prerequisites
 
 Install Nx plugin
 
 - npm
+
   ```
   npm install nx -g
   ```
 
 ### Installation
 
-1. Clone the repo
-   ```sh
-   git clone https://github.com/Invorious/invorious.git
-   ```
-2. Install NPM packages
-   ```sh
-   npm install
-   ```
+```
+  npm install @invorious/access-control
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -105,7 +112,21 @@ Install Nx plugin
 
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+1.  Import our `AccessControlModule` into your app module and the strategies you want to use into you app module.
+
+```
+import { AccessControlModule, MetamaskStrategyModule } from '@invorious/access-control';
+
+@Module({
+  imports: [
+    AccessControlModule.forRoot({
+      strategies: [MetamaskStrategyModule]
+    }),
+  ],
+  controllers: [AppController],
+  providers: [AppService],
+})
+```
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
@@ -115,10 +136,14 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-  - [ ] Nested Feature
+- [ ] Authentication
+  - [ ] username
+  - [ ] discord
+  - [ ] metamask
+  - [ ] google
+- [ ] Authorization
+  - [ ] jwt generation
+  - [ ] role based
 
 See the [open issues](https://github.com/Invorious/invorious/issues) for a full list of proposed features (and known issues).
 
