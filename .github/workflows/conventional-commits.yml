@@ -3,8 +3,7 @@ name: Conventional Commits
 on:
   pull_request:
     branches:
-      - main
-      - dev
+      - [ main ]
 
 jobs:
   build:
