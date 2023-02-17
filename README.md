@@ -59,8 +59,8 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://invorious.com/)
-
+<img  align="center" src="images/logo.png" alt="Logo" width="120" height="120">
+<p> Invorious besto team </p>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
@@ -159,13 +159,13 @@ Project Link: [https://github.com/Invorious/invorious](https://github.com/Invori
 
 <!-- ACKNOWLEDGMENTS -->
 
-## Acknowledgments
+<!-- ## Acknowledgments
 
 - []()
 - []()
 - []()
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
