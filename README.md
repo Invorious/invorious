@@ -77,7 +77,12 @@
 ## Getting Started
 
 ```
-import { AccessControlModule, MetamaskStrategyModule, GoogleStrategyModule, DiscordStrategyModule } from '@invorious/access-control';
+import {
+  AccessControlModule,
+  MetamaskStrategyModule,
+  GoogleStrategyModule,
+  DiscordStrategyModule,
+} from '@invorious/access-control';
 
 @Module({
   imports: [
