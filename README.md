@@ -1,10 +1,10 @@
 <a name="readme-top"></a>
 
-[![Contributors][contributors-shield]][contributors-url]
+<!-- [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+[![MIT License][license-shield]][license-url] -->
 
 <!-- PROJECT LOGO -->
 <br />
@@ -66,7 +66,7 @@
 ### Built With
 
 - [![React][React.js]][React-url]
-- [![Nx][Nx-dev]][Nx-url]
+- [![Nx][Nx-url]][Nx-dev]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -170,18 +170,15 @@ Project Link: [https://github.com/Invorious/invorious](https://github.com/Invori
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/Invorious/invorious.svg?style=for-the-badge
+<!-- [contributors-shield]: https://img.shields.io/github/contributors/Invorious/invorious.svg?style=for-the-badge
 [contributors-url]: https://github.com/Invorious/invorious/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/Invorious/invorious.svg?style=for-the-badge
 [forks-url]: https://github.com/Invorious/invorious/network/members
 [stars-shield]: https://img.shields.io/github/stars/Invorious/invorious.svg?style=for-the-badge
 [stars-url]: https://github.com/Invorious/invorious/stargazers
 [issues-shield]: https://img.shields.io/github/issues/Invorious/invorious.svg?style=for-the-badge
-[issues-url]: https://github.com/Invorious/invorious/issues
-[license-shield]: https://img.shields.io/github/license/Invorious/invorious.svg?style=for-the-badge
-[license-url]: https://github.com/Invorious/invorious/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
+[issues-url]: https://github.com/Invorious/invorious/issues -->
+
 [product-screenshot]: images/logo.png
 [Nx-dev]: https://nx.dev/
 [Nx-url]: https://img.shields.io/badge/nx-35495E?style=for-the-badge&logo=nx&logoColor=4FC08D
