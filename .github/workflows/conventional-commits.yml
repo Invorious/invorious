@@ -1,13 +1,14 @@
-name: Conventional Commits
+name: 'Conventional commits verification'
 
-on:
-  pull_request:
-    branches: [ main ]
+on: [create, push, pull_request, pull_request_review, pull_request_target]
 
 jobs:
   build:
     name: Conventional Commits
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: webiny/action-conventional-commits@v1.1.0
+      - id: checkout
+        uses: actions/checkout@v2
+
+      - id: enforce-commit-msg-style
+        uses: webiny/action-conventional-commits@v1.1.0
