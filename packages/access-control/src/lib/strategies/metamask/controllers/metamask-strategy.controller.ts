@@ -9,8 +9,4 @@ export class MetamaskStrategyController {
   login(@Body() loginDto: LoginDto) {
     return this.metamaskStrategyService.login(loginDto);
   }
-  @Get('puto')
-  puto() {
-    return 'puto';
-  }
 }
