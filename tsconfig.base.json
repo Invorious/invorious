@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@invorious/access-control": ["packages/access-control/src/index.ts"]
+      "@invorious/access-control": ["packages/access-control/src/index.ts"],
+      "@invorious/environments": ["config/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
