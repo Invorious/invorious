@@ -1,13 +1,16 @@
 
 import { registerAs } from '@nestjs/config'
 import * as Joi from 'joi'
+import { ConfigType as ConfigTypeNest } from '@nestjs/config';
 
-export default registerAs('config', () => ({
+const config = registerAs('config', () => ({
   database: {
     name: process.env.DATABASE_NAME,
     port: process.env.DATABASE_PORT,
   }
 }))
+
+export default config
 
 export const environments = {
   development: '.env',
@@ -20,3 +23,5 @@ export const validationSchema = Joi.object({
   DATABASE_NAME: Joi.string().required(),
   DATABASE_PORT: Joi.number().required(),
 })
+
+export type ConfigType = ConfigTypeNest<typeof config>
