@@ -1,7 +1,6 @@
-import { Type, DynamicModule, ForwardReference } from '@nestjs/common';
+import { Type, Provider } from '@nestjs/common';
 
 export interface Strategy {
-  module: Type<any> | DynamicModule | Promise<DynamicModule> | ForwardReference;
-  getUser(): any;
-  validateUser(user: any): boolean;
+  controllers: Type<any>[] | undefined;
+  providers: Provider<any>[] | undefined;
 }

@@ -1,14 +1,21 @@
-import { AccessControlModule } from '@invorious/access-control';
+import {
+  AccessControlModule,
+  metamaskStrategy,
+} from '@invorious/access-control';
 import { Module } from '@nestjs/common';
 
 import { AppService } from './app.service';
-import { ClientStrategy } from './auth/strategies/user-metamask-strategy';
+import { UsersService } from './users/services/users.service';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
     AccessControlModule.forRoot({
-      strategies: [ClientStrategy],
+      strategies: [metamaskStrategy()],
+      UserModule: UsersModule,
+      UserServiceToken: UsersService,
     }),
+    UsersModule,
   ],
   controllers: [],
   providers: [AppService],
