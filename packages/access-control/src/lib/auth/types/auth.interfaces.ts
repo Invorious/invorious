@@ -1,6 +1,6 @@
-export interface IRegisterUserDto<T = any> {
+export interface IRegisterUserDto {
   username: string;
   password: string;
   encryptedPassword?: boolean;
-  userAttributes?: T;
+  // userAttributes?: T;
 }

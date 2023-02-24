@@ -12,10 +12,8 @@ export class AuthUsersService {
     private readonly authUserRepository: Repository<AuthUser>,
   ) {}
 
-  async findByUsername(username: string): Promise<AuthUser | null> {
-    return this.authUserRepository.findOneBy({
-      username: username.toLowerCase().trim(),
-    });
+  private createHash(value: string): string {
+    return bcrypt.hashSync(value, 12);
   }
 
   async create(authUserDto: IRegisterUserDto): Promise<AuthUser> {
@@ -33,5 +31,9 @@ export class AuthUsersService {
     return authUserCreated;
   }
 
-  private createHash = (value: string) => bcrypt.hashSync(value, 12);
+  async findByUsername(username: string): Promise<AuthUser | null> {
+    return this.authUserRepository.findOneBy({
+      username: username.toLowerCase().trim(),
+    });
+  }
 }
