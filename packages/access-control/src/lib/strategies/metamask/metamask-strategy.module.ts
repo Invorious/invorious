@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { DynamicModule, Module } from "@nestjs/common";
 import { MetamaskStrategyController } from "./controllers/metamask-strategy.controller";
 import { MetamaskStrategyService } from "./services/metamask-strategy.service";
 
@@ -10,4 +10,6 @@ import { MetamaskStrategyService } from "./services/metamask-strategy.service";
     MetamaskStrategyService,
   ],
 })
-export class MetamaskStrategyModule { }
+export class MetamaskStrategyModule {
+  
+}
