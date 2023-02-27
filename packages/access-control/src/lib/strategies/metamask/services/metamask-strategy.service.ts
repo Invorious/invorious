@@ -12,12 +12,13 @@ import { USER_SERVICE } from '../../../core/providers/user-service';
 import { IMetamaskService } from '../types/metamask-service';
 
 @Injectable()
-export class MetamaskStrategyService implements StrategyService<IMetamaskUser> {
+export class MetamaskStrategyService<K>
+  implements StrategyService<IMetamaskUser>
+{
   constructor(
-    @Inject('USER_SERVICE') private metamaskUserService: IMetamaskService
-  ) {
-    console.log('From lib metamask uwu → ', metamaskUserService);
-  }
+    @Inject(USER_SERVICE)
+    private metamaskUserService: IMetamaskService<IMetamaskUser, K>
+  ) {}
 
   login(loginDto: LoginDto) {
     const { signature, address } = loginDto;
@@ -40,6 +41,7 @@ export class MetamaskStrategyService implements StrategyService<IMetamaskUser> {
     if (metamaskUser.address === address) {
       return metamaskUser;
     }
+
     return false;
   }
   private normalizeAddress(address: string): string {

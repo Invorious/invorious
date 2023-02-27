@@ -1,7 +1,6 @@
-import { IMetamaskUser } from '@invorious/access-control';
-
-export class User implements IMetamaskUser {
-  address: string;
+export class User {
+  id: number;
   name: string;
+  address: string;
   loPega: boolean;
 }

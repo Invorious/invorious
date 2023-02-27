@@ -4,7 +4,7 @@ import { IUserService } from '../types/user-service';
 
 @Injectable()
 export class CoreService {
-  // constructor(@Inject(USER_SERVICE) private userService: IUserService) {
-  //   console.log('haha', userService);
-  // }
+  constructor(@Inject(USER_SERVICE) private userService: IUserService) {
+    console.log('haha', userService);
+  }
 }
