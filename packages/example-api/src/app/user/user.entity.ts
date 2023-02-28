@@ -1,4 +1,4 @@
-import { IGoogleAccountUser } from "@invorious/access-control/google-account/types";
+import { IGoogleAccountUser } from "@invorious/access-control";
 
 export class User implements IGoogleAccountUser {
   googleId: string;

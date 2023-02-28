@@ -16,8 +16,6 @@
     "baseUrl": ".",
     "paths": {
       "@invorious/access-control": ["packages/access-control/src/index.ts"],
-      "@invorious/access-control/types": ["packages/access-control/src/lib/core/types/access-control-module-config.ts"],
-      "@invorious/access-control/google-account/types": ["packages/access-control/src/lib/strategies/google-account/types/index.ts"],
     }
   },
   "exclude": ["node_modules", "tmp"]

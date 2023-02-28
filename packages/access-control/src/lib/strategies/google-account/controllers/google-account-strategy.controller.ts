@@ -1,19 +1,17 @@
-import { Controller, Get, Inject, Req, UseGuards } from "@nestjs/common";
+import { Controller, Get, Req, UseGuards, Res } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
+import { Response, Request } from 'express';
+
 import { IGoogleAccountBuildController } from "../types";
+import { IController } from "../../../core/types/nest.interface";
 
-const configBase: IGoogleAccountBuildController = {
-  routeController: 'auth/google/callback',
-}
-
-export function buildGoogleAccountController(props: IGoogleAccountBuildController): any {
+export function buildGoogleAccountController({ routeGoogle, routeToRedirect }: IGoogleAccountBuildController): IController {
   @Controller()
   class GoogleAccountStrategyController {
-    @Get(props.routeController! ?? configBase.routeController)
+    @Get(routeGoogle)
     @UseGuards(AuthGuard('google'))
-    googleAuthRedirect(@Req() req: any) {
-      if (!req.user) return 'No user from google'
-      return req.user
+    googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
+      return res.redirect(`${routeToRedirect}?token=${req.user}`);
     }
   }
 

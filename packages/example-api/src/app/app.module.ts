@@ -15,13 +15,17 @@ import { AppService } from './app.service';
     AccessControlModule.forRoot({
       UserModule,
       UserService,
-      JWT_SECRET: 'secret',
+      jwtOptions: {
+        secret: 'aaa',
+        signOptions: { expiresIn: '60s' },
+      },
       strategies: [
         googleAccountStrategy({
-          GOOGLE_CLIENT_ID: '366270697296-lcbqobgi33460arb3g1pg2tc5f2l753j.apps.googleusercontent.com',
-          GOOGLE_CLIENT_SECRET: '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',
-          GOOGLE_REDIRECT: 'http://localhost:3333/api/google/register',
-          routeController: 'google/register',
+          clientID: process.env.GOOGLE_CLIENT_ID,
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+          callbackURL: 'http://localhost:3333/api/google/register',
+          routeGoogle: 'google/register',
+          routeToRedirect: '/api'
         }),
         metamaskStrategy(),
       ],

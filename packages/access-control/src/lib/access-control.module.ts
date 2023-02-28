@@ -1,37 +1,28 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { AccessControlModuleConfig, Strategy } from './core/types/access-control-module-config';
+
+import { AccessControlModuleConfig } from './core/types/access-control.interface';
+import { IController, IProvider } from './core/types/nest.interface';
+import { tokenUserService } from './strategies/google-account/utils';
 
 @Module({})
 export class AccessControlModule {
   static forRoot(config: AccessControlModuleConfig): DynamicModule {
-    const { UserModule, UserService, JWT_SECRET, strategies } = config;
-    const providers: Strategy['providers']  = [];
-    const controllers: Strategy['controllers'] = [];
-
-    strategies.forEach(strategy => {
-      if (strategy.providers.length) {
-        providers.push(...(strategy.providers));
-      }
-      if (strategy.controllers.length) {
-        controllers.push(...strategy.controllers);
-      }
-    })
+    const { UserModule, UserService, jwtOptions, strategies } = config;
+    const providers: IProvider[]  = strategies.flatMap(strategy => strategy.providers);
+    const controllers: IController[] = strategies.flatMap(strategy => strategy.controllers);
 
     return { 
       imports: [
         UserModule,
         PassportModule,
-        JwtModule.register({
-          secret: JWT_SECRET,
-          signOptions: { expiresIn: '60s' },
-        }),
+        JwtModule.register(jwtOptions),
       ],
       exports: providers,
       controllers,
       providers: [
-        { provide: 'user-service', useExisting: UserService },
+        { provide: tokenUserService, useExisting: UserService },
         ...providers,
       ],
       module: AccessControlModule,

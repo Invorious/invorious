@@ -1,5 +1,6 @@
-import { IGoogleAccountResponse, IGoogleAccountService } from '@invorious/access-control/google-account/types';
+import { IGoogleAccountService, ProfileResponseGoogle } from '@invorious/access-control';
 import { Injectable } from '@nestjs/common';
+
 import { User } from './user.entity';
 
 interface JwtPayload {
@@ -8,14 +9,15 @@ interface JwtPayload {
 
 @Injectable()
 export class UserService implements IGoogleAccountService<User, JwtPayload> {
-  users: User[] = []
 
-  parseUser<T>(user: T): JwtPayload {
-    const userParsed = ((user as unknown) as User);
-    return { id: userParsed.id }
+  users: User[] = []
+  
+  parseUser(user: User) {
+    return { id: user.id }
   }
 
-  registerByGoogle(user: IGoogleAccountResponse): void {
+
+  registerByGoogle(user: ProfileResponseGoogle): void {
     const newUser = new User();
     newUser.id = Date.now()
     newUser.email = user.emails[0].value

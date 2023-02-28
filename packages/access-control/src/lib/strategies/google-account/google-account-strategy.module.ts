@@ -1,24 +1,19 @@
-import { Strategy } from "../../core/types/access-control-module-config";
+import { IStrategy } from "../../core/types/access-control.interface";
 import { buildGoogleAccountController } from "./controllers/google-account-strategy.controller";
 import { GoogleAccountStrategyService } from "./services/google-account-strategy.service";
 import { IGoogleAccountStrategy } from "./types";
+import { tokenGoogleAccountConfig } from "./utils";
 
-export function googleAccountStrategy(config: IGoogleAccountStrategy): Strategy {
-  const configGoogle = {
-    GOOGLE_CLIENT_ID: config.GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET: config.GOOGLE_CLIENT_SECRET,
-    GOOGLE_REDIRECT: config.GOOGLE_REDIRECT,
-  }
+export function googleAccountStrategy(config: IGoogleAccountStrategy): IStrategy {
+  const { routeGoogle, routeToRedirect, ...configGoogle } = config
 
   return {
     controllers: [
-      buildGoogleAccountController({
-        routeController: config.routeController,
-      })
+      buildGoogleAccountController({ routeGoogle, routeToRedirect })
     ],
     providers: [
       {
-        provide: 'google-account-config',
+        provide: tokenGoogleAccountConfig,
         useValue: configGoogle,
       },
       GoogleAccountStrategyService,
