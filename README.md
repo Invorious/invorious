@@ -35,7 +35,6 @@
 <br>
 
 ## Documentation
-<hr>
 
 Get started with Invorious Libraries, learn the fundamentals and explore advanced topics on our documentation [website][Url_Docusaurus].
 
@@ -43,7 +42,6 @@ Get started with Invorious Libraries, learn the fundamentals and explore advance
 <br>
 
 ## Ecosystem
-<hr>
 
 | Library | Status | Description |
 | -       | -      | -           |
@@ -59,7 +57,6 @@ Get started with Invorious Libraries, learn the fundamentals and explore advance
 <br>
 
 ## Builded with
-<hr>
 
 <a href="https://nx.dev"><img align="center" src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 <a href="https://nestjs.com"><img align="center" src="https://www.vectorlogo.zone/logos/nestjs/nestjs-icon.svg" width="40"></a>
@@ -72,7 +69,6 @@ Get started with Invorious Libraries, learn the fundamentals and explore advance
 <br>
 
 ## Changelog
-<hr>
 
 Learn about the latest [improvements][Url_ChangeLog].
 
