@@ -5,7 +5,7 @@ import {
 } from '@invorious/access-control';
 import { Injectable } from '@nestjs/common';
 import { User } from '../entities/user.entity';
-import { JwtPayload } from '../types/jwt-payload';
+import { JwtPayload } from '../entities/jwt-payload.entity';
 
 @Injectable()
 export class UsersService

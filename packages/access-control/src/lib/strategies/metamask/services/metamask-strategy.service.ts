@@ -14,9 +14,7 @@ import { IMetamaskService } from '../types/metamask-service';
 export class MetamaskStrategyService {
   constructor(
     @Inject(USER_SERVICE) private metamaskUserService: IMetamaskService,
-  ) {
-    console.log('From lib metamask uwu → ', metamaskUserService);
-  }
+  ) {}
 
   login(loginDto: LoginDto) {
     const { signature, address } = loginDto;

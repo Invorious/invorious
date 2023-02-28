@@ -24,9 +24,6 @@ export class AccessControlModule {
       }
     });
 
-    console.log('Controllers → ', providers);
-    console.log('Providers → ', controllers);
-
     return {
       imports: [
         UsersModule,
