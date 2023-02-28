@@ -1,42 +1,47 @@
-import { DynamicModule, Module } from '@nestjs/common';
-import { Provider, Type } from '@nestjs/common/interfaces';
-import { USER_SERVICE } from './core/providers/user-service';
-import { AccessControlModuleConfig } from './core/types/access-control-module-config';
-import { CoreModule } from './core/core.module';
+import { DynamicModule } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { USER_SERVICE } from './core/providers/service.provider';
+import {
+  AccessControlModuleConfig,
+  Strategy,
+} from './core/types/access-control-module-config';
 
 export class AccessControlModule {
   static forRoot(config: AccessControlModuleConfig): DynamicModule {
-    const { strategies, UserModule, UserServiceToken } = config;
-    // {
-    //   controllers: [MetamaskStrategyController],
-    //   providers: [MetamaskStrategyService],
-    // }
-    const improtedControllers: Type<any>[] = [];
-    const userProvider: Provider = {
-      provide: 'USER_SERVICE',
-      useExisting: UserServiceToken,
-    };
-    const importedProviders: Provider<any>[] = [userProvider];
-    strategies.forEach((strategy) => {
-      const { controllers, providers } = strategy;
+    const { UsersModule, UserServiceToken, JWT_SECRET, strategies } = config;
 
-      if (controllers) {
-        improtedControllers.push(...controllers);
+    const providers: Strategy['providers'] = [];
+
+    const controllers: Strategy['controllers'] = [];
+
+    strategies.forEach((strategy) => {
+      if (strategy.providers.length) {
+        providers.push(...strategy.providers);
       }
-      if (providers) {
-        importedProviders.push(...providers);
+      if (strategy.controllers.length) {
+        controllers.push(...strategy.controllers);
       }
     });
-    // console.log('puto el que lo lea');
-    console.log('Controllers → ', improtedControllers);
-    console.log('PRoviders → ', importedProviders);
+
+    console.log('Controllers → ', providers);
+    console.log('Providers → ', controllers);
 
     return {
-      // imports: [...strategies, CoreModule.forRoot({ userProvider })],
-      // exports: [userProvider],
-      imports: [UserModule],
-      providers: importedProviders,
-      controllers: improtedControllers,
+      imports: [
+        UsersModule,
+        PassportModule,
+        JwtModule.register({
+          secret: JWT_SECRET,
+          signOptions: { expiresIn: '60s' },
+        }),
+      ],
+      exports: providers,
+      controllers,
+      providers: [
+        { provide: USER_SERVICE, useExisting: UserServiceToken },
+        ...providers,
+      ],
       module: AccessControlModule,
     };
   }

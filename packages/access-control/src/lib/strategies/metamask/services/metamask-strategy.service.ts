@@ -6,15 +6,14 @@ import {
 import { LoginDto } from '../types/login-dto';
 import { verifyMessage, getAddress } from 'ethers';
 import { LOGIN_MESSAGE } from '../types/login-message';
-import { StrategyService } from '../../../core/types/strategy-service';
 import { IMetamaskUser } from '../types/metamask-user';
-import { USER_SERVICE } from '../../../core/providers/user-service';
+import { USER_SERVICE } from '../../../core/providers/service.provider';
 import { IMetamaskService } from '../types/metamask-service';
 
 @Injectable()
-export class MetamaskStrategyService implements StrategyService<IMetamaskUser> {
+export class MetamaskStrategyService {
   constructor(
-    @Inject('USER_SERVICE') private metamaskUserService: IMetamaskService
+    @Inject(USER_SERVICE) private metamaskUserService: IMetamaskService,
   ) {
     console.log('From lib metamask uwu → ', metamaskUserService);
   }
@@ -24,13 +23,13 @@ export class MetamaskStrategyService implements StrategyService<IMetamaskUser> {
     const recoveredAddress = verifyMessage(LOGIN_MESSAGE, signature);
     if (this.normalizeAddress(address) !== recoveredAddress) {
       throw new UnprocessableEntityException(
-        'Signer does not match with address'
+        'Signer does not match with address',
       );
     }
     const metamaskUser = this.authenticate(address);
     if (!metamaskUser) {
       throw new UnprocessableEntityException(
-        'Address is not registered as an active user, please follow registration steps'
+        'Address is not registered as an active user, please follow registration steps',
       );
     }
     return metamaskUser;
