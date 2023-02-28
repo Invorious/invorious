@@ -1,40 +1,34 @@
 import { Inject, Injectable } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 import { PassportStrategy } from "@nestjs/passport";
-import { Request } from "express";
-import { ParamsDictionary } from "express-serve-static-core";
 import { Strategy, VerifyCallback } from "passport-google-oauth20";
-import { ParsedQs } from "qs";
-import { IAccessControlModule } from "../../../core/types/access-control-module-config";
-import { IGoogleAccountService } from "../types";
+import { IGoogleAccountConfigService, IGoogleAccountService, IGoogleAccountUser } from "../types";
 
 @Injectable()
-export class GoogleAccountStrategyService extends PassportStrategy(Strategy, 'google') implements IAccessControlModule {
+export class GoogleAccountStrategyService<K> extends PassportStrategy(Strategy, 'google') {
   constructor(
-    @Inject('user-service') private usersService: IGoogleAccountService
+    @Inject('google-account-config') googleAccountConfig: IGoogleAccountConfigService,
+    @Inject('user-service') private userService: IGoogleAccountService<IGoogleAccountUser, K>,
+    private jwtService: JwtService,
   ) {
     super({
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.GOOGLE_REDIRECT,
+      clientID: googleAccountConfig.GOOGLE_CLIENT_ID,
+      clientSecret: googleAccountConfig.GOOGLE_CLIENT_SECRET,
+      callbackURL: googleAccountConfig.GOOGLE_REDIRECT,
       scope: ['email', 'profile'],
     });
   }
 
-  authenticateInvorious(): boolean {
-      return true
-  }
-
   async validate(accessToken: string, refreshToken: string, profile: any, done: VerifyCallback): Promise<any> {
-    const { name, emails, photos } = profile
-    const user = {
-      email: emails[0].value,
-      firstName: name.givenName,
-      lastName: name.familyName,
-      picture: photos[0].value,
-      accessToken
+    let user = await this.userService.findByGoogleId(profile.id)
+    if (!user) {
+      await this.userService.registerByGoogle(profile)
+      user = await this.userService.findByGoogleId(profile.id)
     }
-    done(null, profile);
+    const payload = await this.userService.parseUser(user)
+    const token = await this.jwtService.sign(payload as Object)
+    done(null, { accessToken: token });
   }
 
-  
+
 }

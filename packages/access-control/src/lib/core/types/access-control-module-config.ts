@@ -1,17 +1,19 @@
 import { ClassProvider, DynamicModule, ForwardReference, Provider, Type } from "@nestjs/common";
 
-export type TypeModule = Type<any> | DynamicModule | Promise<DynamicModule> | ForwardReference;
+export type Module = Type<any> | DynamicModule | Promise<DynamicModule> | ForwardReference;
+
 export interface AccessControlModuleConfig {
-  UserModule: TypeModule,
+  UserModule: Module,
   UserService: ClassProvider['useClass'],
-  strategies: Array<TypeModule | StrategyObject>,
+  strategies: Strategy[],
+  JWT_SECRET: string;
 }
 
-export interface StrategyObject {
-  strategy: TypeModule;
-  config: any;
+export interface Strategy {
+  controllers: Type<any>[];
+  providers: Provider<any>[];
 }
 
-export interface IAccessControlModule {
-  authenticateInvorious(): boolean
+export interface JwtParser<K> {
+  parseUser<T>(user: T): K;
 }
