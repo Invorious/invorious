@@ -4,47 +4,32 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { LoginDto } from '../types/login-dto';
-import { verifyMessage, getAddress } from 'ethers';
+import { verifyMessage } from 'ethers';
 import { LOGIN_MESSAGE } from '../types/login-message';
-import { StrategyService } from '../../../core/types/strategy-service';
 import { IMetamaskUser } from '../types/metamask-user';
 import { USER_SERVICE } from '../../../core/providers/user-service';
 import { IMetamaskService } from '../types/metamask-service';
-
+import { AccessControlCoreService } from '../../../core/services/access-control-core.service';
+import { JwtToken } from '../../../core/types/jwt-token';
 @Injectable()
-export class MetamaskStrategyService<K>
-  implements StrategyService<IMetamaskUser>
-{
+export class MetamaskStrategyService<K extends object> {
   constructor(
     @Inject(USER_SERVICE)
-    private metamaskUserService: IMetamaskService<IMetamaskUser, K>
+    private metamaskUserService: IMetamaskService<IMetamaskUser>,
+    private coreService: AccessControlCoreService<IMetamaskUser, K>
   ) {}
 
-  login(loginDto: LoginDto) {
-    const { signature, address } = loginDto;
+  login(loginDto: LoginDto): JwtToken {
+    const { signature } = loginDto;
     const recoveredAddress = verifyMessage(LOGIN_MESSAGE, signature);
-    if (this.normalizeAddress(address) !== recoveredAddress) {
-      throw new UnprocessableEntityException(
-        'Signer does not match with address'
-      );
-    }
-    const metamaskUser = this.authenticate(address);
+    const metamaskUser =
+      this.metamaskUserService.findByAddress(recoveredAddress);
     if (!metamaskUser) {
       throw new UnprocessableEntityException(
         'Address is not registered as an active user, please follow registration steps'
       );
     }
-    return metamaskUser;
-  }
-  authenticate(address: string): boolean | IMetamaskUser {
-    const metamaskUser = this.metamaskUserService.findByAddress(address);
-    if (metamaskUser.address === address) {
-      return metamaskUser;
-    }
 
-    return false;
-  }
-  private normalizeAddress(address: string): string {
-    return getAddress(address);
+    return this.coreService.generateToken(metamaskUser);
   }
 }
