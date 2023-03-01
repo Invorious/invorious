@@ -1,43 +1,61 @@
-import { DynamicModule, Module } from '@nestjs/common';
-import { Provider, Type } from '@nestjs/common/interfaces';
+import { DynamicModule } from '@nestjs/common';
 import { USER_SERVICE } from './core/providers/user-service';
 import { AccessControlModuleConfig } from './core/types/access-control-module-config';
-import { CoreModule } from './core/core.module';
+import { accessControlCoreModule } from './core/access-control-core.module';
+import { ACCESS_CONTROL_SERVICE } from './core/providers/access-control-service';
+import { JwtModule } from '@nestjs/jwt';
+import { NestJSProvider } from './core/types/nestjs-provider-type';
+import { JWT_CONFIG_OPTIONS } from './core/providers/jwt-config-service';
+import { PassportModule } from '@nestjs/passport';
 
-export class AccessControlModule {
+export class InvoriousAccessControlModule {
   static forRoot(config: AccessControlModuleConfig): DynamicModule {
-    const { strategies, UserModule, UserServiceToken } = config;
-    // {
-    //   controllers: [MetamaskStrategyController],
-    //   providers: [MetamaskStrategyService],
-    // }
-    const improtedControllers: Type<any>[] = [];
-    const userProvider: Provider = {
-      provide: 'USER_SERVICE',
+    const {
+      strategies,
+      UserModule,
+      UserServiceToken,
+      AccessControlModule,
+      AccessControlServiceToken,
+      jwtSecret,
+      jwtOptions,
+    } = config;
+    const usedStrategies = [...strategies, accessControlCoreModule()];
+    const userProvider = {
+      provide: USER_SERVICE,
       useExisting: UserServiceToken,
     };
-    const importedProviders: Provider<any>[] = [userProvider];
-    strategies.forEach((strategy) => {
-      const { controllers, providers } = strategy;
-
-      if (controllers) {
-        improtedControllers.push(...controllers);
-      }
-      if (providers) {
-        importedProviders.push(...providers);
-      }
-    });
-    // console.log('puto el que lo lea');
-    console.log('Controllers → ', improtedControllers);
-    console.log('PRoviders → ', importedProviders);
-
+    const accessControlProvider = {
+      provide: ACCESS_CONTROL_SERVICE,
+      useExisting: AccessControlServiceToken,
+    };
+    const jwtConfigProvider: NestJSProvider = {
+      provide: JWT_CONFIG_OPTIONS,
+      useValue: { jwtSecret, jwtOptions },
+    };
+    const importedProviders = usedStrategies.flatMap(
+      ({ providers }) => providers
+    );
+    const controllers = usedStrategies.flatMap(
+      ({ controllers }) => controllers
+    );
     return {
-      // imports: [...strategies, CoreModule.forRoot({ userProvider })],
-      // exports: [userProvider],
-      imports: [UserModule],
-      providers: importedProviders,
-      controllers: improtedControllers,
-      module: AccessControlModule,
+      imports: [
+        UserModule,
+        AccessControlModule,
+        PassportModule,
+        JwtModule.register({
+          secret: jwtSecret,
+          signOptions: jwtOptions,
+        }),
+      ],
+      providers: [
+        userProvider,
+        accessControlProvider,
+        jwtConfigProvider,
+        ...importedProviders,
+      ],
+      controllers,
+      module: InvoriousAccessControlModule,
     };
   }
 }

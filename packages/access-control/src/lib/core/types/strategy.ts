@@ -1,6 +1,9 @@
-import { Type, Provider } from '@nestjs/common';
+import { NestJsController } from './nestjs-controller-type';
+import { NestJsModule } from './nestjs-module-type';
+import { NestJSProvider } from './nestjs-provider-type';
 
 export interface Strategy {
-  controllers: Type<any>[] | undefined;
-  providers: Provider<any>[] | undefined;
+  controllers: NestJsController[];
+  providers: NestJSProvider[];
+  imports?: NestJsModule[];
 }
