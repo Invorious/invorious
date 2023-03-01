@@ -5,7 +5,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ACCESS_CONTROL_SERVICE } from '../providers/access-control-service';
 import { JWT_CONFIG_OPTIONS } from '../providers/jwt-config-service';
 import { AccessControlCoreModuleConfig } from '../types/acces-control-core-module-config';
-import { IAccessControlCoreService } from '../types/core-service';
+import { IAccessControlCoreService } from '../types/access-control-core-service';
 import { JwtToken } from '../types/jwt-token';
 
 @Injectable()
