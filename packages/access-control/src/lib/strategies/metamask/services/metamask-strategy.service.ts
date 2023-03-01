@@ -19,17 +19,15 @@ export class MetamaskStrategyService<K extends object> {
     private coreService: AccessControlCoreService<IMetamaskUser, K>
   ) {}
 
-  login(loginDto: LoginDto): JwtToken {
+  async login(loginDto: LoginDto): Promise<JwtToken> {
     const { signature } = loginDto;
     const recoveredAddress = verifyMessage(LOGIN_MESSAGE, signature);
-    const metamaskUser =
-      this.metamaskUserService.findByAddress(recoveredAddress);
+    let metamaskUser = this.metamaskUserService.findByAddress(recoveredAddress);
     if (!metamaskUser) {
-      throw new UnprocessableEntityException(
-        'Address is not registered as an active user, please follow registration steps'
-      );
+      metamaskUser = await this.metamaskUserService.register({
+        address: recoveredAddress,
+      });
     }
-
     return this.coreService.generateToken(metamaskUser);
   }
 }
