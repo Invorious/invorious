@@ -1,17 +1,13 @@
 import { Strategy } from '../../core/types/strategy';
-import { MetamaskStrategyController } from './controllers/metamask-strategy.controller';
+import { buildMetamaskStrategyController } from './controllers/metamask-strategy.controller';
 import { MetamaskStrategyService } from './services/metamask-strategy.service';
-
-// @Module({
-//   imports: [],
-//   controllers: [MetamaskStrategyController],
-//   providers: [MetamaskStrategyService],
-// })
-// export class MetamaskStrategyModule {}
-
-export function metamaskStrategy(): Strategy {
+import { IMetamaskStrategyControllerOptions } from './types/metamsak-controller-options';
+export interface MetamaskStrategyOptions {
+  controllerOptions: IMetamaskStrategyControllerOptions;
+}
+export function metamaskStrategy(props?: MetamaskStrategyOptions): Strategy {
   return {
-    controllers: [MetamaskStrategyController],
+    controllers: [buildMetamaskStrategyController(props?.controllerOptions)],
     providers: [MetamaskStrategyService],
   };
 }
