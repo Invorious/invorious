@@ -1,3 +1,3 @@
-export interface JwtParser<K> {
-  parseUser<T>(user: T): K;
+export interface JwtParser<T, K extends object> {
+  parseUser(user: T): K;
 }
