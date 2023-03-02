@@ -1,16 +1,21 @@
-import { AccessControlModule, MetamaskStrategyModule } from '@invorious/access-control';
-import { Module } from '@nestjs/common';
+import { tokenUserService } from '@invorious/authorization';
+import { Global, Module } from '@nestjs/common';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UserModule } from './user/user.module';
+import { UserService } from './user/user.service';
 
+const providerUserService = {
+  provide: tokenUserService,
+  useExisting: UserService,
+};
+
+@Global()
 @Module({
-  imports: [
-    AccessControlModule.forRoot({
-      strategies: [MetamaskStrategyModule]
-    }),
-  ],
+  imports: [UserModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, providerUserService],
+  exports: [providerUserService],
 })
 export class AppModule {}
