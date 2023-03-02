@@ -1,6 +1,6 @@
-import { NestJsController } from './nestjs-controller-type';
-import { NestJsModule } from './nestjs-module-type';
-import { NestJSProvider } from './nestjs-provider-type';
+import { NestJsController } from './nest-js-controller.type';
+import { NestJsModule } from './nest-js-module.type';
+import { NestJSProvider } from './nest-js-provider.type';
 
 export interface Strategy {
   controllers: NestJsController[];
