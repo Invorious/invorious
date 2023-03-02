@@ -11,7 +11,7 @@ export class AccessControlService
   getRolesById(id: number): string[] {
     return [''];
   }
-  parseUser(user): JwtPayload {
-    return { id: user.id };
+  parseUser(user: User): JwtPayload {
+    return { address: user.address, id: user.id };
   }
 }
