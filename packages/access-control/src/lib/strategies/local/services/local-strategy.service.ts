@@ -4,7 +4,7 @@ import { Strategy } from 'passport-local';
 import * as bcrypt from 'bcrypt';
 
 import { IUserAndPass } from '../types/user-and-pass.interface';
-import { IUserAndPassService } from '../types/user-and-pass-service';
+import { IUsersService } from '../types/users-service';
 import { AccessControlCoreService } from '../../../core/services/access-control-core.service';
 import { USER_SERVICE } from '../../../core/providers/service.provider';
 import { JwtToken } from '../../../core/types/jwt-token';
@@ -16,26 +16,26 @@ export class LocalStrategyService<K extends object> extends PassportStrategy(
 ) {
   constructor(
     @Inject(USER_SERVICE)
-    private userAndPassService: IUserAndPassService<IUserAndPass>,
+    private usersService: IUsersService<IUserAndPass>,
     private coreService: AccessControlCoreService<IUserAndPass, K>,
   ) {
     super();
   }
 
-  async validate(username: string, password: string) {
-    const user = await this.validateUser(username, password);
-    if (!user)
+  async validate(username: string, password: string): Promise<JwtToken> {
+    const payload = await this.validateUser(username, password);
+    if (!payload)
       throw new UnauthorizedException(
         'User not allowed, please check your credentials',
       );
-    return this.coreService.generateToken(user);
+    return this.coreService.generateToken(payload);
   }
 
   async validateUser(
     username: string,
     pass: string,
   ): Promise<IUserAndPass | null> {
-    const user = this.userAndPassService.findByUsername(username);
+    const user = await this.usersService.findByUsername(username);
     if (user && (await this.validatePassword(pass, user))) return user;
     return null;
   }
@@ -46,5 +46,9 @@ export class LocalStrategyService<K extends object> extends PassportStrategy(
 
   async login(credentials: IUserAndPass): Promise<JwtToken> {
     return await this.validate(credentials.username, credentials.password);
+  }
+
+  async delete(id: number) {
+    return await this.usersService.deleteUser(id);
   }
 }

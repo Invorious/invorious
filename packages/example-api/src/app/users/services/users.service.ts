@@ -1,10 +1,10 @@
-import { IUserAndPassService } from '@invorious/access-control';
+import { IUsersService } from '@invorious/access-control';
 import { Injectable } from '@nestjs/common';
 
 import { User } from '../entities/user.entity';
 
 @Injectable()
-export class UsersService implements IUserAndPassService<User> {
+export class UsersService implements IUsersService<User> {
   users: User[] = [
     {
       id: 1,
@@ -26,9 +26,13 @@ export class UsersService implements IUserAndPassService<User> {
     },
   ];
 
-  findByUsername(username: string): User | null {
+  async findByUsername(username: string): Promise<User | null> {
     return this.users.find(
       (user) => user.username === username.toLowerCase().trim(),
     );
+  }
+
+  async deleteUser(id: number): Promise<User[]> {
+    return this.users.filter((user) => user.id !== id);
   }
 }
