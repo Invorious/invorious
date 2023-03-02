@@ -7,31 +7,26 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { NestJsController } from '../../../core/types/nestjs-controller-type';
+import { NestJsController } from '../../../core/types/nest-js-controller.type';
 import { MetamaskStrategyService } from '../services/metamask-strategy.service';
 import { LoginDto } from '../types/login-dto';
 import { IMetamaskStrategyControllerOptions } from '../types/metamsak-controller-options';
 
 export function buildMetamaskStrategyController(
-  props: IMetamaskStrategyControllerOptions | undefined
+  props: IMetamaskStrategyControllerOptions | undefined,
 ): NestJsController {
-  const defaultStrategyOptions: IMetamaskStrategyControllerOptions = {
-    baseUrl: 'auth/metamask',
-    loginUrl: '/login',
-    profileUrl: '/me',
+  const options: IMetamaskStrategyControllerOptions = {
+    baseUrl: props?.baseUrl ?? 'auth/metamask',
   };
-  @Controller(props?.baseUrl || defaultStrategyOptions.baseUrl)
+  @Controller(options.baseUrl)
   class MetamaskStrategyController<K extends object> {
     constructor(private metamaskStrategyService: MetamaskStrategyService<K>) {}
-    // This get endpoint is for testing purposes, like:
-    // 1 → check jwt is validated from metamaskStrategyService.validate()
-    // 2 → checl if payload is managed correctly
     @UseGuards(AuthGuard('jwt'))
-    @Get(props?.profileUrl || defaultStrategyOptions.profileUrl)
+    @Get('/me')
     getMetamaskUser(@Request() req: { user: K }) {
       return req.user;
     }
-    @Post(props?.loginUrl || defaultStrategyOptions.loginUrl)
+    @Post('/login')
     login(@Body() loginDto: LoginDto) {
       return this.metamaskStrategyService.login(loginDto);
     }
