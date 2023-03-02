@@ -1,45 +1,58 @@
 import { DynamicModule } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { USER_SERVICE } from './core/providers/service.provider';
+
 import {
-  AccessControlModuleConfig,
-  Strategy,
-} from './core/types/access-control-module-config';
+  ACCESS_CONTROL_SERVICE,
+  JWT_CONFIG_OPTIONS,
+  USER_SERVICE,
+} from './core/providers/service.provider';
+import { accessControlCoreModule } from './core/access-control-core.module';
+import { AccessControlModuleConfig } from './core/types/access-control.interface';
+import { IController, IProvider } from './core/types/nest.interface';
 
-export class AccessControlModule {
+export class InvoriousAccessControlModule {
   static forRoot(config: AccessControlModuleConfig): DynamicModule {
-    const { UsersModule, UserServiceToken, JWT_SECRET, strategies } = config;
+    const {
+      AccessControlModule,
+      AccessControlServiceToken,
+      UsersModule,
+      UsersServiceToken,
+      jwtOptions,
+      jwtSecret,
+      strategies,
+    } = config;
 
-    const providers: Strategy['providers'] = [];
-
-    const controllers: Strategy['controllers'] = [];
-
-    strategies.forEach((strategy) => {
-      if (strategy.providers.length) {
-        providers.push(...strategy.providers);
-      }
-      if (strategy.controllers.length) {
-        controllers.push(...strategy.controllers);
-      }
-    });
+    const usedStrategies = [...strategies, accessControlCoreModule()];
+    const controllers: IController[] = usedStrategies.flatMap(
+      ({ controllers }) => controllers,
+    );
+    const providers: IProvider[] = usedStrategies.flatMap(
+      ({ providers }) => providers,
+    );
 
     return {
       imports: [
+        AccessControlModule,
         UsersModule,
         PassportModule,
         JwtModule.register({
-          secret: JWT_SECRET,
-          signOptions: { expiresIn: '60s' },
+          secret: jwtSecret,
+          signOptions: jwtOptions,
         }),
       ],
       exports: providers,
       controllers,
       providers: [
-        { provide: USER_SERVICE, useExisting: UserServiceToken },
+        { provide: USER_SERVICE, useExisting: UsersServiceToken },
+        {
+          provide: ACCESS_CONTROL_SERVICE,
+          useExisting: AccessControlServiceToken,
+        },
+        { provide: JWT_CONFIG_OPTIONS, useValue: { jwtSecret, jwtOptions } },
         ...providers,
       ],
-      module: AccessControlModule,
+      module: InvoriousAccessControlModule,
     };
   }
 }

@@ -1,21 +1,26 @@
 import {
-  AccessControlModule,
+  InvoriousAccessControlModule,
   localStrategy,
-  metamaskStrategy,
 } from '@invorious/access-control';
 import { Module } from '@nestjs/common';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AccessControlModule } from './access-control/access-control.module';
 import { UsersModule } from './users/users.module';
+import { AccessControlService } from './access-control/services/access-control.service';
 import { UsersService } from './users/services/users.service';
 
 @Module({
   imports: [
-    AccessControlModule.forRoot({
+    InvoriousAccessControlModule.forRoot({
+      AccessControlModule,
+      AccessControlServiceToken: AccessControlService,
       UsersModule,
-      UserServiceToken: UsersService,
-      JWT_SECRET: 'secret',
-      strategies: [metamaskStrategy(), localStrategy()],
+      UsersServiceToken: UsersService,
+      jwtSecret: 'secret',
+      jwtOptions: { expiresIn: '60s' },
+      strategies: [localStrategy()],
     }),
     UsersModule,
   ],

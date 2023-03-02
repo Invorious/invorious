@@ -1,14 +1,29 @@
 import { Controller, Post, Request, UseGuards } from '@nestjs/common';
+
 import { LocalAuthGuard } from '../guard/local-auth.guard';
 import { LocalStrategyService } from '../services/local-strategy.service';
+import { ILocalStrategyControllerOptions } from '../types';
+import { IController } from '../../../core/types/nest.interface';
 
-@Controller()
-export class LocalStrategyController<K> {
-  constructor(private localStrategyService: LocalStrategyService<K>) {}
+export function buildLocalStrategyController(
+  props: ILocalStrategyControllerOptions | undefined,
+): IController {
+  const defaultStrategyOptions: ILocalStrategyControllerOptions = {
+    baseUrl: 'auth/local',
+    loginUrl: '/login',
+    profileUrl: '/me',
+  };
 
-  @UseGuards(LocalAuthGuard)
-  @Post('auth/login')
-  async login(@Request() req: any) {
-    return this.localStrategyService.login(req.body);
+  @Controller(props?.baseUrl || defaultStrategyOptions.baseUrl)
+  class LocalStrategyController<K extends object> {
+    constructor(private LocalStrategyService: LocalStrategyService<K>) {}
+
+    @UseGuards(LocalAuthGuard)
+    @Post(props?.loginUrl || defaultStrategyOptions.loginUrl)
+    async login(@Request() req: any) {
+      return this.LocalStrategyService.login(req.body);
+    }
   }
+
+  return LocalStrategyController;
 }
