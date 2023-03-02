@@ -5,6 +5,9 @@
   "scripts": {},
   "private": true,
   "devDependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
+    "@commitlint/config-nx-scopes": "^17.4.3",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
     "@nrwl/eslint-plugin-nx": "15.6.3",
@@ -23,6 +26,7 @@
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
     "ethers": "^6.0.2",
+    "husky": "^8.0.3",
     "jest": "28.1.1",
     "jest-environment-jsdom": "28.1.1",
     "nx": "15.6.3",
@@ -37,13 +41,11 @@
     "@nestjs/jwt": "^10.0.2",
     "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^9.0.0",
-    "@nestjs/typeorm": "^9.0.1",
     "axios": "^1.0.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.0.0",
-    "tslib": "^2.3.0",
-    "typeorm": "^0.3.12"
+    "tslib": "^2.3.0"
   }
 }

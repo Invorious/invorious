@@ -1,7 +1,7 @@
 import { IMetamaskService } from '@invorious/access-control';
 import { Injectable } from '@nestjs/common';
-import { DeepPartial } from 'typeorm';
 import { User } from '../entities/user.entity';
+import { LOGIN_MESSAGE } from '../interfaces/login-message';
 @Injectable()
 export class UsersService implements IMetamaskService<User> {
   users: User[] = [];
@@ -10,10 +10,9 @@ export class UsersService implements IMetamaskService<User> {
     return this.users.find((user) => user.address === address);
   }
 
-  register(data: DeepPartial<User>) {
-    const userId =
-      this.users.length > 0 ? this.users[this.users.length - 1].id + 1 : 0;
-    const newUser: User = {
+  register(data: Partial<User>) {
+    const userId = this.users[this.users.length - 1].id + 1;
+    const newUser = {
       id: userId,
       address: data.address,
       loPega: data.loPega ? data.loPega : false,
@@ -22,14 +21,19 @@ export class UsersService implements IMetamaskService<User> {
     this.users.push(newUser);
     return newUser;
   }
-  update(data: DeepPartial<User>) {
+
+  update(data: Partial<User>) {
     const indexOfUser = this.users.findIndex(
-      (user) => user.address === data.address
+      (user) => user.address === data.address,
     );
     this.users[indexOfUser] = {
       ...this.users[indexOfUser],
       ...data,
     };
     return this.users[indexOfUser];
+  }
+
+  get loginMessage() {
+    return LOGIN_MESSAGE;
   }
 }

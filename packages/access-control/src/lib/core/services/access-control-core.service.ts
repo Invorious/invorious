@@ -11,14 +11,14 @@ import { JwtToken } from '../types/jwt-token';
 @Injectable()
 export class AccessControlCoreService<
   T,
-  K extends object
+  K extends object,
 > extends PassportStrategy(Strategy) {
   constructor(
     @Inject(ACCESS_CONTROL_SERVICE)
     private accessControlService: IAccessControlCoreService<T, K>,
     @Inject(JWT_CONFIG_OPTIONS)
     jwtConfigOptions: AccessControlCoreModuleConfig,
-    private jwtService: JwtService
+    private jwtService: JwtService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -30,10 +30,6 @@ export class AccessControlCoreService<
   generateToken(user: T): JwtToken {
     const payload = this.accessControlService.parseUser(user);
     const token = this.jwtService.sign(payload);
-    return { access_token: token };
-  }
-
-  validate(payload: K) {
-    return payload;
+    return { accessToken: token };
   }
 }

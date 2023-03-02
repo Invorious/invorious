@@ -8,40 +8,36 @@ import {
   Put,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { DeepPartial } from 'typeorm';
-import { NestJsController } from '../../../core/types/nestjs-controller-type';
+import { NestJsController } from '../../../core/types/nest-js-controller.type';
 import { MetamaskStrategyService } from '../services/metamask-strategy.service';
 import { LoginDto } from '../types/login-dto';
-import { MetamaskJwtPayload } from '../types/metamask-jwt-payload';
 import { IMetamaskUser } from '../types/metamask-user';
 import { IMetamaskStrategyControllerOptions } from '../types/metamsak-controller-options';
 
 export function buildMetamaskStrategyController(
-  props: IMetamaskStrategyControllerOptions | undefined
+  props: IMetamaskStrategyControllerOptions | undefined,
 ): NestJsController {
-  const defaultStrategyOptions: IMetamaskStrategyControllerOptions = {
-    baseUrl: 'auth/metamask',
-    loginUrl: '/login',
-    profileUrl: '/me',
+  const options: IMetamaskStrategyControllerOptions = {
+    baseUrl: props?.baseUrl ?? 'auth/metamask',
   };
-  @Controller(props?.baseUrl || defaultStrategyOptions.baseUrl)
-  class MetamaskStrategyController<K extends MetamaskJwtPayload> {
+  @Controller(options.baseUrl)
+  class MetamaskStrategyController<K extends object> {
     constructor(private metamaskStrategyService: MetamaskStrategyService<K>) {}
     @UseGuards(AuthGuard('jwt'))
-    @Get(props?.profileUrl || defaultStrategyOptions.profileUrl)
+    @Get('/me')
     getMetamaskUser(@Request() req: { user: K }) {
       const user = this.metamaskStrategyService.get(req.user.address);
       return user;
     }
-    @Post(props?.loginUrl || defaultStrategyOptions.loginUrl)
+    @Post('/login')
     login(@Body() loginDto: LoginDto) {
       return this.metamaskStrategyService.login(loginDto);
     }
-    @Put(props?.profileUrl || defaultStrategyOptions.profileUrl)
+    @Put('/me')
     @UseGuards(AuthGuard('jwt'))
     updateMetamaskUser(
-      @Body() updateDto: DeepPartial<IMetamaskUser>,
-      @Request() req: { user: K }
+      @Body() updateDto: Partial<IMetamaskUser>,
+      @Request() req: { user: K },
     ) {
       return this.metamaskStrategyService.update({ ...updateDto, ...req.user });
     }

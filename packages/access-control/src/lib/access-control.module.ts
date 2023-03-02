@@ -1,12 +1,12 @@
 import { DynamicModule } from '@nestjs/common';
 import { USER_SERVICE } from './core/providers/user-service';
 import { AccessControlModuleConfig } from './core/types/access-control-module-config';
-import { accessControlCoreModule } from './core/access-control-core.module';
 import { ACCESS_CONTROL_SERVICE } from './core/providers/access-control-service';
 import { JwtModule } from '@nestjs/jwt';
-import { NestJSProvider } from './core/types/nestjs-provider-type';
+import { NestJSProvider } from './core/types/nest-js-provider.type';
 import { JWT_CONFIG_OPTIONS } from './core/providers/jwt-config-service';
 import { PassportModule } from '@nestjs/passport';
+import { AccessControlCoreService } from './core/services/access-control-core.service';
 
 export class InvoriousAccessControlModule {
   static forRoot(config: AccessControlModuleConfig): DynamicModule {
@@ -19,7 +19,7 @@ export class InvoriousAccessControlModule {
       jwtSecret,
       jwtOptions,
     } = config;
-    const usedStrategies = [...strategies, accessControlCoreModule()];
+    const usedStrategies = [...strategies];
     const userProvider = {
       provide: USER_SERVICE,
       useExisting: UserServiceToken,
@@ -33,10 +33,10 @@ export class InvoriousAccessControlModule {
       useValue: { jwtSecret, jwtOptions },
     };
     const importedProviders = usedStrategies.flatMap(
-      ({ providers }) => providers
+      ({ providers }) => providers,
     );
     const controllers = usedStrategies.flatMap(
-      ({ controllers }) => controllers
+      ({ controllers }) => controllers,
     );
     return {
       imports: [
@@ -52,6 +52,7 @@ export class InvoriousAccessControlModule {
         userProvider,
         accessControlProvider,
         jwtConfigProvider,
+        AccessControlCoreService,
         ...importedProviders,
       ],
       controllers,

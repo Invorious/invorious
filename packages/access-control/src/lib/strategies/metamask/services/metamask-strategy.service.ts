@@ -1,8 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DeepPartial } from 'typeorm';
-import { verifyMessage } from 'ethers';
 import { LoginDto } from '../types/login-dto';
-import { LOGIN_MESSAGE } from '../types/login-message';
+import { verifyMessage } from 'ethers';
 import { IMetamaskUser } from '../types/metamask-user';
 import { USER_SERVICE } from '../../../core/providers/user-service';
 import { IMetamaskService } from '../types/metamask-service';
@@ -14,12 +12,15 @@ export class MetamaskStrategyService<K extends MetamaskJwtPayload> {
   constructor(
     @Inject(USER_SERVICE)
     private metamaskUserService: IMetamaskService<IMetamaskUser>,
-    private coreService: AccessControlCoreService<IMetamaskUser, K>
+    private coreService: AccessControlCoreService<IMetamaskUser, K>,
   ) {}
 
   async login(loginDto: LoginDto): Promise<JwtToken> {
     const { signature } = loginDto;
-    const recoveredAddress = verifyMessage(LOGIN_MESSAGE, signature);
+    const recoveredAddress = verifyMessage(
+      this.metamaskUserService.loginMessage,
+      signature,
+    );
     let metamaskUser = this.metamaskUserService.findByAddress(recoveredAddress);
     if (!metamaskUser) {
       metamaskUser = await this.metamaskUserService.register({
@@ -28,7 +29,7 @@ export class MetamaskStrategyService<K extends MetamaskJwtPayload> {
     }
     return this.coreService.generateToken(metamaskUser);
   }
-  async update(updateDto: DeepPartial<IMetamaskUser>) {
+  async update(updateDto: Partial<IMetamaskUser>) {
     return this.metamaskUserService.update(updateDto);
   }
 

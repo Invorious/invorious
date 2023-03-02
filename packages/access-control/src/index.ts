@@ -4,3 +4,4 @@ export * from './lib/strategies/metamask/types/metamask-service';
 export * from './lib/strategies/metamask/types/metamask-user';
 export * from './lib/core/types/access-control-core-service';
 export * from './lib/strategies/metamask/types/metamask-jwt-payload';
+export * from './lib/core/types/jwt-parser';
