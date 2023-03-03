@@ -2,6 +2,7 @@ import { IMetamaskService } from '@invorious/access-control';
 import { Injectable } from '@nestjs/common';
 import { User } from '../entities/user.entity';
 import { LOGIN_MESSAGE } from '../interfaces/login-message';
+import { REQUEST_MESSAGE } from '../interfaces/request-message';
 @Injectable()
 export class UsersService implements IMetamaskService<User> {
   users: User[] = [];
@@ -10,12 +11,16 @@ export class UsersService implements IMetamaskService<User> {
     return this.users.find((user) => user.address === address);
   }
 
+  findById(id: number) {
+    return this.users.find((user) => user.id === id);
+  }
+
   register(data: Partial<User>) {
-    const userId = this.users[this.users.length - 1].id + 1;
+    const userId =
+      this.users.length > 0 ? this.users[this.users.length - 1].id + 1 : 0;
     const newUser = {
       id: userId,
       address: data.address,
-      loPega: data.loPega ? data.loPega : false,
       nickname: data.nickname ? data.nickname : 'patricio',
     };
     this.users.push(newUser);
@@ -35,5 +40,8 @@ export class UsersService implements IMetamaskService<User> {
 
   get loginMessage() {
     return LOGIN_MESSAGE;
+  }
+  get requestMessage() {
+    return REQUEST_MESSAGE;
   }
 }

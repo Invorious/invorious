@@ -11,8 +11,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { NestJsController } from '../../../core/types/nest-js-controller.type';
 import { MetamaskStrategyService } from '../services/metamask-strategy.service';
 import { LoginDto } from '../types/login-dto';
-import { IMetamaskUser } from '../types/metamask-user';
 import { IMetamaskStrategyControllerOptions } from '../types/metamsak-controller-options';
+import { UpdateDto } from '../types/update-dto';
 
 export function buildMetamaskStrategyController(
   props: IMetamaskStrategyControllerOptions | undefined,
@@ -21,12 +21,12 @@ export function buildMetamaskStrategyController(
     baseUrl: props?.baseUrl ?? 'auth/metamask',
   };
   @Controller(options.baseUrl)
-  class MetamaskStrategyController<K extends object> {
+  class MetamaskStrategyController<K extends { id: number }> {
     constructor(private metamaskStrategyService: MetamaskStrategyService<K>) {}
     @UseGuards(AuthGuard('jwt'))
     @Get('/me')
     getMetamaskUser(@Request() req: { user: K }) {
-      const user = this.metamaskStrategyService.get(req.user.address);
+      const user = this.metamaskStrategyService.getById(req.user.id);
       return user;
     }
     @Post('/login')
@@ -35,11 +35,8 @@ export function buildMetamaskStrategyController(
     }
     @Put('/me')
     @UseGuards(AuthGuard('jwt'))
-    updateMetamaskUser(
-      @Body() updateDto: Partial<IMetamaskUser>,
-      @Request() req: { user: K },
-    ) {
-      return this.metamaskStrategyService.update({ ...updateDto, ...req.user });
+    updateMetamaskUser(@Body() updateDto: UpdateDto) {
+      return this.metamaskStrategyService.update(updateDto);
     }
   }
   return MetamaskStrategyController;
