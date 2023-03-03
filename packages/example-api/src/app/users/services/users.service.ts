@@ -1,10 +1,10 @@
-import { IUserAndPassService } from '@invorious/access-control';
+import { IUsersService } from '@invorious/access-control';
 import { Injectable } from '@nestjs/common';
 
 import { User } from '../entities/user.entity';
 
 @Injectable()
-export class UsersService implements IUserAndPassService<User> {
+export class UsersService implements IUsersService<User> {
   users: User[] = [
     {
       id: 1,

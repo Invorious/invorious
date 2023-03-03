@@ -1,10 +1,15 @@
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  UnauthorizedException,
+  NotFoundException,
+} from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 import * as bcrypt from 'bcrypt';
 
-import { IUserAndPass } from '../types/user-and-pass.interface';
-import { IUserAndPassService } from '../types/user-and-pass-service';
+import { IUsernameAndPassword } from '../types/username-and-password.interface';
+import { IUsersService } from '../types/user-service';
 import { AccessControlCoreService } from '../../../core/services/access-control-core.service';
 import { USER_SERVICE } from '../../../core/providers/service.provider';
 import { JwtToken } from '../../../core/types/jwt-token';
@@ -16,35 +21,38 @@ export class LocalStrategyService<K extends object> extends PassportStrategy(
 ) {
   constructor(
     @Inject(USER_SERVICE)
-    private userAndPassService: IUserAndPassService<IUserAndPass>,
-    private coreService: AccessControlCoreService<IUserAndPass, K>,
+    private userAndPassService: IUsersService<IUsernameAndPassword>,
+    private coreService: AccessControlCoreService<IUsernameAndPassword, K>,
   ) {
     super();
   }
 
   async validate(username: string, password: string) {
     const user = await this.validateUser(username, password);
-    if (!user)
-      throw new UnauthorizedException(
-        'User not allowed, please check your credentials',
-      );
+    if (!user) throw new NotFoundException('User not found');
     return this.coreService.generateToken(user);
   }
 
   async validateUser(
     username: string,
     pass: string,
-  ): Promise<IUserAndPass | null> {
+  ): Promise<IUsernameAndPassword | null> {
     const user = this.userAndPassService.findByUsername(username);
     if (user && (await this.validatePassword(pass, user))) return user;
     return null;
   }
 
-  async validatePassword(pass: string, user: IUserAndPass): Promise<boolean> {
-    return await bcrypt.compare(pass, user.password);
+  async validatePassword(
+    pass: string,
+    user: IUsernameAndPassword,
+  ): Promise<boolean> {
+    if (await bcrypt.compare(pass, user.password)) return true;
+    throw new UnauthorizedException(
+      'User not allowed, please check your credentials',
+    );
   }
 
-  async login(credentials: IUserAndPass): Promise<JwtToken> {
+  async login(credentials: IUsernameAndPassword): Promise<JwtToken> {
     return await this.validate(credentials.username, credentials.password);
   }
 }

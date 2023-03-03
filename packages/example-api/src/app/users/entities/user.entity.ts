@@ -1,6 +1,6 @@
-import { IUserAndPass } from '@invorious/access-control';
+import { IUsernameAndPassword } from '@invorious/access-control';
 
-export class User implements IUserAndPass {
+export class User implements IUsernameAndPassword {
   id: number;
   username: string;
   password: string;
