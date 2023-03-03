@@ -5,4 +5,5 @@ export interface IMetamaskService<T extends IMetamaskUser>
   extends IStrategyService<T> {
   findByAddress(address: string): T;
   loginMessage: string;
+  requestMessage: string;
 }
