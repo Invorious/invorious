@@ -32,4 +32,8 @@ export class AccessControlCoreService<
     const token = this.jwtService.sign(payload);
     return { accessToken: token };
   }
+
+  validate(payload: K) {
+    return payload;
+  }
 }
