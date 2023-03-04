@@ -1,5 +1,8 @@
-import { AccessControlModule } from '@invorious/access-control';
-import { Module } from '@nestjs/common';
+import {
+  AccessControlModule,
+  tokenUserService,
+} from '@invorious/access-control';
+import { Global, Module } from '@nestjs/common';
 
 import { AccessControlClientModule } from './access-control-client/access-control-client.module';
 import { AccessControlClientService } from './access-control-client/access-control-client.service';
@@ -9,8 +12,15 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { UserService } from './user/user.service';
 
+const providerUserService = {
+  provide: tokenUserService,
+  useExisting: UserService,
+};
+
+@Global()
 @Module({
   imports: [
+    UserModule,
     AccessControlModule.forRoot({
       AccessControlClientModule,
       AccessControlClientService,
@@ -23,6 +33,7 @@ import { UserService } from './user/user.service';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, providerUserService],
+  exports: [providerUserService],
 })
 export class AppModule {}
