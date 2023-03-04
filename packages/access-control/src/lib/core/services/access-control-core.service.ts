@@ -8,9 +8,10 @@ import { IAccessControlClientService } from '../types/access-control-client.inte
 import { IJwtToken } from '../types/jwt.interface';
 
 @Injectable()
-export class JwtStrategy<T, K extends object> extends PassportStrategy(
-  Strategy,
-) {
+export class AccessControlCoreService<
+  T,
+  K extends object,
+> extends PassportStrategy(Strategy) {
   constructor(
     @Inject(tokenAccessControlClient)
     private accessControlService: IAccessControlClientService<T, K>,
