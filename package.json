@@ -2,7 +2,11 @@
   "name": "invorious",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "prepare": "husky install",
+    "lint": "npx eslint",
+    "fix": "npm run lint -- --fix"
+  },
   "private": true,
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
@@ -46,6 +50,7 @@
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.0.0",
+    "standard": "^17.0.0",
     "tslib": "^2.3.0"
   }
 }

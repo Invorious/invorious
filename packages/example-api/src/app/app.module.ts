@@ -20,13 +20,13 @@ import { UserService } from './user/user.service';
         secret: 'aaaa',
       },
       strategies: [
-        googleStrategy({
-          clientID: process.env.GOOGLE_CLIENT_ID,
-          clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-          callbackURL: 'http://localhost:3333/api/google/register',
-          routeGoogle: 'google/register',
-          routeToRedirect: 'api',
-        }),
+        // googleStrategy({
+        //   clientID: process.env.GOOGLE_CLIENT_ID,
+        //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        //   callbackURL: 'http://localhost:3333/api/google/register',
+        //   routeGoogle: 'google/register',
+        //   routeToRedirect: 'api',
+        // }),
       ],
     }),
   ],

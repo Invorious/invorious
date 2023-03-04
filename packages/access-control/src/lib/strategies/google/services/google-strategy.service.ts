@@ -3,10 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback } from 'passport-google-oauth20';
 import { AccessControlCoreService } from '../../../core/services/access-control-core.service';
 
-import {
-  tokenAccessControlClient,
-  tokenUserService,
-} from '../../../core/tokens';
+import { tokenUserService } from '../../../core/tokens';
 import { tokenGoogleConfig } from '../tokens';
 
 import {
