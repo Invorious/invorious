@@ -1,11 +1,11 @@
-import { ExtractJwt, Strategy } from 'passport-jwt';
-import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, Inject } from '@nestjs/common';
-import { tokenAccessControlClient } from '../tokens';
-import { tokenJWTConfig } from '../tokens';
 import { JwtModuleOptions, JwtService } from '@nestjs/jwt';
-import { JwtToken } from '../types/jwt.interface';
-import { IAccessControlClientService } from '../types/access-control.interface';
+import { PassportStrategy } from '@nestjs/passport';
+import { ExtractJwt, Strategy } from 'passport-jwt';
+
+import { tokenAccessControlClient, tokenJWTConfig } from '../tokens';
+import { IAccessControlClientService } from '../types/access-control-client.interface';
+import { IJwtToken } from '../types/jwt.interface';
 
 @Injectable()
 export class JwtStrategy<T, K extends object> extends PassportStrategy(
@@ -25,7 +25,7 @@ export class JwtStrategy<T, K extends object> extends PassportStrategy(
     });
   }
 
-  generateToken(user: T): JwtToken {
+  generateToken(user: T): IJwtToken {
     const payload = this.accessControlService.parseUser(user);
     const token = this.jwtService.sign(payload);
     return { accessToken: token };

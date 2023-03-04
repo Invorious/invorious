@@ -1,7 +1,7 @@
-export interface JwtParser<T, K> {
+export interface IJwtParser<T, K> {
   parseUser(user: T): K;
 }
 
-export interface JwtToken {
+export interface IJwtToken {
   accessToken: string;
 }
