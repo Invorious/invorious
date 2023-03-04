@@ -1,4 +1,7 @@
-import { AccessControlModule } from '@invorious/access-control';
+import {
+  AccessControlModule,
+  metamaskStrategy,
+} from '@invorious/access-control';
 import { Module } from '@nestjs/common';
 
 import { AccessControlClientModule } from './access-control-client/access-control-client.module';
@@ -19,7 +22,7 @@ import { UserService } from './user/user.service';
       jwtOptions: {
         secret: 'aaaa',
       },
-      strategies: [],
+      strategies: [metamaskStrategy()],
     }),
   ],
   controllers: [AppController],
