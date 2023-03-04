@@ -1,22 +1,22 @@
 import { IStrategy } from '../../core/types/access-control.interface';
-import { buildGoogleAccountController } from './controllers/google-account-strategy.controller';
-import { GoogleAccountStrategyService } from './services/google-account-strategy.service';
+import { buildGoogleController } from './controllers/google-strategy.controller';
+import { GoogleStrategyService } from './services/google-strategy.service';
+import { tokenGoogleConfig } from './tokens';
 import { IGoogleAccountStrategy } from './types';
-import { tokenGoogleAccountConfig } from './utils';
 
 export function googleStrategy(config: IGoogleAccountStrategy): IStrategy {
-  const { routeGoogle, routeToRedirect, ...configGoogle } = config;
+  const { routeGoogle, routeToRedirect, ...googleConfig } = config;
+
+  console.log(config);
 
   return {
-    controllers: [
-      buildGoogleAccountController({ routeGoogle, routeToRedirect }),
-    ],
+    controllers: [buildGoogleController({ routeGoogle, routeToRedirect })],
     providers: [
       {
-        provide: tokenGoogleAccountConfig,
-        useValue: configGoogle,
+        provide: tokenGoogleConfig,
+        useValue: googleConfig,
       },
-      GoogleAccountStrategyService,
+      GoogleStrategyService,
     ],
   };
 }
