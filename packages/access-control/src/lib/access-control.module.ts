@@ -1,8 +1,13 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { AccessControlCoreService } from './core/services/access-control-core.service';
 
-import { tokenAccessControlClient, tokenUserService } from './core/tokens';
+import {
+  tokenAccessControlClient,
+  tokenJWTConfig,
+  tokenUserService,
+} from './core/tokens';
 import { IAccessControlModuleConfig } from './core/types/access-control.interface';
 import { IController, IProvider } from './core/types/nest.interface';
 
@@ -35,10 +40,12 @@ export class AccessControlModule {
       controllers,
       providers: [
         { provide: tokenUserService, useExisting: UserService },
+        { provide: tokenJWTConfig, useExisting: jwtOptions },
         {
           provide: tokenAccessControlClient,
           useExisting: AccessControlClientService,
         },
+        AccessControlCoreService,
         ...providers,
       ],
       module: AccessControlModule,
