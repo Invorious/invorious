@@ -4,6 +4,7 @@ import { Response, Request } from 'express';
 
 import { IGoogleAccountBuildController } from '../types';
 import { IController } from '../../../core/types/nest.interface';
+import { IJwtToken } from '../../../core/types/jwt.interface';
 
 export function buildGoogleController({
   routeGoogle,
@@ -14,7 +15,9 @@ export function buildGoogleController({
     @Get(routeGoogle)
     @UseGuards(AuthGuard('google'))
     googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
-      return res.redirect(`${routeToRedirect}?token=${req.user}`);
+      const token = req.user as IJwtToken;
+
+      return res.redirect(`${routeToRedirect}?token=${token.accessToken}`);
     }
   }
 
