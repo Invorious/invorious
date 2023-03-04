@@ -40,7 +40,7 @@ export class AccessControlModule {
       controllers,
       providers: [
         { provide: tokenUserService, useExisting: UserService },
-        { provide: tokenJWTConfig, useExisting: jwtOptions },
+        { provide: tokenJWTConfig, useValue: jwtOptions },
         {
           provide: tokenAccessControlClient,
           useExisting: AccessControlClientService,
