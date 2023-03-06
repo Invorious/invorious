@@ -11,6 +11,22 @@ export class UserService implements IMetamaskService<User> {
   findByAddress(address: string): User {
     return this.users.find((user) => user.address === address);
   }
+
+  register(data: Partial<User>) {
+    const id = this.users[this.users.length - 1].id + 1;
+    const newUser: User = {
+      id,
+      address: data.address,
+      ...data,
+    };
+    this.users.push(newUser);
+    return newUser;
+  }
+
+  findById(id: number): User {
+    return this.users.find((user) => user.id === id);
+  }
+
   get loginMessage() {
     return 'Welcome back you beatiful bastard, please sign this message to login, xoxo in your butty';
   }
