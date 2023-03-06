@@ -21,23 +21,23 @@ export class LocalStrategyService<K extends object> extends PassportStrategy(
 ) {
   constructor(
     @Inject(tokenUserService)
-    private userAndPassService: IUsersService<IUsernameAndPassword>,
+    private usersService: IUsersService<IUsernameAndPassword>,
     private coreService: AccessControlCoreService<IUsernameAndPassword, K>,
   ) {
     super();
   }
 
-  async validate(username: string, password: string) {
-    const user = await this.validateUser(username, password);
-    if (!user) throw new NotFoundException('User not found');
-    return this.coreService.generateToken(user);
+  async validate(username: string, password: string): Promise<IJwtToken> {
+    const payload = await this.validateUser(username, password);
+    if (!payload) throw new NotFoundException('User not found');
+    return this.coreService.generateToken(payload);
   }
 
   async validateUser(
     username: string,
     pass: string,
   ): Promise<IUsernameAndPassword | null> {
-    const user = this.userAndPassService.findByUsername(username);
+    const user = await this.usersService.findByUsername(username);
     if (user && (await this.validatePassword(pass, user))) return user;
     return null;
   }
@@ -54,5 +54,11 @@ export class LocalStrategyService<K extends object> extends PassportStrategy(
 
   async login(credentials: IUsernameAndPassword): Promise<IJwtToken> {
     return await this.validate(credentials.username, credentials.password);
+  }
+
+  async delete(id: number) {
+    const user = await this.usersService.findUserById(id);
+    if (user) return await this.usersService.deleteUser(id);
+    throw new NotFoundException('User not found');
   }
 }

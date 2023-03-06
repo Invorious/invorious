@@ -25,9 +25,17 @@ export class UserService implements IUsersService<User> {
     },
   ];
 
-  findByUsername(username: string): User {
+  async findByUsername(username: string): Promise<User | null> {
     return this.users.find(
       (user) => user.username === username.toLowerCase().trim(),
     );
+  }
+
+  async findUserById(id: number): Promise<User | null> {
+    return this.users.find((user) => user.id === id);
+  }
+
+  async deleteUser(id: number): Promise<User[]> {
+    return this.users.filter((user) => user.id !== id);
   }
 }
