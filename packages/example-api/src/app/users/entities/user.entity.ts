@@ -1,8 +1,8 @@
-import { IUserAndPass } from '@invorious/access-control';
+import { IUsernameAndPassword } from '@invorious/access-control';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class User implements IUserAndPass {
+export class User implements IUsernameAndPassword {
   constructor(id: number, username: string, password: string, address: string) {
     this.id = id;
     this.username = username;
