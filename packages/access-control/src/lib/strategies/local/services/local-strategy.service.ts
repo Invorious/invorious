@@ -21,23 +21,23 @@ export class LocalStrategyService<K extends object> extends PassportStrategy(
 ) {
   constructor(
     @Inject(tokenUserService)
-    private userAndPassService: IUsersService<IUsernameAndPassword>,
+    private usersService: IUsersService<IUsernameAndPassword>,
     private coreService: AccessControlCoreService<IUsernameAndPassword, K>,
   ) {
     super();
   }
 
   async validate(username: string, password: string) {
-    const user = await this.validateUser(username, password);
-    if (!user) throw new NotFoundException('User not found');
-    return this.coreService.generateToken(user);
+    const payload = await this.validateUser(username, password);
+    if (!payload) throw new NotFoundException('User not found');
+    return this.coreService.generateToken(payload);
   }
 
   async validateUser(
     username: string,
     pass: string,
   ): Promise<IUsernameAndPassword | null> {
-    const user = this.userAndPassService.findByUsername(username);
+    const user = this.usersService.findByUsername(username);
     if (user && (await this.validatePassword(pass, user))) return user;
     return null;
   }
