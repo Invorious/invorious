@@ -42,7 +42,7 @@ export class MetamaskStrategyService<K extends IJwtPayload> {
     const { signature } = updateDto;
     const user = this.metamaskUserService.findById(id);
     const recoveredAddress = verifyMessage(
-      this.metamaskUserService.loginMessage,
+      this.metamaskUserService.updateMessage,
       signature,
     );
     if (user.address == recoveredAddress) {
