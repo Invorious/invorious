@@ -3,7 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { Response, Request } from 'express';
 
 import { IGoogleAccountBuildController } from '../types';
-import { IController } from '../../../core/types/nest.interface';
+import { IController } from '../../../core/types/nest-js';
 import { IJwtToken } from '../../../core/types/jwt.interface';
 
 export function buildGoogleController({

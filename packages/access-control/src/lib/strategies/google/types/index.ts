@@ -1,7 +1,5 @@
 import { Profile } from 'passport-google-oauth20';
 
-import { IJwtParser } from '../../../core/types/jwt.interface';
-
 export type IProfileResponseGoogle = Profile;
 
 export interface IGoogleAccountUser {
