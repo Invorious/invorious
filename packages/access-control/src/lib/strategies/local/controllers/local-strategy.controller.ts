@@ -12,7 +12,6 @@ export function buildLocalStrategyController(
   const defaultStrategyOptions: ILocalStrategyControllerOptions = {
     baseUrl: props?.baseUrl || 'auth/local',
     loginUrl: props?.loginUrl || '/login',
-    profileUrl: '/me',
   };
 
   @Controller(defaultStrategyOptions.baseUrl)
