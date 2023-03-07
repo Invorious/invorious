@@ -9,7 +9,7 @@ import {
   tokenUserService,
 } from './core/tokens';
 import { IAccessControlModuleConfig } from './core/types/access-control.interface';
-import { IController, IProvider } from './core/types/nest.interface';
+import { IController, IProvider } from './core/types/nest-js';
 
 @Module({})
 export class AccessControlModule {
@@ -36,7 +36,6 @@ export class AccessControlModule {
         PassportModule,
         JwtModule.register(jwtOptions),
       ],
-      exports: providers,
       controllers,
       providers: [
         { provide: tokenUserService, useExisting: UserService },

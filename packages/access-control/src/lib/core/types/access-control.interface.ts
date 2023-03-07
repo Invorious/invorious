@@ -1,13 +1,12 @@
-import { ClassProvider } from '@nestjs/common';
 import { JwtModuleOptions } from '@nestjs/jwt';
 
-import { IController, IModule, IProvider } from './nest.interface';
+import { IController, IModule, IProvider, IProviderValue } from './nest-js';
 
 export interface IAccessControlModuleConfig {
   UserModule: IModule;
-  UserService: ClassProvider['useClass'];
+  UserService: IProviderValue;
   AccessControlClientModule: IModule;
-  AccessControlClientService: ClassProvider['useClass'];
+  AccessControlClientService: IProviderValue;
   strategies: IStrategy[];
   jwtOptions: JwtModuleOptions;
 }
