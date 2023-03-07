@@ -31,7 +31,7 @@ export class UserService implements IUsersService<User> {
     );
   }
 
-  async findUserById(id: number): Promise<User | null> {
+  async findById(id: number): Promise<User | null> {
     return this.users.find((user) => user.id === id);
   }
 

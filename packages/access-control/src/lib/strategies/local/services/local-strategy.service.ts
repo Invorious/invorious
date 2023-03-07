@@ -12,13 +12,12 @@ import { IUsernameAndPassword } from '../types/username-and-password.interface';
 import { IUsersService } from '../types/user-service';
 import { AccessControlCoreService } from '../../../core/services/access-control-core.service';
 import { tokenUserService } from '../../../core/tokens';
-import { IJwtToken } from '../../../core/types/jwt.interface';
+import { IJwtPayload, IJwtToken } from '../../../core/types/jwt.interface';
 
 @Injectable()
-export class LocalStrategyService<K extends object> extends PassportStrategy(
-  Strategy,
-  'local',
-) {
+export class LocalStrategyService<
+  K extends IJwtPayload,
+> extends PassportStrategy(Strategy, 'local') {
   constructor(
     @Inject(tokenUserService)
     private usersService: IUsersService<IUsernameAndPassword>,
@@ -57,7 +56,7 @@ export class LocalStrategyService<K extends object> extends PassportStrategy(
   }
 
   async delete(id: number) {
-    const user = await this.usersService.findUserById(id);
+    const user = await this.usersService.findById(id);
     if (user) return await this.usersService.deleteUser(id);
     throw new NotFoundException('User not found');
   }
