@@ -7,8 +7,6 @@ import { IGoogleAccountStrategy } from './types';
 export function googleStrategy(config: IGoogleAccountStrategy): IStrategy {
   const { routeGoogle, routeToRedirect, ...googleConfig } = config;
 
-  console.log(config);
-
   return {
     controllers: [buildGoogleController({ routeGoogle, routeToRedirect })],
     providers: [
