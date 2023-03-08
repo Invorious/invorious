@@ -2,6 +2,7 @@ import {
   AccessControlModule,
   googleStrategy,
   metamaskStrategy,
+  localStrategy
 } from '@invorious/access-control';
 import { Module } from '@nestjs/common';
 
@@ -32,6 +33,7 @@ import { UserService } from './user/user.service';
           routeToRedirect: '/api',
         }),
         metamaskStrategy(),
+        localStrategy()
       ],
     }),
   ],
