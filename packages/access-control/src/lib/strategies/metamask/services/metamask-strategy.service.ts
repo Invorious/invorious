@@ -8,6 +8,7 @@ import { AccessControlCoreService } from '../../../core/services/access-control-
 import { tokenUserService } from '../../../core/tokens';
 import { IJwtToken } from '../../../core/types/jwt.interface';
 import { IJwtPayload } from '../../../core/types/jwt-payload.interface';
+import { UpdateRequestDto } from '../types/update-request.dto';
 
 @Injectable()
 export class MetamaskStrategyService<K extends IJwtPayload> {
@@ -35,5 +36,18 @@ export class MetamaskStrategyService<K extends IJwtPayload> {
 
   getProfile(user: K) {
     return this.metamaskUserService.findById(user.id);
+  }
+
+  updateProfile(id: number, updateDto: UpdateRequestDto) {
+    const { signature } = updateDto;
+    const user = this.metamaskUserService.findById(id);
+    const recoveredAddress = verifyMessage(
+      this.metamaskUserService.updateMessage,
+      signature,
+    );
+    if (user.address == recoveredAddress) {
+      return this.metamaskUserService.update(id, updateDto);
+    }
+    return;
   }
 }

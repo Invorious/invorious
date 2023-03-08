@@ -5,19 +5,32 @@ import { User } from './user.entity';
 @Injectable()
 export class UserService implements IMetamaskService<User> {
   users: User[] = [
-    { id: 1, address: '0xEdca6B2e3b5DDDFf53297f3E188C2Ca6D51c587f' },
+    {
+      id: 1,
+      address: '0xEdca6B2e3b5DDDFf53297f3E188C2Ca6D51c587f',
+      username: '',
+    },
   ];
 
   findByAddress(address: string): User {
     return this.users.find((user) => user.address === address);
   }
 
+  update(id: number, data: Partial<User>) {
+    this.users = this.users.map((user) => {
+      if (user.id === id) {
+        return { ...user, username: data.username };
+      }
+      return user;
+    });
+    return this.findById(id);
+  }
   register(data: Partial<User>) {
     const id = this.users[this.users.length - 1].id + 1;
     const newUser: User = {
       id,
       address: data.address,
-      ...data,
+      username: data.username,
     };
     this.users.push(newUser);
     return newUser;
@@ -29,5 +42,9 @@ export class UserService implements IMetamaskService<User> {
 
   get loginMessage() {
     return 'Welcome back you beatiful bastard, please sign this message to login, xoxo in your butty';
+  }
+
+  get updateMessage() {
+    return `You're about to modify your profile information, give me your autograph baby`;
   }
 }
