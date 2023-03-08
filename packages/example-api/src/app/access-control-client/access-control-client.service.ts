@@ -9,7 +9,7 @@ import { User } from '../user/user.entity';
 export class AccessControlClientService
   implements IAccessControlClientService<User, IJwtPayload>
 {
-  parseUser(user: User): IJwtPayload {
+  parseUser(user: User) {
     return { id: user.id };
   }
 }
