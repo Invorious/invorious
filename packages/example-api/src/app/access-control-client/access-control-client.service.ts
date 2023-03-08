@@ -1,16 +1,15 @@
-import { IAccessControlClientService } from '@invorious/access-control';
+import {
+  IAccessControlClientService,
+  IJwtPayload,
+} from '@invorious/access-control';
 import { Injectable } from '@nestjs/common';
 import { User } from '../user/user.entity';
 
-interface JwtPayload {
-  id: number;
-}
-
 @Injectable()
 export class AccessControlClientService
-  implements IAccessControlClientService<User, JwtPayload>
+  implements IAccessControlClientService<User, IJwtPayload>
 {
-  parseUser(user: User): JwtPayload {
+  parseUser(user: User) {
     return { id: user.id };
   }
 }

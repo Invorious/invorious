@@ -1,5 +1,4 @@
 import { JwtModuleOptions } from '@nestjs/jwt';
-
 import { IController, IModule, IProvider, IProviderValue } from './nest-js';
 
 export interface IAccessControlModuleConfig {
