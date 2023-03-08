@@ -1,6 +1,7 @@
 import {
   AccessControlModule,
   tokenUserService,
+  googleStrategy,
 } from '@invorious/access-control';
 import { Global, Module } from '@nestjs/common';
 
@@ -29,7 +30,15 @@ const providerUserService = {
       jwtOptions: {
         secret: 'aaaa',
       },
-      strategies: [],
+      strategies: [
+        googleStrategy({
+          clientID: process.env.GOOGLE_CLIENT_ID,
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+          callbackURL: 'http://localhost:3333/api/google/register',
+          routeGoogle: 'google/register',
+          routeToRedirect: '/api',
+        }),
+      ],
     }),
   ],
   controllers: [AppController],
