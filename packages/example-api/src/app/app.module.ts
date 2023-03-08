@@ -1,4 +1,4 @@
-import { AccessControlModule, googleStrategy } from '@invorious/access-control';
+import { AccessControlModule } from '@invorious/access-control';
 import { Module } from '@nestjs/common';
 
 import { AccessControlClientModule } from './access-control-client/access-control-client.module';
@@ -19,15 +19,7 @@ import { UserService } from './user/user.service';
       jwtOptions: {
         secret: 'aaaa',
       },
-      strategies: [
-        googleStrategy({
-          clientID: process.env.GOOGLE_CLIENT_ID,
-          clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-          callbackURL: 'http://localhost:3333/api/google/register',
-          routeGoogle: 'google/register',
-          routeToRedirect: '/api',
-        }),
-      ],
+      strategies: [],
     }),
   ],
   controllers: [AppController],
