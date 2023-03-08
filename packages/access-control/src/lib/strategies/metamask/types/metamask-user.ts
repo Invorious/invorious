@@ -1,3 +1,3 @@
-export interface IMetamaskUser {
+export interface IMetamaskUserEntity {
   address: string;
 }

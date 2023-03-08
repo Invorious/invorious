@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { verifyMessage } from 'ethers';
 
 import { SignedRequestDto } from '../types/signed-request.dto';
-import { IMetamaskUser } from '../types/metamask-user';
+import { IMetamaskUserEntity } from '../types/metamask-user';
 import { IMetamaskService } from '../types/metamask-service';
 import { AccessControlCoreService } from '../../../core/services/access-control-core.service';
 import { tokenUserService } from '../../../core/tokens';
@@ -14,8 +14,8 @@ import { UpdateRequestDto } from '../types/update-request.dto';
 export class MetamaskStrategyService<K extends IJwtPayload> {
   constructor(
     @Inject(tokenUserService)
-    private metamaskUserService: IMetamaskService<IMetamaskUser>,
-    private coreService: AccessControlCoreService<IMetamaskUser, K>,
+    private metamaskUserService: IMetamaskService<IMetamaskUserEntity>,
+    private coreService: AccessControlCoreService<IMetamaskUserEntity, K>,
   ) {}
 
   connect(connectDto: SignedRequestDto): IJwtToken {
