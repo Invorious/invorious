@@ -6,7 +6,6 @@ import { IMetamaskUserEntity } from '../types/metamask-user';
 import { IMetamaskService } from '../types/metamask-service';
 import { AccessControlCoreService } from '../../../core/services/access-control-core.service';
 import { tokenUserService } from '../../../core/tokens';
-import { IJwtToken } from '../../../core/types/jwt.interface';
 import { IJwtPayload } from '../../../core/types/jwt-payload.interface';
 import { UpdateRequestDto } from '../types/update-request.dto';
 
