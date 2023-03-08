@@ -4,6 +4,7 @@ import { Strategy, VerifyCallback } from 'passport-google-oauth20';
 import { AccessControlCoreService } from '../../../core/services/access-control-core.service';
 
 import { tokenUserService } from '../../../core/tokens';
+import { IJwtPayload } from '../../../core/types/jwt-payload.interface';
 import { tokenGoogleConfig } from '../tokens';
 
 import {
@@ -16,7 +17,7 @@ import {
 @Injectable()
 export class GoogleStrategyService<
   T extends IGoogleAccountUser,
-  K extends object,
+  K extends IJwtPayload,
 > extends PassportStrategy(Strategy, 'google') {
   constructor(
     @Inject(tokenGoogleConfig)
