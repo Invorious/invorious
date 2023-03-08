@@ -11,6 +11,6 @@ export class AccessControlClientService
   implements IAccessControlClientService<User, JwtPayload>
 {
   parseUser(user: User): JwtPayload {
-    return { id: user.id };
+    throw new Error('Method not implemented.');
   }
 }
