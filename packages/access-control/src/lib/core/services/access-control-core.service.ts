@@ -2,7 +2,6 @@ import { Injectable, Inject } from '@nestjs/common';
 import { JwtModuleOptions, JwtService } from '@nestjs/jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-
 import {
   tokenAccessControlClient,
   tokenJWTConfig,

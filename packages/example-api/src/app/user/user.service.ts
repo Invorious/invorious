@@ -1,16 +1,15 @@
-import { IMetamaskService } from '@invorious/access-control';
+import {
+  IMetamaskService,
+  IGoogleAccountService,
+} from '@invorious/access-control';
 import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
-
+import { Profile } from 'passport-google-oauth20';
 @Injectable()
-export class UserService implements IMetamaskService<User> {
-  users: User[] = [
-    {
-      id: 1,
-      address: '0xEdca6B2e3b5DDDFf53297f3E188C2Ca6D51c587f',
-      username: '',
-    },
-  ];
+export class UserService
+  implements IMetamaskService<User>, IGoogleAccountService<User>
+{
+  users: User[] = [];
 
   findByAddress(address: string): User {
     return this.users.find((user) => user.address === address);
@@ -31,6 +30,8 @@ export class UserService implements IMetamaskService<User> {
       id,
       address: data.address,
       username: data.username,
+      email: '',
+      googleId: '',
     };
     this.users.push(newUser);
     return newUser;
@@ -40,6 +41,18 @@ export class UserService implements IMetamaskService<User> {
     return this.users.find((user) => user.id === id);
   }
 
+  findByGoogleId(googleId: string): User {
+    return this.users.find((user) => user.googleId === googleId);
+  }
+  registerByGoogle(user: Profile): void {
+    this.users.push({
+      email: user.emails[0].value,
+      googleId: user.id,
+      id: Date.now(),
+      address: '',
+      username: '',
+    });
+  }
   get loginMessage() {
     return 'Welcome back you beatiful bastard, please sign this message to login, xoxo in your butty';
   }

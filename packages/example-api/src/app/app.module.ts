@@ -1,5 +1,6 @@
 import {
   AccessControlModule,
+  googleStrategy,
   metamaskStrategy,
 } from '@invorious/access-control';
 import { Module } from '@nestjs/common';
@@ -22,7 +23,16 @@ import { UserService } from './user/user.service';
       jwtOptions: {
         secret: 'aaaa',
       },
-      strategies: [metamaskStrategy()],
+      strategies: [
+        googleStrategy({
+          clientID: process.env.GOOGLE_CLIENT_ID,
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+          callbackURL: 'http://localhost:3333/api/google/register',
+          routeGoogle: 'google/register',
+          routeToRedirect: '/api',
+        }),
+        metamaskStrategy(),
+      ],
     }),
   ],
   controllers: [AppController],
