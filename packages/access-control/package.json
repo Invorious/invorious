@@ -1,4 +1,9 @@
 {
   "name": "@invorious/access-control",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "scripts": {
+    "release:major": "standard-version --release-as major",
+    "release:minor": "standard-version --release-as minor",
+    "release:patch": "standard-version --release-as patch"
+  }
 }
