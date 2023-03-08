@@ -12,7 +12,7 @@ import { LocalStrategyService } from '../services/local-strategy.service';
 import { ILocalStrategyControllerOptions } from '../types';
 import { IUsernameAndPassword } from '../types/username-and-password.interface';
 import { IController } from '../../../core/types/nest.interface';
-import { IJwtPayload } from '../../../core/types/jwt.interface';
+import { IJwtPayload } from '../../../core/types/jwt-payload.interface';
 
 export function buildLocalStrategyController(
   props: ILocalStrategyControllerOptions | undefined,

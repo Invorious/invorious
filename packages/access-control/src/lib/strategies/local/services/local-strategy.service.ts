@@ -12,7 +12,8 @@ import { IUsernameAndPassword } from '../types/username-and-password.interface';
 import { IUsersService } from '../types/user-service';
 import { AccessControlCoreService } from '../../../core/services/access-control-core.service';
 import { tokenUserService } from '../../../core/tokens';
-import { IJwtPayload, IJwtToken } from '../../../core/types/jwt.interface';
+import { IJwtToken } from '../../../core/types/jwt.interface';
+import { IJwtPayload } from '../../../core/types/jwt-payload.interface';
 
 @Injectable()
 export class LocalStrategyService<

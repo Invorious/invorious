@@ -14,8 +14,3 @@ export interface IStrategy {
   controllers: IController[];
   providers: IProvider[];
 }
-
-export interface IStrategyService<T> {
-  deleteUser(id: number): Promise<T[]>;
-  findById(id: number): Promise<T>;
-}

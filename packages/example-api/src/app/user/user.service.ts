@@ -1,13 +1,17 @@
 import {
   IMetamaskService,
   IGoogleAccountService,
+  IUsersService,
 } from '@invorious/access-control';
 import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
 import { Profile } from 'passport-google-oauth20';
 @Injectable()
 export class UserService
-  implements IMetamaskService<User>, IGoogleAccountService<User>, IUsersService<User>
+  implements
+    IMetamaskService<User>,
+    IGoogleAccountService<User>,
+    IUsersService<User>
 {
   users: User[] = [];
 
@@ -30,7 +34,7 @@ export class UserService
       id,
       address: data.address,
       username: data.username,
-      password:'',
+      password: '',
       email: '',
       googleId: '',
     };
@@ -41,7 +45,11 @@ export class UserService
   findById(id: number): User {
     return this.users.find((user) => user.id === id);
   }
-
+  async findByUsername(username: string) {
+    return this.users.find(
+      (user) => user.username === username.toLowerCase().trim(),
+    );
+  }
   async deleteUser(id: number) {
     return this.users.filter((user) => user.id !== id);
   }
@@ -55,7 +63,7 @@ export class UserService
       id: Date.now(),
       address: '',
       username: '',
-      password: ''
+      password: '',
     });
   }
   get loginMessage() {

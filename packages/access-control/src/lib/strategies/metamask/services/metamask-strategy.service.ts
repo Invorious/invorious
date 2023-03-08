@@ -18,7 +18,7 @@ export class MetamaskStrategyService<K extends IJwtPayload> {
     private coreService: AccessControlCoreService<IMetamaskUserEntity, K>,
   ) {}
 
-  connect(connectDto: SignedRequestDto): IJwtToken {
+  async connect(connectDto: SignedRequestDto) {
     const { signature } = connectDto;
     const recoveredAddress = verifyMessage(
       this.metamaskUserService.loginMessage,
@@ -26,7 +26,7 @@ export class MetamaskStrategyService<K extends IJwtPayload> {
     );
     let metamaskUser = this.metamaskUserService.findByAddress(recoveredAddress);
     if (!metamaskUser) {
-      metamaskUser = this.metamaskUserService.register({
+      metamaskUser = await this.metamaskUserService.register({
         address: recoveredAddress,
       });
     }
@@ -38,9 +38,9 @@ export class MetamaskStrategyService<K extends IJwtPayload> {
     return this.metamaskUserService.findById(user.id);
   }
 
-  updateProfile(id: number, updateDto: UpdateRequestDto) {
+  async updateProfile(id: number, updateDto: UpdateRequestDto) {
     const { signature } = updateDto;
-    const user = this.metamaskUserService.findById(id);
+    const user = await this.metamaskUserService.findById(id);
     const recoveredAddress = verifyMessage(
       this.metamaskUserService.updateMessage,
       signature,
