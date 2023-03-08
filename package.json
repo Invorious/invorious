@@ -51,6 +51,7 @@
     "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^9.0.0",
     "axios": "^1.0.0",
+    "ethers": "^6.0.8",
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.1.13",

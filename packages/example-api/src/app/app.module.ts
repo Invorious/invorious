@@ -1,4 +1,8 @@
-import { AccessControlModule, googleStrategy } from '@invorious/access-control';
+import {
+  AccessControlModule,
+  googleStrategy,
+  metamaskStrategy,
+} from '@invorious/access-control';
 import { Module } from '@nestjs/common';
 
 import { AccessControlClientModule } from './access-control-client/access-control-client.module';
@@ -27,6 +31,7 @@ import { UserService } from './user/user.service';
           routeGoogle: 'google/register',
           routeToRedirect: '/api',
         }),
+        metamaskStrategy(),
       ],
     }),
   ],
