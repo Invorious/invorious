@@ -1,6 +1,8 @@
 import {
   AccessControlModule,
   tokenUserService,
+  metamaskStrategy,
+  localStrategy,
   googleStrategy,
 } from '@invorious/access-control';
 import { Global, Module } from '@nestjs/common';
@@ -39,6 +41,8 @@ const providerUserService = {
           routeGoogle: 'google/register',
           routeToRedirect: '/api',
         }),
+        metamaskStrategy(),
+        localStrategy(),
       ],
     }),
   ],

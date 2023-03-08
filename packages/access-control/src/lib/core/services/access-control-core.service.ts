@@ -2,21 +2,28 @@ import { Injectable, Inject } from '@nestjs/common';
 import { JwtModuleOptions, JwtService } from '@nestjs/jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-
-import { tokenAccessControlClient, tokenJWTConfig } from '../tokens';
+import {
+  tokenAccessControlClient,
+  tokenJWTConfig,
+  tokenUserService,
+} from '../tokens';
 import { IAccessControlClientService } from '../types/access-control-client.interface';
+import { IJwtPayload } from '../types/jwt-payload.interface';
 import { IJwtToken } from '../types/jwt.interface';
+import { IStrategyService } from '../types/strategy-service.interface';
 
 @Injectable()
 export class AccessControlCoreService<
   T,
-  K extends object,
+  K extends IJwtPayload,
 > extends PassportStrategy(Strategy) {
   constructor(
     @Inject(tokenAccessControlClient)
     private accessControlService: IAccessControlClientService<T, K>,
     @Inject(tokenJWTConfig)
     jwtConfigOptions: JwtModuleOptions,
+    @Inject(tokenUserService)
+    private userService: IStrategyService<T>,
     private jwtService: JwtService,
   ) {
     super({
@@ -33,6 +40,7 @@ export class AccessControlCoreService<
   }
 
   validate(payload: K) {
-    return payload;
+    const user = this.userService.findById(payload.id);
+    return { ...payload, ...user };
   }
 }
