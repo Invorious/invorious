@@ -1,6 +1,10 @@
 {
   "name": "@invorious/access-control",
+<<<<<<< HEAD
   "version": "0.0.0",
+=======
+  "version": "0.0.1",
+>>>>>>> 61a7eb2622ba4f5a8731bb4d46b01560ebef936c
   "scripts": {
     "release:major": "standard-version --release-as major",
     "release:minor": "standard-version --release-as minor",
