@@ -12,13 +12,12 @@ import { IUsernameAndPassword } from '../types/username-and-password.interface';
 import { IUsersService } from '../types/user-service';
 import { AccessControlCoreService } from '../../../core/services/access-control-core.service';
 import { tokenUserService } from '../../../core/tokens';
-import { IJwtToken } from '../../../core/types/jwt.interface';
+import { IJwtPayload, IJwtToken } from '../../../core/types/jwt.interface';
 
 @Injectable()
-export class LocalStrategyService<K extends object> extends PassportStrategy(
-  Strategy,
-  'local',
-) {
+export class LocalStrategyService<
+  K extends IJwtPayload,
+> extends PassportStrategy(Strategy, 'local') {
   constructor(
     @Inject(tokenUserService)
     private usersService: IUsersService<IUsernameAndPassword>,
@@ -27,7 +26,7 @@ export class LocalStrategyService<K extends object> extends PassportStrategy(
     super();
   }
 
-  async validate(username: string, password: string) {
+  async validate(username: string, password: string): Promise<IJwtToken> {
     const payload = await this.validateUser(username, password);
     if (!payload) throw new NotFoundException('User not found');
     return this.coreService.generateToken(payload);
@@ -37,7 +36,7 @@ export class LocalStrategyService<K extends object> extends PassportStrategy(
     username: string,
     pass: string,
   ): Promise<IUsernameAndPassword | null> {
-    const user = this.usersService.findByUsername(username);
+    const user = await this.usersService.findByUsername(username);
     if (user && (await this.validatePassword(pass, user))) return user;
     return null;
   }
@@ -54,5 +53,11 @@ export class LocalStrategyService<K extends object> extends PassportStrategy(
 
   async login(credentials: IUsernameAndPassword): Promise<IJwtToken> {
     return await this.validate(credentials.username, credentials.password);
+  }
+
+  async delete(id: number) {
+    const user = await this.usersService.findById(id);
+    if (user) return await this.usersService.deleteUser(id);
+    throw new NotFoundException('User not found');
   }
 }

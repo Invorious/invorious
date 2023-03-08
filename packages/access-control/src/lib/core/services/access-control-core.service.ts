@@ -5,12 +5,12 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 
 import { tokenAccessControlClient, tokenJWTConfig } from '../tokens';
 import { IAccessControlClientService } from '../types/access-control-client.interface';
-import { IJwtToken } from '../types/jwt.interface';
+import { IJwtPayload, IJwtToken } from '../types/jwt.interface';
 
 @Injectable()
 export class AccessControlCoreService<
   T,
-  K extends object,
+  K extends IJwtPayload,
 > extends PassportStrategy(Strategy) {
   constructor(
     @Inject(tokenAccessControlClient)
