@@ -9,7 +9,6 @@ export function Authorization<T extends IAuthorizationPermission>(
 ) {
   return applyDecorators(
     AuthorizationMetadata(...permissions),
-    UseGuards(AuthorizationGuard<T>),
-    UseGuards(AuthGuard(), AuthorizationGuard<T>),
+    UseGuards(AuthGuard('jwt'), AuthorizationGuard<T>),
   );
 }

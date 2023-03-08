@@ -9,7 +9,7 @@ import { Profile } from 'passport-google-oauth20';
 
 @Injectable()
 export class UserService
-  implements IAuthorizationService<Permission>, IGoogleAccountService
+  implements IAuthorizationService<Permission>, IGoogleAccountService<User>
 {
   users: User[] = [
     {

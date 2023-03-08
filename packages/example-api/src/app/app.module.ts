@@ -4,6 +4,7 @@ import {
   googleStrategy,
 } from '@invorious/access-control';
 import { Global, Module } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 import { AccessControlClientModule } from './access-control-client/access-control-client.module';
 import { AccessControlClientService } from './access-control-client/access-control-client.service';
@@ -42,7 +43,7 @@ const providerUserService = {
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, providerUserService],
-  exports: [providerUserService],
+  providers: [AppService, providerUserService, JwtService],
+  exports: [providerUserService, JwtService],
 })
 export class AppModule {}
