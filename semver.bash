@@ -1,7 +1,7 @@
 #! /bin/bash
 
 if [ -z "$1" ]; then
-  echo 'Se requiere el nombre de la libreria' && exit
+  echo 'Library name is required' && exit
 fi
 
 packages=('access-control')
@@ -16,7 +16,7 @@ do
 done
 
 if [ $packageExist == 'no' ]; then
-  echo "La libreria $1 no existe en el arreglo de packages del bash" && exit
+  echo "Library $1 doesn't exist in array of packages inside semver.bash" && exit
 fi
 
 cd "./packages/$1" && npm run release:patch -- -t=$1.v && cd "../../dist/packages/$1" && \
