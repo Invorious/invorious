@@ -35,8 +35,6 @@ if [ $exist == 'no' ]; then
   echo "Library $package doesn't exist in array of packages inside semver" && exit
 fi
 
-exit
-
 cd "./packages/$package" && npm run $release -- -t=$package.v && \
 cd "../.." && npx nx build $package && cd "./dist/packages/$package" && \
 npm publish && cd "../.." && git push --follow-tags origin master && \
