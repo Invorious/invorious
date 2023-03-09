@@ -1,4 +1,11 @@
 Changelog
+### [0.0.2](https://github.com/Invorious/invorious.git/compare/access-control.v0.0.1...access-control.v0.0.2) (2023-03-09)
+
+
+### Features
+
+* **access-control:** generic authorization ([3330e2c](https://github.com/Invorious/invorious.git/commit/3330e2c93267ba61983bae3824fdaeeb5c20741d))
+
 ### 0.0.1 (2023-03-09)
 
 
