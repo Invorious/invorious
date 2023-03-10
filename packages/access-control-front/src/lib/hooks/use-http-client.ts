@@ -1,4 +1,4 @@
-import axios, { AxiosError, CreateAxiosDefaults } from 'axios';
+import axios, { AxiosError, AxiosInstance, CreateAxiosDefaults } from 'axios';
 import { useState } from 'react';
 import { IHttpClient } from '../types/http-client';
 import { RequestError } from '../types/request-error';
@@ -6,11 +6,20 @@ import { RequestError } from '../types/request-error';
 export function useHttpClient(
   config?: CreateAxiosDefaults,
   onError?: (error: any) => void,
+  jwtToken?: string,
 ): IHttpClient {
   const [requestError, setRequestError] = useState<RequestError | undefined>(
     undefined,
   );
-  const instance = axios.create(config);
+  const instance = authorizedInstance(axios.create(config));
+
+  function authorizedInstance(instance: AxiosInstance) {
+    instance.interceptors.request.use((config) => {
+      config.headers.Authorization = `Bearer ${jwtToken}`;
+      return config;
+    });
+    return instance;
+  }
 
   function handleError(
     error: AxiosError,
