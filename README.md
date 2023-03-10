@@ -63,6 +63,26 @@
 - [![React][React.js]][React-url]
 - [![Nx][Nx-url]][Nx-dev]
 
+**Important**: Before of exect this script, shoul be to do npm login with any user of organization invorious.
+
+```
+- npm run upload-npm access-control
+- npm run upload-npm access-control patch
+- npm run upload-npm access-control minor
+- npm run upload-npm access-control major
+```
+
+In each library of the package.json is obligatory, also your scripts
+
+```
+"scripts": {
+  "release": "standard-version",
+  "release:major": "standard-version --release-as major",
+  "release:minor": "standard-version --release-as minor",
+  "release:patch": "standard-version --release-as patch"
+}
+```
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
