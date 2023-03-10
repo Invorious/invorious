@@ -1,0 +1,16 @@
+{
+  "name": "http-client-front",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/http-client-front/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/http-client-front/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}
