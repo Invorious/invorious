@@ -17,7 +17,7 @@ export function useHttpClient<T>(
     error: AxiosError,
     reject: (reason?: AxiosError) => void,
   ) {
-    const { response, message } = error;
+    const { response } = error;
     setRequestError(
       response
         ? { statusCode: response.status, message: response.statusText }
