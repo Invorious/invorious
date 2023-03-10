@@ -63,9 +63,9 @@ export function useHttpClient(
     });
   }
 
-  function deleteRequest<T>(url: string, data?: Partial<T>) {
+  function deleteRequest<T>(url: string) {
     return new Promise<DeleteResult>((resolve, reject) => {
-      instance.delete<DeleteResult>(url, { data }).then(
+      instance.delete<DeleteResult>(url).then(
         (response) => handleResponse(response.data, resolve),
         (error: AxiosError) => handleError(error, reject),
       );
