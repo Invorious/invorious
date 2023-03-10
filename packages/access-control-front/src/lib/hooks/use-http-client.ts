@@ -1,6 +1,5 @@
 import axios, { AxiosError, CreateAxiosDefaults } from 'axios';
 import { useState } from 'react';
-import { DeleteResult } from '../types/delete-result';
 import { IHttpClient } from '../types/http-client';
 import { RequestError } from '../types/request-error';
 
@@ -45,18 +44,18 @@ export function useHttpClient(
     });
   }
 
-  function post<T>(url: string, data?: Partial<T>) {
+  function post<T>(url: string, body?: object) {
     return new Promise<T>((resolve, reject) => {
-      instance.post<T>(url, data).then(
+      instance.post<T>(url, body).then(
         (response) => handleResponse(response.data, resolve),
         (error: AxiosError) => handleError(error, reject),
       );
     });
   }
 
-  function put<T>(url: string, data?: Partial<T>) {
+  function put<T>(url: string, body?: object) {
     return new Promise<T>((resolve, reject) => {
-      instance.put<T>(url, data).then(
+      instance.put<T>(url, body).then(
         (response) => handleResponse(response.data, resolve),
         (error: AxiosError) => handleError(error, reject),
       );
@@ -64,8 +63,8 @@ export function useHttpClient(
   }
 
   function deleteRequest<T>(url: string) {
-    return new Promise<DeleteResult>((resolve, reject) => {
-      instance.delete<DeleteResult>(url).then(
+    return new Promise<T>((resolve, reject) => {
+      instance.delete<T>(url).then(
         (response) => handleResponse(response.data, resolve),
         (error: AxiosError) => handleError(error, reject),
       );
