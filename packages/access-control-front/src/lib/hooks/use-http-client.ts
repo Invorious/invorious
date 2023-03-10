@@ -1,13 +1,11 @@
-import axios, { AxiosError, AxiosInstance, CreateAxiosDefaults } from 'axios';
+import axios, { AxiosError, AxiosInstance } from 'axios';
 import { useState } from 'react';
 import { IHttpClient } from '../types/http-client';
+import { IHttpClientConfig } from '../types/http-client-config';
 import { RequestError } from '../types/request-error';
 
-export function useHttpClient(
-  config?: CreateAxiosDefaults,
-  onError?: (error: any) => void,
-  jwtToken?: string,
-): IHttpClient {
+export function useHttpClient(props: IHttpClientConfig): IHttpClient {
+  const { config, jwtToken, onError } = props;
   const [requestError, setRequestError] = useState<RequestError | undefined>(
     undefined,
   );
