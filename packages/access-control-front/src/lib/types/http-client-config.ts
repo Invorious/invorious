@@ -2,6 +2,6 @@ import { AxiosError, CreateAxiosDefaults } from 'axios';
 
 export interface IHttpClientConfig {
   config?: CreateAxiosDefaults;
-  jwtToken?: string;
+  jwtToken?: string | null;
   onError?: (error: AxiosError) => void;
 }

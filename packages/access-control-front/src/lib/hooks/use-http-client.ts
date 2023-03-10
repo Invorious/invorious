@@ -4,7 +4,7 @@ import { IHttpClient } from '../types/http-client';
 import { IHttpClientConfig } from '../types/http-client-config';
 import { RequestError } from '../types/request-error';
 
-export function useHttpClient(props: IHttpClientConfig): IHttpClient {
+export function useHttpClient(props: IHttpClientConfig = {}): IHttpClient {
   const { config, jwtToken, onError } = props;
   const [requestError, setRequestError] = useState<RequestError | undefined>(
     undefined,
