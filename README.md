@@ -12,7 +12,7 @@
 
 <br>
 <div align="center" id="readme-top">
-  <a href="./README.md">
+  <a href="https://github.com/Invorious/invorious">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
