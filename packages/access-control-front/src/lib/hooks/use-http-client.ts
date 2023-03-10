@@ -1,4 +1,4 @@
-import axios, { CreateAxiosDefaults } from 'axios';
+import axios, { AxiosError, CreateAxiosDefaults } from 'axios';
 import { useState } from 'react';
 import { DeleteResult } from '../types/delete-result';
 import { IHttpClient } from '../types/http-client';
@@ -14,20 +14,33 @@ export function useHttpClient<T>(
   const instance = axios.create(config);
 
   function handleError(
-    error: RequestError,
-    reject: (reason: RequestError) => void,
+    error: AxiosError,
+    reject: (reason?: AxiosError) => void,
   ) {
-    setRequestError(error);
+    const { response, message } = error;
+    setRequestError(
+      response
+        ? { statusCode: response.status, message: response.statusText }
+        : undefined,
+    );
     onError?.(error);
-    reject(error);
+    return reject(error);
+  }
+
+  function handleResponse<K>(
+    data: K,
+    resolve: (value: K | PromiseLike<K>) => void,
+  ) {
+    setRequestError(undefined);
+    return resolve(data);
   }
 
   function get(url: string, query?: Record<string, string>) {
     const params = new URLSearchParams(query);
     return new Promise<T>((resolve, reject) => {
       instance.get<T>(url, { params }).then(
-        (response) => resolve(response.data),
-        (error: RequestError) => handleError(error, reject),
+        (response) => handleResponse(response.data, resolve),
+        (error: AxiosError) => handleError(error, reject),
       );
     });
   }
@@ -35,8 +48,8 @@ export function useHttpClient<T>(
   function post<K>(url: string, data?: Partial<T> | K) {
     return new Promise<T>((resolve, reject) => {
       instance.post<T>(url, data).then(
-        (response) => resolve(response.data),
-        (error: RequestError) => handleError(error, reject),
+        (response) => handleResponse(response.data, resolve),
+        (error: AxiosError) => handleError(error, reject),
       );
     });
   }
@@ -44,8 +57,8 @@ export function useHttpClient<T>(
   function put(url: string, data?: Partial<T>) {
     return new Promise<T>((resolve, reject) => {
       instance.put<T>(url, data).then(
-        (response) => resolve(response.data),
-        (error: RequestError) => handleError(error, reject),
+        (response) => handleResponse(response.data, resolve),
+        (error: AxiosError) => handleError(error, reject),
       );
     });
   }
@@ -53,8 +66,8 @@ export function useHttpClient<T>(
   function deleteRequest(url: string, data?: Partial<T>) {
     return new Promise<DeleteResult>((resolve, reject) => {
       instance.delete<DeleteResult>(url, { data }).then(
-        (response) => resolve(response.data),
-        (error: RequestError) => handleError(error, reject),
+        (response) => handleResponse(response.data, resolve),
+        (error: AxiosError) => handleError(error, reject),
       );
     });
   }
@@ -64,6 +77,6 @@ export function useHttpClient<T>(
     get,
     post,
     put,
-    deleteRequest,
+    delete: deleteRequest,
   };
 }
