@@ -1,10 +1,10 @@
 import { DeleteResult } from './delete-result';
 import { RequestError } from './request-error';
 
-export interface IHttpClient<T> {
+export interface IHttpClient {
   requestError: RequestError | undefined;
-  get(url: string, query?: Record<string, string>): Promise<T>;
-  post<K>(url: string, data?: Partial<T> | K): Promise<T>;
-  put(url: string, data?: Partial<T>): Promise<T>;
-  delete(url: string, data?: Partial<T>): Promise<DeleteResult>;
+  get<T>(url: string, query?: Record<string, string>): Promise<T>;
+  post<T>(url: string, data?: Partial<T>): Promise<T>;
+  put<T>(url: string, data?: Partial<T>): Promise<T>;
+  delete<T>(url: string, data?: Partial<T>): Promise<DeleteResult>;
 }

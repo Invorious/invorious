@@ -4,10 +4,10 @@ import { DeleteResult } from '../types/delete-result';
 import { IHttpClient } from '../types/http-client';
 import { RequestError } from '../types/request-error';
 
-export function useHttpClient<T>(
-  config?: CreateAxiosDefaults<T>,
+export function useHttpClient(
+  config?: CreateAxiosDefaults,
   onError?: (error: any) => void,
-): IHttpClient<T> {
+): IHttpClient {
   const [requestError, setRequestError] = useState<RequestError | undefined>(
     undefined,
   );
@@ -27,15 +27,15 @@ export function useHttpClient<T>(
     return reject(error);
   }
 
-  function handleResponse<K>(
-    data: K,
-    resolve: (value: K | PromiseLike<K>) => void,
+  function handleResponse<T>(
+    data: T,
+    resolve: (value: T | PromiseLike<T>) => void,
   ) {
     setRequestError(undefined);
     return resolve(data);
   }
 
-  function get(url: string, query?: Record<string, string>) {
+  function get<T>(url: string, query?: Record<string, string>) {
     const params = new URLSearchParams(query);
     return new Promise<T>((resolve, reject) => {
       instance.get<T>(url, { params }).then(
@@ -45,7 +45,7 @@ export function useHttpClient<T>(
     });
   }
 
-  function post<K>(url: string, data?: Partial<T> | K) {
+  function post<T>(url: string, data?: Partial<T>) {
     return new Promise<T>((resolve, reject) => {
       instance.post<T>(url, data).then(
         (response) => handleResponse(response.data, resolve),
@@ -54,7 +54,7 @@ export function useHttpClient<T>(
     });
   }
 
-  function put(url: string, data?: Partial<T>) {
+  function put<T>(url: string, data?: Partial<T>) {
     return new Promise<T>((resolve, reject) => {
       instance.put<T>(url, data).then(
         (response) => handleResponse(response.data, resolve),
@@ -63,7 +63,7 @@ export function useHttpClient<T>(
     });
   }
 
-  function deleteRequest(url: string, data?: Partial<T>) {
+  function deleteRequest<T>(url: string, data?: Partial<T>) {
     return new Promise<DeleteResult>((resolve, reject) => {
       instance.delete<DeleteResult>(url, { data }).then(
         (response) => handleResponse(response.data, resolve),
