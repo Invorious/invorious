@@ -1,0 +1,18 @@
+.login-local-form,
+.social-media-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+
+.login-local-form {
+  flex-direction: column;
+  margin: 45px auto;
+}
+
+.social-media-icon {
+  cursor: pointer;
+  position: relative;
+  width: 32px;
+}
