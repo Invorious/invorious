@@ -92,8 +92,4 @@ export class UserService
   get loginMessage() {
     return 'Welcome back you beatiful bastard, please sign this message to login, xoxo in your butty';
   }
-
-  get updateMessage() {
-    return `You're about to modify your profile information, give me your autograph baby`;
-  }
 }
