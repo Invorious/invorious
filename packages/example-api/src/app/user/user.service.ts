@@ -48,7 +48,7 @@ export class UserService
   update(id: number, data: Partial<User>) {
     this.users = this.users.map((user) => {
       if (user.id === id) {
-        return { ...user, username: data.username };
+        return { ...user, ...data };
       }
       return user;
     });
@@ -81,7 +81,7 @@ export class UserService
     );
   }
 
-  async deleteUser(id: number) {
+  async delete(id: number) {
     return this.users.filter((user) => user.id !== id);
   }
 
@@ -91,9 +91,5 @@ export class UserService
 
   get loginMessage() {
     return 'Welcome back you beatiful bastard, please sign this message to login, xoxo in your butty';
-  }
-
-  get updateMessage() {
-    return `You're about to modify your profile information, give me your autograph baby`;
   }
 }
