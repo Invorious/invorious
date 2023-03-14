@@ -24,9 +24,8 @@ export function useHttpClient(props: IHttpClientConfig = {}): IHttpClient {
     (error: AxiosError) => handleError(error),
   );
 
-  function handleError(error: AxiosError) {
+  async function handleError(error: AxiosError) {
     const { response } = error;
-    console.log('Got error → ', error);
     onError?.(error);
     if (response?.status === 401) {
       return setRequestError({
@@ -49,25 +48,25 @@ export function useHttpClient(props: IHttpClientConfig = {}): IHttpClient {
     return Promise.reject(error);
   }
 
-  function handleResponse<T>(response: AxiosResponse<T>) {
+  async function handleResponse<T>(response: AxiosResponse<T>) {
     setRequestError(undefined);
     return Promise.resolve(response.data);
   }
 
-  function get<T>(url: string, query?: Record<string, string>) {
+  async function get<T>(url: string, query?: Record<string, string>) {
     const params = new URLSearchParams(query);
     return instance.get<T>(url, { params }).then(handleResponse);
   }
 
-  function post<T>(url: string, body?: object) {
+  async function post<T>(url: string, body?: object) {
     return instance.post<T>(url, body).then(handleResponse);
   }
 
-  function put<T>(url: string, body?: object) {
+  async function put<T>(url: string, body?: object) {
     return instance.put<T>(url, body).then(handleResponse);
   }
 
-  function deleteRequest<T>(url: string) {
+  async function deleteRequest<T>(url: string) {
     return instance.delete<T>(url).then(handleResponse);
   }
 
