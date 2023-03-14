@@ -19,7 +19,6 @@ export function useLocalStrategy(
       username,
       password,
     });
-    localStorage.setItem('token', response.accessToken);
     return response;
   }
 
