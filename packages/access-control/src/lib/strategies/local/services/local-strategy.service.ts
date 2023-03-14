@@ -55,10 +55,4 @@ export class LocalStrategyService<
   async login(credentials: IUsernameAndPassword): Promise<IJwtToken> {
     return await this.validate(credentials.username, credentials.password);
   }
-
-  async delete(id: number) {
-    const user = await this.usersService.findById(id);
-    if (user) return await this.usersService.deleteUser(id);
-    throw new NotFoundException('User not found');
-  }
 }
