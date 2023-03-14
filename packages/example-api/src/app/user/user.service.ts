@@ -8,7 +8,6 @@ import {
 import { Permission } from '../permission/permission.entity';
 import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
-import { Profile } from 'passport-google-oauth20';
 
 @Injectable()
 export class UserService
@@ -62,11 +61,11 @@ export class UserService
       id,
       address: data.address,
       username: data.username,
-      name: 'aaaaa',
-      permissions: [],
-      password: '',
-      email: '',
-      googleId: '',
+      name: data.name,
+      permissions: data.permissions,
+      password: data.password,
+      email: data.email,
+      googleId: data.googleId,
     };
     this.users.push(newUser);
     return newUser;
@@ -88,19 +87,6 @@ export class UserService
 
   findByGoogleId(googleId: string): User {
     return this.users.find((user) => user.googleId === googleId);
-  }
-
-  registerByGoogle(user: Profile): void {
-    this.users.push({
-      name: 'aaa',
-      permissions: [],
-      email: user.emails[0].value,
-      googleId: user.id,
-      id: Date.now(),
-      address: '',
-      username: '',
-      password: '',
-    });
   }
 
   get loginMessage() {
