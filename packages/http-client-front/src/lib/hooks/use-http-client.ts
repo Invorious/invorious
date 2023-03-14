@@ -12,18 +12,33 @@ export function useHttpClient(
   );
   const instance = axios.create(config);
 
-  function handleError(
-    error: AxiosError,
-    reject: (reason?: AxiosError) => void,
-  ) {
+  instance.interceptors.response.use(
+    (response) => response,
+    (error: AxiosError) => handleError(error),
+  );
+
+  function handleError(error: AxiosError) {
     const { response } = error;
-    setRequestError(
+    onError?.(error);
+    if (response?.status === 401) {
+      return setRequestError({
+        statusCode: response.status,
+        message: `Unathorized, make sure you're currently logged in`,
+      });
+    }
+
+    if (response?.status && response.status >= 500) {
+      return setRequestError({
+        statusCode: response.status,
+        message: 'Server error',
+      });
+    }
+
+    return setRequestError(
       response
         ? { statusCode: response.status, message: response.statusText }
         : undefined,
     );
-    onError?.(error);
-    return reject(error);
   }
 
   function handleResponse<T>(
@@ -36,39 +51,35 @@ export function useHttpClient(
 
   function get<T>(url: string, query?: Record<string, string>) {
     const params = new URLSearchParams(query);
-    return new Promise<T>((resolve, reject) => {
-      instance.get<T>(url, { params }).then(
-        (response) => handleResponse(response.data, resolve),
-        (error: AxiosError) => handleError(error, reject),
-      );
+    return new Promise<T>((resolve) => {
+      instance
+        .get<T>(url, { params })
+        .then((response) => handleResponse(response.data, resolve));
     });
   }
 
   function post<T>(url: string, body?: object) {
-    return new Promise<T>((resolve, reject) => {
-      instance.post<T>(url, body).then(
-        (response) => handleResponse(response.data, resolve),
-        (error: AxiosError) => handleError(error, reject),
-      );
-    });
+    return new Promise<T>((resolve) =>
+      instance
+        .post<T>(url, body)
+        .then((response) => handleResponse(response.data, resolve)),
+    );
   }
 
   function put<T>(url: string, body?: object) {
-    return new Promise<T>((resolve, reject) => {
-      instance.put<T>(url, body).then(
-        (response) => handleResponse(response.data, resolve),
-        (error: AxiosError) => handleError(error, reject),
-      );
-    });
+    return new Promise<T>((resolve) =>
+      instance
+        .put<T>(url, body)
+        .then((response) => handleResponse(response.data, resolve)),
+    );
   }
 
   function deleteRequest<T>(url: string) {
-    return new Promise<T>((resolve, reject) => {
-      instance.delete<T>(url).then(
-        (response) => handleResponse(response.data, resolve),
-        (error: AxiosError) => handleError(error, reject),
-      );
-    });
+    return new Promise<T>((resolve) =>
+      instance
+        .delete<T>(url)
+        .then((response) => handleResponse(response.data, resolve)),
+    );
   }
 
   return {
