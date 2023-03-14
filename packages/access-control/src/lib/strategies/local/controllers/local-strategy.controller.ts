@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Param,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
-
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { LocalStrategyService } from '../services/local-strategy.service';
 import { ILocalStrategyControllerOptions } from '../types';
@@ -30,11 +22,6 @@ export function buildLocalStrategyController(
     @Post(defaultStrategyOptions.loginUrl)
     async login(@Body() credentials: IUsernameAndPassword) {
       return this.localStrategyService.login(credentials);
-    }
-
-    @Delete('delete/:id')
-    async delete(@Param('id') id: number) {
-      return this.localStrategyService.delete(Number(id));
     }
   }
 
