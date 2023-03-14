@@ -7,6 +7,8 @@ import {
   Get,
   Put,
   Request,
+  Delete,
+  Param,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { tokenUserService } from '../tokens';
@@ -36,6 +38,11 @@ export function buildAccessControlCoreController(): IController {
     @Put('/me')
     async updateUser(@Request() req: { user: K }, @Body() user: Partial<T>) {
       return this.userService.update(req.user.id, user);
+    }
+
+    @Delete('delete/:id')
+    async delete(@Param('id') id: number) {
+      return this.userService.delete(+id);
     }
   }
   return AccessControlCoreController;
