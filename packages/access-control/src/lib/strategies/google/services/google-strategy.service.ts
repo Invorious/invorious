@@ -44,7 +44,7 @@ export class GoogleStrategyService<
   ): Promise<void> {
     let user = await this.userService.findByGoogleId(profile.id);
     if (!user) {
-      await this.userService.registerByGoogle(profile);
+      await this.userService.register(user);
       user = await this.userService.findByGoogleId(profile.id);
     }
     const token = await this.coreService.generateToken(user);
