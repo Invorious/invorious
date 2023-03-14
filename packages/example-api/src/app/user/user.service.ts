@@ -81,7 +81,7 @@ export class UserService
     );
   }
 
-  async deleteUser(id: number) {
+  async delete(id: number) {
     return this.users.filter((user) => user.id !== id);
   }
 
