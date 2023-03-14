@@ -1,7 +1,7 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { buildAccessControlCoreController } from './core/controllers/access-control-core.controller';
+import { buildUserManagementController } from './core/controllers/user-management-controller';
 import { AccessControlCoreService } from './core/services/access-control-core.service';
 
 import {
@@ -37,7 +37,7 @@ export class AccessControlModule {
         PassportModule,
         JwtModule.register(jwtOptions),
       ],
-      controllers: [buildAccessControlCoreController(), ...controllers],
+      controllers: [buildUserManagementController(), ...controllers],
       providers: [
         { provide: tokenUserService, useExisting: UserService },
         { provide: tokenJWTConfig, useValue: jwtOptions },
