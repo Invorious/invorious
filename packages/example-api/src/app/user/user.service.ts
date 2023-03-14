@@ -48,7 +48,7 @@ export class UserService
   update(id: number, data: Partial<User>) {
     this.users = this.users.map((user) => {
       if (user.id === id) {
-        return { ...user, username: data.username };
+        return { ...user, ...data };
       }
       return user;
     });
