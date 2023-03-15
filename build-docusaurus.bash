@@ -1,1 +1,1 @@
-rm -r docs && cd ./docusaurus && npm i && npm run build && mv build ../docs
+rm -r docs && cd ./docusaurus && npm i && NODE_REPO_GITHUB="/invorious/" npm run build && mv build ../docs
