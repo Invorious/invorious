@@ -16,15 +16,16 @@ import { IJwtPayload } from '../types/jwt-payload.interface';
 import { IController } from '../types/nest-js';
 import { IStrategyService } from '../types/strategy-service.interface';
 
-export function buildAccessControlCoreController(): IController {
+export function buildUserManagementController(): IController {
   @Controller('/auth')
-  class AccessControlCoreController<T, K extends IJwtPayload> {
+  class UserManagementController<T, K extends IJwtPayload> {
     constructor(
       @Inject(tokenUserService)
       private userService: IStrategyService<T>,
     ) {}
     @Post('/register')
     async registerUser(@Body() user: Partial<T>) {
+      console.log('Registering user: ', user);
       return this.userService.register(user);
     }
 
@@ -45,5 +46,5 @@ export function buildAccessControlCoreController(): IController {
       return this.userService.delete(+id);
     }
   }
-  return AccessControlCoreController;
+  return UserManagementController;
 }

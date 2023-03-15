@@ -8,6 +8,7 @@ import {
 import { Permission } from '../permission/permission.entity';
 import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService
@@ -63,7 +64,7 @@ export class UserService
       username: data.username,
       name: data.name,
       permissions: data.permissions,
-      password: data.password,
+      password: bcrypt.hashSync(data.password, 10),
       email: data.email,
       googleId: data.googleId,
     };

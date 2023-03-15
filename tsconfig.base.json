@@ -18,6 +18,9 @@
       "@invorious/access-control": ["packages/access-control/src/index.ts"],
       "@invorious/access-control-front": [
         "packages/access-control-front/src/index.ts"
+      ],
+      "@invorious/http-client-front": [
+        "packages/http-client-front/src/index.ts"
       ]
     }
   },

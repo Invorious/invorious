@@ -51,8 +51,8 @@
       "executor": "@nrwl/webpack:dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "example-front:build",
-        "hmr": true
+        "hmr": true,
+        "proxyConfig": "packages/example-front/proxy.conf.json"
       },
       "configurations": {
         "development": {
