@@ -5,7 +5,13 @@ import { IUserManagement } from '../types/user-management.interface';
 export function useUserManagement(
   config?: CreateAxiosDefaults,
 ): IUserManagement {
-  const { post, requestError, get, put } = useHttpClient({
+  const {
+    post,
+    requestError,
+    get,
+    put,
+    delete: deleteRequest,
+  } = useHttpClient({
     config,
   });
   async function register<T>(data: Partial<T>) {
@@ -23,10 +29,15 @@ export function useUserManagement(
       ...data,
     });
   }
+
+  async function deleteProfile<T = void>(id: number) {
+    return await deleteRequest<T>(`/me/${id}`);
+  }
   return {
     register,
     requestError,
     getProfile,
     update,
+    deleteProfile,
   };
 }
