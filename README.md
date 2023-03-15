@@ -66,7 +66,7 @@ Get started with Invorious Libraries, learn the fundamentals and explore advance
 
 <h2 id="build-library-invorious">Build library invorious</h2>
 
-In each library the package.json is obligatory, also your scripts
+Your scripts and the package.json are required for each library
 
 ```json
 "scripts": {
@@ -77,7 +77,7 @@ In each library the package.json is obligatory, also your scripts
 }
 ```
 
-**Important**: Before of exect this script, shoul be to do npm login with any user of organization invorious.
+**Important**: Before running this script, you must log in to npm with a valid user from the Invorious organization.
 
 ```console
 npm run upload-npm access-control
