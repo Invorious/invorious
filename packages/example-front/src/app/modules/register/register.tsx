@@ -6,7 +6,9 @@ import styles from './register.module.scss';
 
 export function Register() {
   const navigate = useNavigate();
-  const { register, requestError } = useUserManagement();
+  const { register, requestError } = useUserManagement({
+    baseURL: 'api/auth',
+  });
   const [formData, setFormData] = useState<Partial<IUser>>({});
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

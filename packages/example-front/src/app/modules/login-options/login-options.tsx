@@ -4,14 +4,15 @@ import { useState } from 'react';
 import { ReactComponent as GoogleLogoIcon } from '../../../assets/svg/google-logo.svg';
 import { ReactComponent as MetamaskLogoIcon } from '../../../assets/svg/metamask-logo.svg';
 import { useLocalStrategy } from '@invorious/access-control-front';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function LoginOptions() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
-  const { login } = useLocalStrategy({
+  const { login, requestError } = useLocalStrategy({
     baseURL: '/api/auth/local',
   });
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +29,10 @@ export function LoginOptions() {
       password: '',
     });
     const response = await login(formData.username, formData.password);
-    //save access token from response
+    if (!requestError) {
+      localStorage.setItem('token', response.accessToken);
+      navigate('/profile');
+    }
   };
 
   const handleGoogleLogin = () => {

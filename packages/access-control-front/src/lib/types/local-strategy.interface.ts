@@ -1,3 +1,4 @@
+import { RequestError } from '@invorious/http-client-front';
 import { ILoginResponse } from './login-response.interface';
 
 export interface ILocalStrategy {
@@ -5,4 +6,5 @@ export interface ILocalStrategy {
     username: string,
     password: string,
   ): Promise<T>;
+  requestError: RequestError | undefined;
 }
