@@ -3,15 +3,21 @@ import { useState } from 'react';
 
 import { ReactComponent as GoogleLogoIcon } from '../../../assets/svg/google-logo.svg';
 import { ReactComponent as MetamaskLogoIcon } from '../../../assets/svg/metamask-logo.svg';
-import { useLocalStrategy } from '@invorious/access-control-front';
+import {
+  useLocalStrategy,
+  useMetamaskStrategy,
+} from '@invorious/access-control-front';
 
 export function LoginOptions() {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
-  const { login } = useLocalStrategy({
+  const { login: loginLocal } = useLocalStrategy({
     baseURL: '/api/auth/local',
+  });
+  const { login: loginMetamask } = useMetamaskStrategy({
+    baseURL: '/api/auth/metamask',
   });
   const handleChange = (event: { target: { name: string; value: string } }) => {
     setFormData({
@@ -26,7 +32,7 @@ export function LoginOptions() {
       username: '',
       password: '',
     });
-    const response = await login(formData.username, formData.password);
+    const response = await loginLocal(formData.username, formData.password);
     //save access token from response
   };
 
@@ -34,8 +40,11 @@ export function LoginOptions() {
     console.log('useGoogleLogin');
   };
 
-  const handleMetamaskLogin = () => {
-    console.log('useMetamaskLogin');
+  const handleMetamaskLogin = async () => {
+    const message =
+      'Welcome back you beatiful bastard, please sign this message to login, xoxo in your butty';
+    const response = await loginMetamask(message);
+    //save access token from response
   };
 
   return (

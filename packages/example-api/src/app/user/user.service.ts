@@ -64,7 +64,7 @@ export class UserService
       username: data.username,
       name: data.name,
       permissions: data.permissions,
-      password: bcrypt.hashSync(data.password, 10),
+      password: data.password ? bcrypt.hashSync(data.password, 10) : '',
       email: data.email,
       googleId: data.googleId,
     };
