@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ReactComponent as GoogleLogoIcon } from '../../../assets/svg/google-logo.svg';
 import { ReactComponent as MetamaskLogoIcon } from '../../../assets/svg/metamask-logo.svg';
 import { useLocalStrategy } from '@invorious/access-control-front';
+import { Link } from 'react-router-dom';
 
 export function LoginOptions() {
   const [formData, setFormData] = useState({
@@ -13,14 +14,14 @@ export function LoginOptions() {
   const { login } = useLocalStrategy({
     baseURL: '/api/auth/local',
   });
-  const handleChange = (event: { target: { name: string; value: string } }) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
     });
   };
 
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setFormData({
       username: '',
@@ -64,6 +65,13 @@ export function LoginOptions() {
         </label>
         <input type="submit" value="Login" />
       </form>
+      <hr />
+      <div className={styles['register']}>
+        <h3>Not registered yet? what are you waiting for?</h3>
+        <Link to="/register">
+          <button>Register</button>
+        </Link>
+      </div>
       <hr />
       <div className={styles['social-media-icons']}>
         <h2>Or login with</h2>
