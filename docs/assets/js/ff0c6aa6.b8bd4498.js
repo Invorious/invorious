@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[6571],{8470:e=>{e.exports=JSON.parse('{"title":"Setup project","description":"The focus of this is setup of all project.","slug":"/category/setup-project","permalink":"/docs/category/setup-project","navigation":{"next":{"title":"NX","permalink":"/docs/repository/nx"}}}')}}]);
