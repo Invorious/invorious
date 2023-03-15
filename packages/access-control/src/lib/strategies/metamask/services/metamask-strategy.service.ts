@@ -22,7 +22,9 @@ export class MetamaskStrategyService<K extends IJwtPayload> {
       this.metamaskUserService.loginMessage,
       signature,
     );
-    let metamaskUser = this.metamaskUserService.findByAddress(recoveredAddress);
+    let metamaskUser = await this.metamaskUserService.findByAddress(
+      recoveredAddress,
+    );
     if (!metamaskUser) {
       metamaskUser = await this.metamaskUserService.register({
         address: recoveredAddress,

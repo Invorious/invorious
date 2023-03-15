@@ -72,21 +72,21 @@ export class UserService
     return newUser;
   }
 
-  async registerByGoogle(user: Profile) {
-    const id = this.users[this.users.length - 1].id + 1;
-    const newUser: User = {
-      id,
-      name: user.displayName,
-      address: '',
-      username: user.emails[0].value,
-      password: '',
-      email: user.emails[0].value,
-      googleId: user.id,
-      permissions: [],
-    };
-    this.users.push(newUser);
-    return newUser;
-  }
+  // async registerByGoogle(user: Profile) {
+  //   const id = this.users[this.users.length - 1].id + 1;
+  //   const newUser: User = {
+  //     id,
+  //     name: user.displayName,
+  //     address: '',
+  //     username: user.emails[0].value,
+  //     password: '',
+  //     email: user.emails[0].value,
+  //     googleId: user.id,
+  //     permissions: [],
+  //   };
+  //   this.users.push(newUser);
+  //   return newUser;
+  // }
 
   async findById(id: number) {
     return this.users.find((user) => user.id === id);
