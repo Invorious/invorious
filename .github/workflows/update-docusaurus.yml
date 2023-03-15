@@ -1,0 +1,24 @@
+name: Update docusaurus
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '18'
+      - run: |
+          cp ./docusaurus/.env.example ./docusaurus/.env
+          npm run docusaurus:build-github
+          git config user.name invorious
+          git config user.email devops@invorious.com
+          git add .
+          git commit -m "feat(bot): update docusaurus with latest info"
+          git push origin main
