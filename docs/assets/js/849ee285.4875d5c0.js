@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[9739],{8761:e=>{e.exports=JSON.parse('{"label":"hello","permalink":"/invorious/blog/tags/hello","allTagsPath":"/invorious/blog/tags","count":2}')}}]);
