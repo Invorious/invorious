@@ -17,14 +17,9 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-<<<<<<<< HEAD:docusaurus/src/pages/index.tsx
             to="/docs/category/setup-project"
           >
             See ecosystem ⏱️
-========
-            to="/docs/intro">
-            Docusaurus Tutorial - 5min ⏱️
->>>>>>>> main:docs/src/pages/index.tsx
           </Link>
         </div>
       </div>
