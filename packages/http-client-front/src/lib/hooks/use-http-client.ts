@@ -1,12 +1,11 @@
-import axios, { AxiosError, CreateAxiosDefaults } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useState } from 'react';
 import { IHttpClient } from '../types/http-client';
+import { IHttpClientConfig } from '../types/http-client-config';
 import { RequestError } from '../types/request-error';
 
-export function useHttpClient(
-  config?: CreateAxiosDefaults,
-  onError?: (error: any) => void,
-): IHttpClient {
+export function useHttpClient(props: IHttpClientConfig = {}): IHttpClient {
+  const { config, onError } = props;
   const [requestError, setRequestError] = useState<RequestError | undefined>(
     undefined,
   );
@@ -17,7 +16,7 @@ export function useHttpClient(
     (error: AxiosError) => handleError(error),
   );
 
-  function handleError(error: AxiosError) {
+  async function handleError(error: AxiosError) {
     const { response } = error;
     onError?.(error);
     if (response?.status === 401) {
@@ -33,53 +32,34 @@ export function useHttpClient(
         message: 'Server error',
       });
     }
-
-    return setRequestError(
+    setRequestError(
       response
         ? { statusCode: response.status, message: response.statusText }
         : undefined,
     );
+    return Promise.reject(error);
   }
 
-  function handleResponse<T>(
-    data: T,
-    resolve: (value: T | PromiseLike<T>) => void,
-  ) {
+  async function handleResponse<T>(response: AxiosResponse<T>) {
     setRequestError(undefined);
-    return resolve(data);
+    return Promise.resolve(response.data);
   }
 
-  function get<T>(url: string, query?: Record<string, string>) {
+  async function get<T>(url: string, query?: Record<string, string>) {
     const params = new URLSearchParams(query);
-    return new Promise<T>((resolve) => {
-      instance
-        .get<T>(url, { params })
-        .then((response) => handleResponse(response.data, resolve));
-    });
+    return instance.get<T>(url, { params }).then(handleResponse);
   }
 
-  function post<T>(url: string, body?: object) {
-    return new Promise<T>((resolve) =>
-      instance
-        .post<T>(url, body)
-        .then((response) => handleResponse(response.data, resolve)),
-    );
+  async function post<T>(url: string, body?: object) {
+    return instance.post<T>(url, body).then(handleResponse);
   }
 
-  function put<T>(url: string, body?: object) {
-    return new Promise<T>((resolve) =>
-      instance
-        .put<T>(url, body)
-        .then((response) => handleResponse(response.data, resolve)),
-    );
+  async function put<T>(url: string, body?: object) {
+    return instance.put<T>(url, body).then(handleResponse);
   }
 
-  function deleteRequest<T>(url: string) {
-    return new Promise<T>((resolve) =>
-      instance
-        .delete<T>(url)
-        .then((response) => handleResponse(response.data, resolve)),
-    );
+  async function deleteRequest<T>(url: string) {
+    return instance.delete<T>(url).then(handleResponse);
   }
 
   return {
