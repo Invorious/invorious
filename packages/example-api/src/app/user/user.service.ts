@@ -49,45 +49,27 @@ export class UserService
   async update(id: number, data: Partial<User>) {
     this.users = this.users.map((user) => {
       if (user.id === id) {
-        return { ...user, username: data.username };
+        return { ...user, ...data };
       }
       return user;
     });
     return await this.findById(id);
   }
 
-  register(data: Partial<User>) {
+  async register(data: Partial<User>) {
     const id = this.users[this.users.length - 1].id + 1;
     const newUser: User = {
       id,
-      address: data.address,
+      name: data.name,
       username: data.username,
-      name: 'aaaaa',
-      permissions: [],
-      password: '',
-      email: '',
-      googleId: '',
+      password: data.password,
+      address: data.address,
+      email: data.email,
+      googleId: data.googleId,
+      permissions: data.permissions,
     };
     this.users.push(newUser);
     return newUser;
-  }
-
-  async findById(id: number) {
-    return this.users.find((user) => user.id === id);
-  }
-
-  async findByUsername(username: string) {
-    return this.users.find(
-      (user) => user.username === username.toLowerCase().trim(),
-    );
-  }
-
-  async deleteUser(id: number) {
-    return this.users.filter((user) => user.id !== id);
-  }
-
-  async findByGoogleId(googleId: string) {
-    return this.users.find((user) => user.googleId === googleId);
   }
 
   async registerByGoogle(user: Profile) {
@@ -106,11 +88,25 @@ export class UserService
     return newUser;
   }
 
-  get loginMessage() {
-    return 'Welcome back you beatiful bastard, please sign this message to login, xoxo in your butty';
+  async findById(id: number) {
+    return this.users.find((user) => user.id === id);
   }
 
-  get updateMessage() {
-    return `You're about to modify your profile information, give me your autograph baby`;
+  async findByUsername(username: string) {
+    return this.users.find(
+      (user) => user.username === username.toLowerCase().trim(),
+    );
+  }
+
+  async delete(id: number) {
+    return this.users.filter((user) => user.id !== id);
+  }
+
+  async findByGoogleId(googleId: string) {
+    return this.users.find((user) => user.googleId === googleId);
+  }
+
+  get loginMessage() {
+    return 'Welcome back you beatiful bastard, please sign this message to login, xoxo in your butty';
   }
 }

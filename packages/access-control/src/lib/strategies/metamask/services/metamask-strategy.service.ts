@@ -7,7 +7,6 @@ import { IMetamaskService } from '../types/metamask-service';
 import { AccessControlCoreService } from '../../../core/services/access-control-core.service';
 import { tokenUserService } from '../../../core/tokens';
 import { IJwtPayload } from '../../../core/types/jwt-payload.interface';
-import { UpdateRequestDto } from '../types/update-request.dto';
 
 @Injectable()
 export class MetamaskStrategyService<K extends IJwtPayload> {
@@ -31,22 +30,5 @@ export class MetamaskStrategyService<K extends IJwtPayload> {
     }
 
     return this.coreService.generateToken(metamaskUser);
-  }
-
-  getProfile(user: K) {
-    return this.metamaskUserService.findById(user.id);
-  }
-
-  async updateProfile(id: number, updateDto: UpdateRequestDto) {
-    const { signature } = updateDto;
-    const user = await this.metamaskUserService.findById(id);
-    const recoveredAddress = verifyMessage(
-      this.metamaskUserService.updateMessage,
-      signature,
-    );
-    if (user.address == recoveredAddress) {
-      return this.metamaskUserService.update(id, updateDto);
-    }
-    return;
   }
 }

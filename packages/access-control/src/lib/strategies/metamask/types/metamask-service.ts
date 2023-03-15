@@ -3,7 +3,6 @@ import { IMetamaskUserEntity } from './metamask-user';
 
 export interface IMetamaskService<T extends IMetamaskUserEntity>
   extends IStrategyService<T> {
-  findByAddress(address: string): T;
+  findByAddress(address: string): Promise<T[]> | T;
   loginMessage: string;
-  updateMessage: string;
 }

@@ -28,17 +28,18 @@ export class LocalStrategyService<
   }
 
   async validate(username: string, password: string): Promise<IJwtToken> {
-    const payload = await this.validateUser(username, password);
-    if (!payload) throw new NotFoundException('User not found');
-    return this.coreService.generateToken(payload);
+    const user = await this.validateUser(username, password);
+    if (!user) throw new NotFoundException('User not found');
+    return this.coreService.generateToken(user);
   }
 
   async validateUser(
     username: string,
     pass: string,
   ): Promise<IUsernameAndPassword | null> {
-    const user = await this.usersService.findByUsername(username);
-    if (user && (await this.validatePassword(pass, user))) return user;
+    const validUser = await this.usersService.findByUsername(username);
+    if (validUser && (await this.validatePassword(pass, validUser)))
+      return validUser;
     return null;
   }
 
@@ -54,11 +55,5 @@ export class LocalStrategyService<
 
   async login(credentials: IUsernameAndPassword): Promise<IJwtToken> {
     return await this.validate(credentials.username, credentials.password);
-  }
-
-  async delete(id: number) {
-    const user = await this.usersService.findById(id);
-    if (user) return await this.usersService.deleteUser(id);
-    throw new NotFoundException('User not found');
   }
 }
