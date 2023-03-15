@@ -4,30 +4,35 @@ import { useState } from 'react';
 import { ReactComponent as GoogleLogoIcon } from '../../../assets/svg/google-logo.svg';
 import { ReactComponent as MetamaskLogoIcon } from '../../../assets/svg/metamask-logo.svg';
 import { useLocalStrategy } from '@invorious/access-control-front';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function LoginOptions() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
-  const { login } = useLocalStrategy({
+  const { login, requestError } = useLocalStrategy({
     baseURL: '/api/auth/local',
   });
-  const handleChange = (event: { target: { name: string; value: string } }) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
     });
   };
 
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setFormData({
       username: '',
       password: '',
     });
     const response = await login(formData.username, formData.password);
-    //save access token from response
+    if (!requestError) {
+      localStorage.setItem('token', response.accessToken);
+      navigate('/profile');
+    }
   };
 
   const handleGoogleLogin = () => {
@@ -64,6 +69,13 @@ export function LoginOptions() {
         </label>
         <input type="submit" value="Login" />
       </form>
+      <hr />
+      <div className={styles['register']}>
+        <h3>Not registered yet? what are you waiting for?</h3>
+        <Link to="/register">
+          <button>Register</button>
+        </Link>
+      </div>
       <hr />
       <div className={styles['social-media-icons']}>
         <h2>Or login with</h2>
