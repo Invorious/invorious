@@ -1,20 +1,10 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.scss';
-
 import { Route, Routes, Link } from 'react-router-dom';
-<<<<<<< HEAD
-=======
 import LoginOptions from './modules/login-options/login-options';
->>>>>>> main
 
 export function App() {
   return (
     <>
-<<<<<<< HEAD
-=======
       <LoginOptions />
-
->>>>>>> main
       <div />
 
       {/* START: routes */}
