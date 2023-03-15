@@ -25,7 +25,6 @@ export function buildUserManagementController(): IController {
     ) {}
     @Post('/register')
     async registerUser(@Body() user: Partial<T>) {
-      console.log('Registering user: ', user);
       return this.userService.register(user);
     }
 

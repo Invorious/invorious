@@ -4,7 +4,7 @@ import { ILoginResponse } from '../types/login-response.interface';
 import { ILocalStrategy } from '../types/local-strategy.interface';
 
 export function useLocalStrategy(config?: CreateAxiosDefaults): ILocalStrategy {
-  const { post } = useHttpClient({
+  const { post, requestError } = useHttpClient({
     config,
   });
   async function login<T extends ILoginResponse>(
@@ -20,5 +20,6 @@ export function useLocalStrategy(config?: CreateAxiosDefaults): ILocalStrategy {
 
   return {
     login,
+    requestError,
   };
 }

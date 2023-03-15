@@ -1,8 +1,11 @@
 import { useHttpClient } from '@invorious/http-client-front';
+import { CreateAxiosDefaults } from 'axios';
 import { IUserManagement } from '../types/user-management.interface';
 
-export function useUserManagement(): IUserManagement {
-  const { post } = useHttpClient({
+export function useUserManagement(
+  config?: CreateAxiosDefaults,
+): IUserManagement {
+  const { post, requestError } = useHttpClient({
     config: {
       baseURL: 'api/auth',
     },
@@ -15,5 +18,6 @@ export function useUserManagement(): IUserManagement {
 
   return {
     register,
+    requestError,
   };
 }

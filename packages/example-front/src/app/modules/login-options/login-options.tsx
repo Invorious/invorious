@@ -7,33 +7,40 @@ import {
   useLocalStrategy,
   useMetamaskStrategy,
 } from '@invorious/access-control-front';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function LoginOptions() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
-  const { login: loginLocal } = useLocalStrategy({
-    baseURL: '/api/auth/local',
-  });
-  const { login: loginMetamask } = useMetamaskStrategy({
-    baseURL: '/api/auth/metamask',
-  });
-  const handleChange = (event: { target: { name: string; value: string } }) => {
+  const { login: loginLocal, requestError: requestErrorLocal } =
+    useLocalStrategy({
+      baseURL: '/api/auth/local',
+    });
+  const { login: loginMetamask, requestError: requestErrorMetamask } =
+    useMetamaskStrategy({
+      baseURL: '/api/auth/metamask',
+    });
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
     });
   };
 
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setFormData({
       username: '',
       password: '',
     });
     const response = await loginLocal(formData.username, formData.password);
-    //save access token from response
+    if (!requestErrorMetamask) {
+      localStorage.setItem('token', response.accessToken);
+      navigate('/profile');
+    }
   };
 
   const handleGoogleLogin = () => {
@@ -44,7 +51,10 @@ export function LoginOptions() {
     const message =
       'Welcome back you beatiful bastard, please sign this message to login, xoxo in your butty';
     const response = await loginMetamask(message);
-    //save access token from response
+    if (!requestErrorLocal) {
+      localStorage.setItem('token', response.accessToken);
+      navigate('/profile');
+    }
   };
 
   return (
@@ -73,6 +83,13 @@ export function LoginOptions() {
         </label>
         <input type="submit" value="Login" />
       </form>
+      <hr />
+      <div className={styles['register']}>
+        <h3>Not registered yet? what are you waiting for?</h3>
+        <Link to="/register">
+          <button>Register</button>
+        </Link>
+      </div>
       <hr />
       <div className={styles['social-media-icons']}>
         <h2>Or login with</h2>

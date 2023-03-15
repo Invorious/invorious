@@ -1,12 +1,14 @@
 .login-local-form,
-.social-media-icons {
+.social-media-icons,
+.register {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 24px;
 }
 
-.login-local-form {
+.login-local-form,
+.register {
   flex-direction: column;
   margin: 45px auto;
 }
