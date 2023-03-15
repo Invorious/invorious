@@ -39,7 +39,7 @@ const providerUserService = {
           clientSecret: process.env.GOOGLE_CLIENT_SECRET,
           callbackURL: 'http://localhost:3333/api/google/callback',
           routeGoogle: 'google',
-          routeToRedirect: 'http://localhost:4200/',
+          routeToRedirect: 'http://localhost:4200/login',
         }),
         metamaskStrategy(),
         localStrategy(),

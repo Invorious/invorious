@@ -4,11 +4,12 @@ import {
   IMetamaskService,
   IUsersService,
 } from '@invorious/access-control';
-
-import { Permission } from '../permission/permission.entity';
 import { Injectable } from '@nestjs/common';
-import { User } from './user.entity';
+import { Profile } from 'passport-google-oauth20';
 import * as bcrypt from 'bcrypt';
+
+import { User } from './user.entity';
+import { Permission } from '../permission/permission.entity';
 
 @Injectable()
 export class UserService
@@ -56,37 +57,37 @@ export class UserService
     return await this.findById(id);
   }
 
-  async register(data: Partial<User>) {
+  async register(data: Partial<any>) {
     const id = this.users[this.users.length - 1].id + 1;
+
+    if (typeof data.name !== 'string') {
+      const newUser: User = {
+        id,
+        name: data.displayName,
+        username: data.emails[0].value,
+        password: '',
+        address: '',
+        email: data.emails[0].value,
+        googleId: data.id,
+        permissions: [],
+      };
+      this.users.push(newUser);
+      return newUser;
+    }
+
     const newUser: User = {
       id,
       name: data.name,
       username: data.username,
+      password: data.password ? bcrypt.hashSync(data.password, 10) : '',
       address: data.address,
-      permissions: data.permissions,
-      password: bcrypt.hashSync(data.password, 10),
       email: data.email,
       googleId: data.googleId,
+      permissions: data.permissions,
     };
     this.users.push(newUser);
     return newUser;
   }
-
-  // async registerByGoogle(user: Profile) {
-  //   const id = this.users[this.users.length - 1].id + 1;
-  //   const newUser: User = {
-  //     id,
-  //     name: user.displayName,
-  //     address: '',
-  //     username: user.emails[0].value,
-  //     password: '',
-  //     email: user.emails[0].value,
-  //     googleId: user.id,
-  //     permissions: [],
-  //   };
-  //   this.users.push(newUser);
-  //   return newUser;
-  // }
 
   async findById(id: number) {
     return this.users.find((user) => user.id === id);

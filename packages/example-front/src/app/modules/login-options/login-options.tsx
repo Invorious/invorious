@@ -1,5 +1,5 @@
 import styles from './login-options.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { ReactComponent as GoogleLogoIcon } from '../../../assets/svg/google-logo.svg';
@@ -11,17 +11,27 @@ export function LoginOptions() {
     username: '',
     password: '',
   });
+
   const { login } = useLocalStrategy({
     baseURL: '/api/auth/local',
   });
-  const handleChange = (event: { target: { name: string; value: string } }) => {
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const receivedToken = searchParams.get('token');
+    if (receivedToken) {
+      localStorage.setItem('token', receivedToken);
+    }
+  }, []);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
     });
   };
 
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setFormData({
       username: '',
@@ -68,6 +78,13 @@ export function LoginOptions() {
       </form>
       <hr />
       <br />
+      <div className={styles['register']}>
+        <h3>Not registered yet? what are you waiting for?</h3>
+        <Link to="/register">
+          <button>Register</button>
+        </Link>
+      </div>
+      <hr />
       <div className={styles['social-media-icons']}>
         <h2>Or login with</h2>
         <div
@@ -86,7 +103,6 @@ export function LoginOptions() {
       <br />
       <hr />
       <br />
-      <Link to="/">Click here to get back to Home page.</Link>
     </div>
   );
 }

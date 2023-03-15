@@ -4,14 +4,13 @@ import { IStrategyService } from '../../../core/types/strategy-service.interface
 export type IProfileResponseGoogle = Profile;
 
 export interface IGoogleAccountUser {
-  googleId: string;
   email: string;
+  googleId: string | number;
 }
 
 export interface IGoogleAccountService<T extends IGoogleAccountUser>
   extends IStrategyService<T> {
   findByGoogleId(googleId: string): Promise<T> | T;
-  // registerByGoogle(user: IProfileResponseGoogle): Promise<T> | T;
 }
 
 export interface IGoogleAccountBuildController {

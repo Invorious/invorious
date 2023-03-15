@@ -9,11 +9,11 @@ export class User
   implements IMetamaskUserEntity, IGoogleAccountUser, IUsernameAndPassword
 {
   id: number;
-  name: string;
-  googleId: string;
-  email: string;
+  name: string | number;
+  username: IUsernameAndPassword['username'];
+  password: IUsernameAndPassword['password'];
+  address: IMetamaskUserEntity['address'];
+  email: IGoogleAccountUser['email'];
+  googleId: IGoogleAccountUser['googleId'];
   permissions: Permission[];
-  address: string;
-  username: string;
-  password: string;
 }
