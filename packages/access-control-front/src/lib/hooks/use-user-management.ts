@@ -31,7 +31,7 @@ export function useUserManagement(
   }
 
   async function deleteProfile<T = void>(id: number) {
-    return await deleteRequest<T>(`/me/${id}`);
+    return await deleteRequest<T>(`/delete/${id}`);
   }
   return {
     register,
