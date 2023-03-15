@@ -11,7 +11,8 @@
     "release:minor": "standard-version --release-as minor",
     "release:patch": "standard-version --release-as patch",
     "upload-npm": "bash semver",
-    "docusaurus:start": "cd ./docs && npm run start"
+    "docusaurus:install": "cd ./docs && npm install",
+    "docusaurus:start": "cd ./docs && npm start"
   },
   "private": true,
   "devDependencies": {

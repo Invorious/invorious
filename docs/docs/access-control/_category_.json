@@ -1,0 +1,8 @@
+{
+  "label": "Access Control",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "The focus of this library is authentication and authorization."
+  }
+}
