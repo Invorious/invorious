@@ -8,7 +8,6 @@ import {
 import { Permission } from '../permission/permission.entity';
 import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
-import { Profile } from 'passport-google-oauth20';
 
 @Injectable()
 export class UserService
@@ -49,7 +48,7 @@ export class UserService
   update(id: number, data: Partial<User>) {
     this.users = this.users.map((user) => {
       if (user.id === id) {
-        return { ...user, username: data.username };
+        return { ...user, ...data };
       }
       return user;
     });
@@ -62,11 +61,11 @@ export class UserService
       id,
       address: data.address,
       username: data.username,
-      name: 'aaaaa',
-      permissions: [],
-      password: '',
-      email: '',
-      googleId: '',
+      name: data.name,
+      permissions: data.permissions,
+      password: data.password,
+      email: data.email,
+      googleId: data.googleId,
     };
     this.users.push(newUser);
     return newUser;
@@ -82,7 +81,7 @@ export class UserService
     );
   }
 
-  async deleteUser(id: number) {
+  async delete(id: number) {
     return this.users.filter((user) => user.id !== id);
   }
 
@@ -90,24 +89,7 @@ export class UserService
     return this.users.find((user) => user.googleId === googleId);
   }
 
-  registerByGoogle(user: Profile): void {
-    this.users.push({
-      name: 'aaa',
-      permissions: [],
-      email: user.emails[0].value,
-      googleId: user.id,
-      id: Date.now(),
-      address: '',
-      username: '',
-      password: '',
-    });
-  }
-
   get loginMessage() {
     return 'Welcome back you beatiful bastard, please sign this message to login, xoxo in your butty';
-  }
-
-  get updateMessage() {
-    return `You're about to modify your profile information, give me your autograph baby`;
   }
 }

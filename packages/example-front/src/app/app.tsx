@@ -2,10 +2,13 @@
 import styles from './app.module.scss';
 
 import { Route, Routes, Link } from 'react-router-dom';
+import LoginOptions from './modules/login-options/login-options';
 
 export function App() {
   return (
     <>
+      <LoginOptions />
+
       <div />
 
       {/* START: routes */}
