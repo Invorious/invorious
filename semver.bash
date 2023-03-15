@@ -32,7 +32,7 @@ do
 done
 
 if [ $exist == 'no' ]; then
-  echo "Library $package doesn't exist in array of packages inside semver" && exit
+  echo "Library $package doesn't exist in array of packages inside semver.bash" && exit
 fi
 
 cd "./packages/$package" && npm run $release -- -t=$package.v && \
