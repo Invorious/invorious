@@ -42,18 +42,18 @@ export class UserService
     return user.permissions;
   }
 
-  findByAddress(address: string): User {
+  async findByAddress(address: string) {
     return this.users.find((user) => user.address === address);
   }
 
-  update(id: number, data: Partial<User>) {
+  async update(id: number, data: Partial<User>) {
     this.users = this.users.map((user) => {
       if (user.id === id) {
         return { ...user, username: data.username };
       }
       return user;
     });
-    return this.findById(id);
+    return await this.findById(id);
   }
 
   register(data: Partial<User>) {
@@ -72,7 +72,7 @@ export class UserService
     return newUser;
   }
 
-  findById(id: number): User {
+  async findById(id: number) {
     return this.users.find((user) => user.id === id);
   }
 
@@ -86,21 +86,24 @@ export class UserService
     return this.users.filter((user) => user.id !== id);
   }
 
-  findByGoogleId(googleId: string): User {
+  async findByGoogleId(googleId: string) {
     return this.users.find((user) => user.googleId === googleId);
   }
 
-  registerByGoogle(user: Profile): void {
-    this.users.push({
-      name: 'aaa',
-      permissions: [],
+  async registerByGoogle(user: Profile) {
+    const id = this.users[this.users.length - 1].id + 1;
+    const newUser: User = {
+      id,
+      name: user.displayName,
+      address: '',
+      username: user.emails[0].value,
+      password: '',
       email: user.emails[0].value,
       googleId: user.id,
-      id: Date.now(),
-      address: '',
-      username: '',
-      password: '',
-    });
+      permissions: [],
+    };
+    this.users.push(newUser);
+    return newUser;
   }
 
   get loginMessage() {

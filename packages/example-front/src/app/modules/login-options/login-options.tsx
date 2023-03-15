@@ -1,5 +1,6 @@
 import styles from './login-options.module.scss';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { ReactComponent as GoogleLogoIcon } from '../../../assets/svg/google-logo.svg';
 import { ReactComponent as MetamaskLogoIcon } from '../../../assets/svg/metamask-logo.svg';
@@ -30,8 +31,9 @@ export function LoginOptions() {
     );
   };
 
-  const handleGoogleLogin = () => {
-    console.log('useGoogleLogin');
+  const handleGoogleLogin = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    window.location.href = 'http://localhost:3333/api/google';
   };
 
   const handleMetamaskLogin = () => {
@@ -65,6 +67,7 @@ export function LoginOptions() {
         <input type="submit" value="Login" />
       </form>
       <hr />
+      <br />
       <div className={styles['social-media-icons']}>
         <h2>Or login with</h2>
         <div
@@ -80,8 +83,10 @@ export function LoginOptions() {
           <MetamaskLogoIcon />
         </div>
       </div>
+      <br />
+      <hr />
+      <br />
+      <Link to="/">Click here to get back to Home page.</Link>
     </div>
   );
 }
-
-export default LoginOptions;

@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback } from 'passport-google-oauth20';
-import { AccessControlCoreService } from '../../../core/services/access-control-core.service';
 
+import { tokenGoogleConfig } from '../tokens';
+import { AccessControlCoreService } from '../../../core/services/access-control-core.service';
 import { tokenUserService } from '../../../core/tokens';
 import { IJwtPayload } from '../../../core/types/jwt-payload.interface';
-import { tokenGoogleConfig } from '../tokens';
 
 import {
   IGoogleAccountConfigService,
@@ -27,7 +27,6 @@ export class GoogleStrategyService<
     private coreService: AccessControlCoreService<T, K>,
   ) {
     const { clientID, clientSecret, callbackURL, scope } = configGoogleAccount;
-
     super({
       clientID,
       clientSecret,
@@ -47,7 +46,7 @@ export class GoogleStrategyService<
       await this.userService.registerByGoogle(profile);
       user = await this.userService.findByGoogleId(profile.id);
     }
-    const token = await this.coreService.generateToken(user);
+    const token = this.coreService.generateToken(user);
     done(null, token);
   }
 }

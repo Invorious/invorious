@@ -39,8 +39,8 @@ export class AccessControlCoreService<
     return { accessToken: token };
   }
 
-  validate(payload: K) {
-    const user = this.userService.findById(payload.id);
+  async validate(payload: K) {
+    const user = await this.userService.findById(payload.id);
     return { ...payload, ...user };
   }
 }
