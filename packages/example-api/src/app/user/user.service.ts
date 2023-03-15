@@ -8,7 +8,7 @@ import {
 import { Permission } from '../permission/permission.entity';
 import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
-import { Profile } from 'passport-google-oauth20';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService
@@ -62,11 +62,11 @@ export class UserService
       id,
       name: data.name,
       username: data.username,
-      password: data.password,
       address: data.address,
+      permissions: data.permissions,
+      password: bcrypt.hashSync(data.password, 10),
       email: data.email,
       googleId: data.googleId,
-      permissions: data.permissions,
     };
     this.users.push(newUser);
     return newUser;

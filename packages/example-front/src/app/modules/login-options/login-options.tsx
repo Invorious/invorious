@@ -4,13 +4,16 @@ import { Link } from 'react-router-dom';
 
 import { ReactComponent as GoogleLogoIcon } from '../../../assets/svg/google-logo.svg';
 import { ReactComponent as MetamaskLogoIcon } from '../../../assets/svg/metamask-logo.svg';
+import { useLocalStrategy } from '@invorious/access-control-front';
 
 export function LoginOptions() {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
-
+  const { login } = useLocalStrategy({
+    baseURL: '/api/auth/local',
+  });
   const handleChange = (event: { target: { name: string; value: string } }) => {
     setFormData({
       ...formData,
@@ -18,17 +21,14 @@ export function LoginOptions() {
     });
   };
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
     setFormData({
       username: '',
       password: '',
     });
-
-    console.log(
-      'credentials to send in the body to the endpoint through useLocalLogin',
-      formData,
-    );
+    const response = await login(formData.username, formData.password);
+    //save access token from response
   };
 
   const handleGoogleLogin = (event: { preventDefault: () => void }) => {
