@@ -1,4 +1,5 @@
 import { Profile } from 'passport-google-oauth20';
+import { IStrategyService } from '../../../core/types/strategy-service.interface';
 
 export type IProfileResponseGoogle = Profile;
 
@@ -7,9 +8,9 @@ export interface IGoogleAccountUser {
   email: string;
 }
 
-export interface IGoogleAccountService<T extends IGoogleAccountUser> {
+export interface IGoogleAccountService<T extends IGoogleAccountUser>
+  extends IStrategyService<T> {
   findByGoogleId(googleId: string): T;
-  registerByGoogle(user: IProfileResponseGoogle): void;
 }
 
 export interface IGoogleAccountBuildController {
