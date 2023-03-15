@@ -1,6 +1,6 @@
 {
   "name": "@invorious/access-control",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "scripts": {
     "release": "standard-version",
     "release:major": "standard-version --release-as major",
