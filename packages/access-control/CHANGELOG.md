@@ -1,4 +1,25 @@
 Changelog
+### 0.0.6 (2023-03-15)
+
+
+### Features
+
+* **access-control:** add google strategy ([eb7ca9d](https://github.com/Invorious/invorious.git/commit/eb7ca9dfb3106ea4c89f6cab485a0aff086ba6ab)), closes [#30](https://github.com/Invorious/invorious.git/issues/30)
+* **access-control:** generic authorization ([3330e2c](https://github.com/Invorious/invorious.git/commit/3330e2c93267ba61983bae3824fdaeeb5c20741d))
+* add core access-control and metamask-strategy ([2eb70cb](https://github.com/Invorious/invorious.git/commit/2eb70cbd321a83523f22edf2dc79b25e98f01043))
+* add readme general and readme access-control ([bef5e25](https://github.com/Invorious/invorious.git/commit/bef5e25b022bbfadd99576ed958bee99bd120b0d))
+* automatized library deploy ([ce00948](https://github.com/Invorious/invorious.git/commit/ce00948ec49e0bb5f454fb1aa187b5e6c6281f46))
+* implement metamask strategy  ([ae4e886](https://github.com/Invorious/invorious.git/commit/ae4e886fd5ec19c2f8f91508f480edbbe78b98a5))
+* implement username/password authentication strategy  ([38a3944](https://github.com/Invorious/invorious.git/commit/38a394493e3e15c4c32c20b11354021fc23ae625)), closes [#85zrnv1](https://github.com/Invorious/invorious.git/issues/85zrnv1) [#27](https://github.com/Invorious/invorious.git/issues/27)
+* **semver:** add changelog based on commits using 'standard version' dependence ([#14](https://github.com/Invorious/invorious.git/issues/14)) ([475583a](https://github.com/Invorious/invorious.git/commit/475583a824a1a33974d374760639fa92439fd9f9))
+* verify commit message with husky ([a5958bd](https://github.com/Invorious/invorious.git/commit/a5958bd77253b1bce252438a84e4c237190acfb8))
+
+
+### Bug Fixes
+
+* change commitlint.config from js to json ([2f51e14](https://github.com/Invorious/invorious.git/commit/2f51e14e5408472c13e3a5973d63a040f1daa333))
+* use user management on core rather on each strategy ([e7deb65](https://github.com/Invorious/invorious.git/commit/e7deb65159e3bb1280e4a0c0f1925e5657dcfc30))
+
 ### [0.0.5](https://github.com/Invorious/invorious.git/compare/access-control.v0.0.4...access-control.v0.0.5) (2023-03-09)
 
 ### [0.0.4](https://github.com/Invorious/invorious.git/compare/access-control.v0.0.3...access-control.v0.0.4) (2023-03-09)
