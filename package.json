@@ -10,7 +10,8 @@
     "release:major": "standard-version --release-as major",
     "release:minor": "standard-version --release-as minor",
     "release:patch": "standard-version --release-as patch",
-    "upload-npm": "bash semver"
+    "upload-npm": "bash semver",
+    "docusaurus:start": "cd ./docs && npm run start"
   },
   "private": true,
   "devDependencies": {
@@ -18,7 +19,6 @@
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
     "@commitlint/config-nx-scopes": "^17.4.3",
-    "@docusaurus/module-type-aliases": "2.1.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
     "@nrwl/cypress": "15.8.5",
@@ -31,7 +31,6 @@
     "@nrwl/react": "^15.8.5",
     "@nrwl/webpack": "15.6.3",
     "@nrwl/workspace": "15.6.3",
-    "@nx-plus/docusaurus": "^15.0.0-rc.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@svgr/webpack": "^6.1.2",
     "@testing-library/react": "14.0.0",
@@ -69,9 +68,6 @@
     "url-loader": "^4.1.1"
   },
   "dependencies": {
-    "@docusaurus/core": "2.1.0",
-    "@docusaurus/preset-classic": "2.1.0",
-    "@mdx-js/react": "^1.6.22",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/jwt": "^10.0.2",
