@@ -10,8 +10,10 @@
     "release:major": "standard-version --release-as major",
     "release:minor": "standard-version --release-as minor",
     "release:patch": "standard-version --release-as patch",
-    "upload-npm": "bash semver",
-    "docusaurus:start": "cd ./docs && npm run start"
+    "upload-npm": "bash semver.bash",
+    "docusaurus:install": "cd ./docusaurus && npm install",
+    "docusaurus:start": "cd ./docusaurus && npm start",
+    "docusaurus:build-github": "bash build-docusaurus.bash"
   },
   "private": true,
   "devDependencies": {
