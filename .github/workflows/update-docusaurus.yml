@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - docusaurus
+      - main
 
 jobs:
   build:
