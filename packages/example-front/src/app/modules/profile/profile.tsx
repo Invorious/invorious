@@ -38,7 +38,6 @@ export function Profile() {
 
   const handleDelete = async () => {
     if (user) {
-      console.log('Deleting profile → ', user);
       await deleteProfile(user.id);
       signout();
     }
