@@ -1,20 +1,37 @@
 import styles from './login-options.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import {
+  useLocalStrategy,
+  useMetamaskStrategy,
+} from '@invorious/access-control-front';
 
 import { ReactComponent as GoogleLogoIcon } from '../../../assets/svg/google-logo.svg';
 import { ReactComponent as MetamaskLogoIcon } from '../../../assets/svg/metamask-logo.svg';
-import { useLocalStrategy } from '@invorious/access-control-front';
-import { Link, useNavigate } from 'react-router-dom';
-
 export function LoginOptions() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
-  const { login, requestError } = useLocalStrategy({
-    baseURL: '/api/auth/local',
-  });
+
+  const { login: loginLocal, requestError: requestErrorLocal } =
+    useLocalStrategy({
+      baseURL: '/api/auth/local',
+    });
+  const { login: loginMetamask, requestError: requestErrorMetamask } =
+    useMetamaskStrategy({
+      baseURL: '/api/auth/metamask',
+    });
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const receivedToken = searchParams.get('token');
+    if (receivedToken) {
+      localStorage.setItem('token', receivedToken);
+    }
+  }, []);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -28,19 +45,26 @@ export function LoginOptions() {
       username: '',
       password: '',
     });
-    const response = await login(formData.username, formData.password);
-    if (!requestError) {
+    const response = await loginLocal(formData.username, formData.password);
+    if (!requestErrorLocal) {
       localStorage.setItem('token', response.accessToken);
       navigate('/profile');
     }
   };
 
-  const handleGoogleLogin = () => {
-    console.log('useGoogleLogin');
+  const handleGoogleLogin = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    window.location.href = 'http://localhost:3333/api/google';
   };
 
-  const handleMetamaskLogin = () => {
-    console.log('useMetamaskLogin');
+  const handleMetamaskLogin = async () => {
+    const message =
+      'Welcome back you beatiful bastard, please sign this message to login, xoxo in your butty';
+    const response = await loginMetamask(message);
+    if (!requestErrorMetamask) {
+      localStorage.setItem('token', response.accessToken);
+      navigate('/profile');
+    }
   };
 
   return (
@@ -70,13 +94,7 @@ export function LoginOptions() {
         <input type="submit" value="Login" />
       </form>
       <hr />
-      <div className={styles['register']}>
-        <h3>Not registered yet? what are you waiting for?</h3>
-        <Link to="/register">
-          <button>Register</button>
-        </Link>
-      </div>
-      <hr />
+      <br />
       <div className={styles['social-media-icons']}>
         <h2>Or login with</h2>
         <div
@@ -92,8 +110,15 @@ export function LoginOptions() {
           <MetamaskLogoIcon />
         </div>
       </div>
+      <br />
+      <hr />
+      <div className={styles['register']}>
+        <h2>Not registered yet? what are you waiting for?</h2>
+        <Link to="/register">
+          <button>Register</button>
+        </Link>
+      </div>
+      <hr />
     </div>
   );
 }
-
-export default LoginOptions;

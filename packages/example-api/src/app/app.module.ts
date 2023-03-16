@@ -37,9 +37,9 @@ const providerUserService = {
         googleStrategy({
           clientID: process.env.GOOGLE_CLIENT_ID,
           clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-          callbackURL: 'http://localhost:3333/api/google/register',
-          routeGoogle: 'google/register',
-          routeToRedirect: '/api',
+          callbackURL: 'http://localhost:3333/api/google/callback',
+          routeGoogle: 'google',
+          routeToRedirect: 'http://localhost:4200/login',
         }),
         metamaskStrategy(),
         localStrategy(),
