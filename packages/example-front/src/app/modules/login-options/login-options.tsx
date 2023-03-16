@@ -29,6 +29,7 @@ export function LoginOptions() {
     const receivedToken = searchParams.get('token');
     if (receivedToken) {
       localStorage.setItem('token', receivedToken);
+      navigate('/profile');
     }
   }, []);
 
