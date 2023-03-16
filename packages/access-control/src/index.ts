@@ -15,4 +15,5 @@ export * from './lib/strategies/google/google-strategy';
 export {
   IGoogleAccountService,
   IGoogleAccountUser,
+  IProfileResponseGoogle,
 } from './lib/strategies/google/types/index';

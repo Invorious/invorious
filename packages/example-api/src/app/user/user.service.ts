@@ -2,10 +2,10 @@ import {
   IAuthorizationService,
   IGoogleAccountService,
   IMetamaskService,
+  IProfileResponseGoogle,
   IUsersService,
 } from '@invorious/access-control';
 import { Injectable } from '@nestjs/common';
-import { Profile } from 'passport-google-oauth20';
 import * as bcrypt from 'bcrypt';
 
 import { User } from './user.entity';
@@ -73,7 +73,7 @@ export class UserService
     return newUser;
   }
 
-  async registerByGoogle(user: Profile) {
+  async registerByGoogle(user: IProfileResponseGoogle) {
     const newGoogleUser = {
       name: user.displayName,
       username: user.emails[0].value,
