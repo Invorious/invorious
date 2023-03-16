@@ -1,6 +1,7 @@
-import { Route, Routes, Navigate } from 'react-router-dom';
-import LoginOptions from './modules/login-options/login-options';
-import Register from './modules/register/register';
+import { Navigate, Route, Routes } from 'react-router-dom';
+
+import { LoginOptions } from './modules/login-options/login-options';
+import { Register } from './modules/register/register';
 
 export function App() {
   return (

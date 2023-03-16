@@ -10,10 +10,10 @@ export class User
 {
   id: number;
   name: string;
-  googleId: string;
-  email: string;
-  permissions: Permission[];
-  address: string;
   username: string;
   password: string;
+  address: string;
+  email: string;
+  googleId: string | number;
+  permissions: Permission[];
 }
