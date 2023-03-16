@@ -1,11 +1,13 @@
 import styles from './login-options.module.scss';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useLocalStrategy } from '@invorious/access-control-front';
+import {
+  useLocalStrategy,
+  useMetamaskStrategy,
+} from '@invorious/access-control-front';
 
 import { ReactComponent as GoogleLogoIcon } from '../../../assets/svg/google-logo.svg';
 import { ReactComponent as MetamaskLogoIcon } from '../../../assets/svg/metamask-logo.svg';
-
 export function LoginOptions() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -13,9 +15,14 @@ export function LoginOptions() {
     password: '',
   });
 
-  const { login, requestError } = useLocalStrategy({
-    baseURL: '/api/auth/local',
-  });
+  const { login: loginLocal, requestError: requestErrorLocal } =
+    useLocalStrategy({
+      baseURL: '/api/auth/local',
+    });
+  const { login: loginMetamask, requestError: requestErrorMetamask } =
+    useMetamaskStrategy({
+      baseURL: '/api/auth/metamask',
+    });
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -38,8 +45,8 @@ export function LoginOptions() {
       username: '',
       password: '',
     });
-    const response = await login(formData.username, formData.password);
-    if (!requestError) {
+    const response = await loginLocal(formData.username, formData.password);
+    if (!requestErrorLocal) {
       localStorage.setItem('token', response.accessToken);
       navigate('/profile');
     }
@@ -50,8 +57,14 @@ export function LoginOptions() {
     window.location.href = 'http://localhost:3333/api/google';
   };
 
-  const handleMetamaskLogin = () => {
-    console.log('useMetamaskLogin');
+  const handleMetamaskLogin = async () => {
+    const message =
+      'Welcome back you beatiful bastard, please sign this message to login, xoxo in your butty';
+    const response = await loginMetamask(message);
+    if (!requestErrorMetamask) {
+      localStorage.setItem('token', response.accessToken);
+      navigate('/profile');
+    }
   };
 
   return (

@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.scss';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { LoginOptions } from './modules/login-options/login-options';
