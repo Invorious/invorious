@@ -11,6 +11,7 @@
 [Url_Docusaurus]: https://docusaurus.io
 
 <br>
+
 <div align="center" id="readme-top">
   <a href="https://github.com/Invorious/invorious">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
