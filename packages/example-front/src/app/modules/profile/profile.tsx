@@ -1,6 +1,7 @@
 import { useUserManagement } from '@invorious/access-control-front';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuthorizationHeader } from '../../hooks/use-authorization-headers';
 import { IUser } from '../../types/user.interface';
 import ProfileInformation from '../profile-information/profile-information';
 import styles from './profile.module.scss';
@@ -10,11 +11,10 @@ export function Profile() {
   const [updateProfile, setUpdateProfile] = useState(false);
   const [fetchingUser, setFetchingUser] = useState(false);
   const [user, setUser] = useState<IUser>();
+  const { bearerAuthHeader } = useAuthorizationHeader();
   const { requestError, getProfile, update, deleteProfile } = useUserManagement(
     {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
+      headers: bearerAuthHeader(),
     },
   );
 
