@@ -52,15 +52,16 @@ Get started with Invorious Libraries, learn the fundamentals and explore advance
 
 <h2 id="ecosystem">Ecosystem</h2>
 
-| Library            | Status                        | Description                                      |
-| ------------------ | ----------------------------- | ------------------------------------------------ |
-| Access Control     | :construction: :construction: | [Read more](./packages/access-control/README.md) |
-| Collection Manager | :construction: :construction: | In progress                                      |
-| Forms Manager      | :construction: :construction: | In progress                                      |
-| Repository         | :construction: :construction: | In progress                                      |
-| HttpClient         | :construction: :construction: | In progress                                      |
-| Email              | :construction: :construction: | In progress                                      |
-| Errors             | :construction: :construction: | In progress                                      |
+| Library              | Status                        | Description                                            |
+| -------------------- | ----------------------------- | ------------------------------------------------------ |
+| Access Control       | :construction: :construction: | [Read more](./packages/access-control/README.md)       |
+| Access Control Front | :construction: :construction: | [Read more](./packages/access-control-front/README.md) |
+| Collection Manager   | :construction: :construction: | In progress                                            |
+| Forms Manager        | :construction: :construction: | In progress                                            |
+| Repository           | :construction: :construction: | In progress                                            |
+| HttpClient           | :construction: :construction: | In progress                                            |
+| Email                | :construction: :construction: | In progress                                            |
+| Errors               | :construction: :construction: | In progress                                            |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
