@@ -12,7 +12,10 @@ export function useUserManagement(
     put,
     delete: deleteRequest,
   } = useHttpClient({
-    config,
+    config: {
+      ...config,
+      baseURL: 'api/auth',
+    },
   });
   async function register<T>(data: Partial<T>) {
     return await post<T>('/register', {

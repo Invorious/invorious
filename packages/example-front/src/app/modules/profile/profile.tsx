@@ -12,7 +12,6 @@ export function Profile() {
   const [user, setUser] = useState<IUser>();
   const { requestError, getProfile, update, deleteProfile } = useUserManagement(
     {
-      baseURL: 'api/auth',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
