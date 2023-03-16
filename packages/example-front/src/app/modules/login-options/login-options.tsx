@@ -82,13 +82,6 @@ export function LoginOptions() {
       </form>
       <hr />
       <br />
-      <div className={styles['register']}>
-        <h3>Not registered yet? what are you waiting for?</h3>
-        <Link to="/register">
-          <button>Register</button>
-        </Link>
-      </div>
-      <hr />
       <div className={styles['social-media-icons']}>
         <h2>Or login with</h2>
         <div
@@ -106,7 +99,13 @@ export function LoginOptions() {
       </div>
       <br />
       <hr />
-      <br />
+      <div className={styles['register']}>
+        <h2>Not registered yet? what are you waiting for?</h2>
+        <Link to="/register">
+          <button>Register</button>
+        </Link>
+      </div>
+      <hr />
     </div>
   );
 }

@@ -57,24 +57,8 @@ export class UserService
     return await this.findById(id);
   }
 
-  async register(data: Partial<any>) {
+  async register(data: Partial<User>) {
     const id = this.users[this.users.length - 1].id + 1;
-
-    if (typeof data.name !== 'string') {
-      const newUser: User = {
-        id,
-        name: data.displayName,
-        username: data.emails[0].value,
-        password: '',
-        address: '',
-        email: data.emails[0].value,
-        googleId: data.id,
-        permissions: [],
-      };
-      this.users.push(newUser);
-      return newUser;
-    }
-
     const newUser: User = {
       id,
       name: data.name,
@@ -87,6 +71,17 @@ export class UserService
     };
     this.users.push(newUser);
     return newUser;
+  }
+
+  async registerByGoogle(user: Profile) {
+    const newGoogleUser = {
+      name: user.displayName,
+      username: user.emails[0].value,
+      email: user.emails[0].value,
+      googleId: user.id,
+      permissions: [],
+    };
+    return await this.register(newGoogleUser);
   }
 
   async findById(id: number) {
