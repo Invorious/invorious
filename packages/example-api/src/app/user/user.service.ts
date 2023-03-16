@@ -83,7 +83,8 @@ export class UserService
   }
 
   async delete(id: number) {
-    return this.users.filter((user) => user.id !== id);
+    this.users = this.users.filter((user) => user.id !== id);
+    return this.users;
   }
 
   findByGoogleId(googleId: string): User {

@@ -5,5 +5,5 @@ export interface IHttpClient {
   get<T>(url: string, query?: Record<string, string>): Promise<T>;
   post<T>(url: string, body?: object): Promise<T>;
   put<T>(url: string, body?: object): Promise<T>;
-  delete<T>(url: string, body?: object): Promise<T>;
+  delete<T>(url: string): Promise<T>;
 }

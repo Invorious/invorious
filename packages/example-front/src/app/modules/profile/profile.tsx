@@ -1,19 +1,23 @@
 import { useUserManagement } from '@invorious/access-control-front';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { IUser } from '../../types/user.interface';
 import ProfileInformation from '../profile-information/profile-information';
 import styles from './profile.module.scss';
 
 export function Profile() {
+  const navigate = useNavigate();
   const [updateProfile, setUpdateProfile] = useState(false);
   const [fetchingUser, setFetchingUser] = useState(false);
   const [user, setUser] = useState<IUser>();
-  const { requestError, getProfile, update } = useUserManagement({
-    baseURL: 'api/auth',
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+  const { requestError, getProfile, update, deleteProfile } = useUserManagement(
+    {
+      baseURL: 'api/auth',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
     },
-  });
+  );
 
   const [formData, setFormData] = useState<IUser>({} as IUser);
 
@@ -32,11 +36,24 @@ export function Profile() {
     setUser(updatedUser);
   };
 
+  const handleDelete = async () => {
+    if (user) {
+      await deleteProfile(user.id);
+      signout();
+    }
+  };
+
+  const signout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
   useEffect(() => {
     const fetchUser = async () => {
       const user = await getProfile<IUser>();
-      if (!requestError) {
+      if (!requestError && user.id) {
         setUser(user);
+      } else {
+        navigate('/login');
       }
     };
     setFetchingUser(true);
@@ -97,6 +114,7 @@ export function Profile() {
               <button onClick={() => setUpdateProfile(true)}>
                 update information
               </button>
+              <button onClick={() => handleDelete()}>delete profile</button>
             </>
           )}
         </>
