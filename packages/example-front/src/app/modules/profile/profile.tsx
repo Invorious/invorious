@@ -114,6 +114,7 @@ export function Profile() {
                 update information
               </button>
               <button onClick={() => handleDelete()}>delete profile</button>
+              <button onClick={() => signout()}>signout()</button>
             </>
           )}
         </>
