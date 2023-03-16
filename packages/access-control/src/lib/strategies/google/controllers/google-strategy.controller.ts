@@ -1,4 +1,4 @@
-import { Controller, Get, Req, UseGuards, Res } from '@nestjs/common';
+import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Response, Request } from 'express';
 
@@ -12,11 +12,16 @@ export function buildGoogleController({
 }: IGoogleAccountBuildController): IController {
   @Controller()
   class GoogleStrategyController {
-    @Get(routeGoogle)
     @UseGuards(AuthGuard('google'))
-    googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
-      const token = req.user as IJwtToken;
+    @Get(routeGoogle)
+    async googleAuth() {
+      return { msg: 'Redirect to authentication with Google' };
+    }
 
+    @UseGuards(AuthGuard('google'))
+    @Get('google/callback')
+    googleCallback(@Req() req: Request, @Res() res: Response) {
+      const token = req.user as IJwtToken;
       return res.redirect(`${routeToRedirect}?token=${token.accessToken}`);
     }
   }

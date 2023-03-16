@@ -1,10 +1,10 @@
 import styles from './login-options.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useLocalStrategy } from '@invorious/access-control-front';
 
 import { ReactComponent as GoogleLogoIcon } from '../../../assets/svg/google-logo.svg';
 import { ReactComponent as MetamaskLogoIcon } from '../../../assets/svg/metamask-logo.svg';
-import { useLocalStrategy } from '@invorious/access-control-front';
-import { Link, useNavigate } from 'react-router-dom';
 
 export function LoginOptions() {
   const navigate = useNavigate();
@@ -12,9 +12,19 @@ export function LoginOptions() {
     username: '',
     password: '',
   });
+
   const { login, requestError } = useLocalStrategy({
     baseURL: '/api/auth/local',
   });
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const receivedToken = searchParams.get('token');
+    if (receivedToken) {
+      localStorage.setItem('token', receivedToken);
+    }
+  }, []);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -35,8 +45,9 @@ export function LoginOptions() {
     }
   };
 
-  const handleGoogleLogin = () => {
-    console.log('useGoogleLogin');
+  const handleGoogleLogin = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    window.location.href = 'http://localhost:3333/api/google';
   };
 
   const handleMetamaskLogin = () => {
@@ -70,13 +81,7 @@ export function LoginOptions() {
         <input type="submit" value="Login" />
       </form>
       <hr />
-      <div className={styles['register']}>
-        <h3>Not registered yet? what are you waiting for?</h3>
-        <Link to="/register">
-          <button>Register</button>
-        </Link>
-      </div>
-      <hr />
+      <br />
       <div className={styles['social-media-icons']}>
         <h2>Or login with</h2>
         <div
@@ -92,8 +97,15 @@ export function LoginOptions() {
           <MetamaskLogoIcon />
         </div>
       </div>
+      <br />
+      <hr />
+      <div className={styles['register']}>
+        <h2>Not registered yet? what are you waiting for?</h2>
+        <Link to="/register">
+          <button>Register</button>
+        </Link>
+      </div>
+      <hr />
     </div>
   );
 }
-
-export default LoginOptions;

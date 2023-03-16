@@ -1,9 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styles from './app.module.scss';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
-import { Route, Routes, Navigate } from 'react-router-dom';
-import LoginOptions from './modules/login-options/login-options';
-import Register from './modules/register/register';
+import { LoginOptions } from './modules/login-options/login-options';
+import { Register } from './modules/register/register';
 
 export function App() {
   return (
