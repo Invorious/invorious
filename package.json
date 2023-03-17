@@ -34,6 +34,8 @@
     "@nrwl/webpack": "15.6.3",
     "@nrwl/workspace": "15.6.3",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
+    "@rollup/plugin-url": "^7.0.0",
+    "@svgr/rollup": "^6.1.2",
     "@svgr/webpack": "^6.1.2",
     "@testing-library/react": "14.0.0",
     "@types/bcrypt": "^5.0.0",
