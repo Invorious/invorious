@@ -1,4 +1,6 @@
 Changelog
+### [0.0.4](https://github.com/Invorious/invorious.git/compare/access-control-front.v0.0.3...access-control-front.v0.0.4) (2023-03-17)
+
 ### 0.0.3 (2023-03-17)
 
 
