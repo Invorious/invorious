@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx",
+    "format": "prettier --write .",
     "prepare": "husky install",
-    "lint": "npx eslint",
+    "lint:prettier": "prettier --write --config .prettierrc --ignore-path .gitignore --quiet \"**/*.+(js|jsx|ts|tsx|html|json|css|scss)\"",
     "fix": "npm run lint -- --fix",
     "release": "standard-version",
     "release:major": "standard-version --release-as major",
@@ -14,6 +16,12 @@
     "docusaurus:install": "cd ./docusaurus && npm install",
     "docusaurus:start": "cd ./docusaurus && npm start",
     "docusaurus:build-github": "bash build-docusaurus.bash"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,html,css,md}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   },
   "private": true,
   "devDependencies": {
@@ -54,11 +62,13 @@
     "eslint-plugin-cypress": "^2.10.3",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-jsx-a11y": "6.7.1",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "7.32.2",
     "eslint-plugin-react-hooks": "4.6.0",
     "husky": "^8.0.3",
     "jest": "28.1.1",
     "jest-environment-jsdom": "28.1.1",
+    "lint-staged": "^13.2.0",
     "nx": "15.6.3",
     "passport": "^0.6.0",
     "prettier": "^2.6.2",
