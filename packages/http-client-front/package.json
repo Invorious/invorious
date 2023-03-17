@@ -1,0 +1,15 @@
+{
+  "name": "@invorious/http-client-front",
+  "version": "0.0.0",
+  "scripts": {
+    "release": "standard-version",
+    "release:major": "standard-version --release-as major",
+    "release:minor": "standard-version --release-as minor",
+    "release:patch": "standard-version --release-as patch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Invorious/invorious.git"
+  },
+  "homepage": "https://github.com/Invorious/invorious#readme"
+}
