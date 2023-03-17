@@ -76,7 +76,7 @@ export class UserService
   async registerByGoogle(user: IProfileResponseGoogle) {
     const newGoogleUser = {
       name: user.displayName,
-      username: user.emails[0].value,
+      username: user.name.givenName,
       email: user.emails[0].value,
       googleId: user.id,
       permissions: [],
