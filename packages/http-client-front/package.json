@@ -1,6 +1,6 @@
 {
   "name": "@invorious/http-client-front",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "release": "standard-version",
     "release:major": "standard-version --release-as major",

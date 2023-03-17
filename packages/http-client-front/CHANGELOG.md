@@ -1,4 +1,11 @@
 Changelog
+### [0.0.2](https://github.com/Invorious/invorious.git/compare/http-client-front.v0.0.1...http-client-front.v0.0.2) (2023-03-17)
+
+
+### Bug Fixes
+
+* **http-client-front:** update readme ([09f78fa](https://github.com/Invorious/invorious.git/commit/09f78fa97e6e5b444e05cf2354e4672663f322c3))
+
 ### 0.0.1 (2023-03-17)
 
 
