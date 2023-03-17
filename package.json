@@ -6,7 +6,7 @@
     "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --write .",
     "prepare": "husky install",
-    "lint:prettier": "prettier --write --config .prettierrc --ignore-path .gitignore --quiet \"**/*.+(js|jsx|ts|tsx|html|json|css|scss)\"",
+    "lint:prettier": "prettier --write --config .prettierrc --ignore-path .gitignore --quiet \"**/*.+(js|jsx|ts|tsx|html|json|css|scss|md)\"",
     "fix": "npm run lint -- --fix",
     "release": "standard-version",
     "release:major": "standard-version --release-as major",
@@ -16,12 +16,6 @@
     "docusaurus:install": "cd ./docusaurus && npm install",
     "docusaurus:start": "cd ./docusaurus && npm start",
     "docusaurus:build-github": "bash build-docusaurus.bash"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,html,css,md}": [
-      "prettier --write",
-      "eslint --fix"
-    ]
   },
   "private": true,
   "devDependencies": {
