@@ -1,6 +1,6 @@
 #! /bin/bash
 
-packages=('access-control')
+packages=('access-control' 'access-control-front' 'http-client-front')
 
 if [ "$1" ]; then
   package=$1
@@ -37,5 +37,5 @@ fi
 
 cd "./packages/$package" && npm run $release -- -t=$package.v && \
 cd "../.." && npx nx build $package && cd "./dist/packages/$package" && \
-npm publish && cd "../.." && git push --tags && \
+npm publish --access public && cd "../.." && git push --tags && \
 echo "Library $package updated with semver, builded and uploaded in npm"

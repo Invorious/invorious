@@ -11,8 +11,8 @@
 
 <br>
 <div align="center" id="readme-top">
-  <a href="../../README.md">
-    <img src="../../images/logo.png" alt="Logo" width="80" height="80">
+  <a href="https://github.com/Invorious/invorious#readme">
+    <img src="https://raw.githubusercontent.com/Invorious/invorious/HEAD/images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <br>
@@ -51,7 +51,7 @@ npm install @invorious/http-client-front
 
 <h2 id="usage">Usage</h2>
 
-```typescript
+```tsx
 import { useState } from 'react';
 import { useHttpClient } from '@invorious/http-client-front';
 
@@ -90,12 +90,12 @@ export function MyComponent() {
 }
 ```
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+_For more examples, please refer to the [Documentation](https://invorious.github.io/invorious/)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <h2 id="changelog">Changelog</h2>
 
-Learn about the latest [improvements](./CHANGELOG.md).
+Learn about the latest [improvements](https://github.com/Invorious/invorious/blob/main/packages/http-client-front/CHANGELOG.md).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
