@@ -11,6 +11,26 @@
       "options": {
         "lintFilePatterns": ["packages/http-client-front/**/*.{ts,tsx,js,jsx}"]
       }
+    },
+    "build": {
+      "executor": "@nrwl/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/http-client-front",
+        "tsConfig": "packages/http-client-front/tsconfig.lib.json",
+        "project": "packages/http-client-front/package.json",
+        "entryFile": "packages/http-client-front/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "compiler": "babel",
+        "assets": [
+          {
+            "glob": "packages/http-client-front/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
     }
   }
 }
