@@ -1,9 +1,10 @@
 import styles from './login-options.module.scss';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   useLocalStrategy,
   useMetamaskStrategy,
+  useTokenFromURL,
 } from '@invorious/access-control-front';
 
 import { ReactComponent as GoogleLogoIcon } from '../../../assets/svg/google-logo.svg';
@@ -19,19 +20,11 @@ export function LoginOptions() {
     useLocalStrategy({
       baseURL: '/api/auth/local',
     });
+
   const { login: loginMetamask, requestError: requestErrorMetamask } =
     useMetamaskStrategy({
       baseURL: '/api/auth/metamask',
     });
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const receivedToken = searchParams.get('token');
-    if (receivedToken) {
-      localStorage.setItem('token', receivedToken);
-      navigate('/profile');
-    }
-  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -67,6 +60,8 @@ export function LoginOptions() {
       navigate('/profile');
     }
   };
+
+  useTokenFromURL('/profile');
 
   return (
     <div>
