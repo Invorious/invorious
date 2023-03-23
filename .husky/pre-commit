@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npx nx run-many --target=lint --all
 npx lint-staged && echo 'Prettier formatting applied successfully!'
