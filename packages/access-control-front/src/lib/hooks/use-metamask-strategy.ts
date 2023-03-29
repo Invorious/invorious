@@ -16,7 +16,8 @@ export function useMetamaskStrategy(
     message: string,
   ) {
     const { ethereum } = window as any;
-    const provider = new ethers.BrowserProvider(ethereum);
+
+    const provider = new ethers.providers.Web3Provider(ethereum);
     const signer = await provider.getSigner();
     const signature = (await signer.signMessage(message)) ?? '';
     return await post<T>('/connect', { signature });
