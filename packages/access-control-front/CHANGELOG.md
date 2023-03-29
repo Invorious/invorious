@@ -1,4 +1,60 @@
 Changelog
+### 0.0.6 (2023-03-29)
+
+
+### Features
+
+* **access-control-front:** add hook metamask ([c99ed92](https://github.com/Invorious/invorious.git/commit/c99ed92c12fdab60a835ad0dfaa83c44c780dec5))
+* **access-control-front:** google oauth2 login ([#46](https://github.com/Invorious/invorious.git/issues/46)) ([c46e552](https://github.com/Invorious/invorious.git/commit/c46e5525d9b04aaa88a776cf885c35e694444e4b))
+* **access-control-front:** update readme ([#56](https://github.com/Invorious/invorious.git/issues/56)) ([c3e8b90](https://github.com/Invorious/invorious.git/commit/c3e8b90fe0d202558aa3eeff207672af475aa695))
+* **access-control:** add google strategy ([eb7ca9d](https://github.com/Invorious/invorious.git/commit/eb7ca9dfb3106ea4c89f6cab485a0aff086ba6ab)), closes [#30](https://github.com/Invorious/invorious.git/issues/30)
+* **access-control:** generic authorization ([3330e2c](https://github.com/Invorious/invorious.git/commit/3330e2c93267ba61983bae3824fdaeeb5c20741d))
+* **access-control:** update package.json and readme ([289bc83](https://github.com/Invorious/invorious.git/commit/289bc83225badd24eef76871bd3fdc3528538e56))
+* add button to perfom signout on profile  ([922330f](https://github.com/Invorious/invorious.git/commit/922330fd4e2d942ac991523fb0f1730ed24917de))
+* add core access-control and metamask-strategy ([2eb70cb](https://github.com/Invorious/invorious.git/commit/2eb70cbd321a83523f22edf2dc79b25e98f01043))
+* add readme general and readme access-control ([bef5e25](https://github.com/Invorious/invorious.git/commit/bef5e25b022bbfadd99576ed958bee99bd120b0d))
+* apply interceptors on http client library ([c543ec7](https://github.com/Invorious/invorious.git/commit/c543ec77ecbb19e9a3596ab2d16d3d58961b2542))
+* automatized library deploy ([ce00948](https://github.com/Invorious/invorious.git/commit/ce00948ec49e0bb5f454fb1aa187b5e6c6281f46))
+* **bot:** update docusaurus ([5b6a41f](https://github.com/Invorious/invorious.git/commit/5b6a41f8cc0cf13986fd43b719824c4c37edf7f3))
+* **bot:** update docusaurus with latest info ([423d04f](https://github.com/Invorious/invorious.git/commit/423d04f5fd3424916ce63155ef6793ea921087c6))
+* create a http client hook ([86f4f10](https://github.com/Invorious/invorious.git/commit/86f4f10309932c0100ffdd7ed67650e3765bd29f))
+* create hook for local (username and password) strategy  ([48e27d0](https://github.com/Invorious/invorious.git/commit/48e27d06ae6c66b701c254dd593d94e06d4ce690)), closes [#36](https://github.com/Invorious/invorious.git/issues/36)
+* create hook for updating/deleting user profile ([fe9e987](https://github.com/Invorious/invorious.git/commit/fe9e98750d88c93b764085c4996850f709492b82))
+* create hook for user management/register user ([5d2f07c](https://github.com/Invorious/invorious.git/commit/5d2f07ca9b5d5947521bf4f7679a3b0383c51cb9))
+* create proxy configuration for frontend app ([3312ee9](https://github.com/Invorious/invorious.git/commit/3312ee93425ad2e3829086855b7a82804d2a9321))
+* **docs:** adding documentation of docosaurus ([4423885](https://github.com/Invorious/invorious.git/commit/442388513d03f89dcdc759c99c887346af5263ce))
+* **docs:** update docusaurus ([#57](https://github.com/Invorious/invorious.git/issues/57)) ([1467c58](https://github.com/Invorious/invorious.git/commit/1467c58533987fbc9d1566034ca69da0e3936608))
+* implement metamask strategy  ([ae4e886](https://github.com/Invorious/invorious.git/commit/ae4e886fd5ec19c2f8f91508f480edbbe78b98a5))
+* implement username/password authentication strategy  ([38a3944](https://github.com/Invorious/invorious.git/commit/38a394493e3e15c4c32c20b11354021fc23ae625)), closes [#85zrnv1](https://github.com/Invorious/invorious.git/issues/85zrnv1) [#27](https://github.com/Invorious/invorious.git/issues/27)
+* **multiple:** add config of build in project.json in each library of react ([#59](https://github.com/Invorious/invorious.git/issues/59)) ([1968d99](https://github.com/Invorious/invorious.git/commit/1968d9911d426aacee4f4817ecee527cb0c0e536))
+* **multiple:** add plugin rollup from nx ([#60](https://github.com/Invorious/invorious.git/issues/60)) ([9fdb5dc](https://github.com/Invorious/invorious.git/commit/9fdb5dc5dc21093477dcea5da97951611866a776))
+* **multiple:** upload libraries to npm ([#61](https://github.com/Invorious/invorious.git/issues/61)) ([dcd6a8a](https://github.com/Invorious/invorious.git/commit/dcd6a8a0e8758e83e1f12985e7f6a230c67bc7ad))
+* **semver:** add changelog based on commits using 'standard version' dependence ([#14](https://github.com/Invorious/invorious.git/issues/14)) ([475583a](https://github.com/Invorious/invorious.git/commit/475583a824a1a33974d374760639fa92439fd9f9))
+* verify commit message with husky ([a5958bd](https://github.com/Invorious/invorious.git/commit/a5958bd77253b1bce252438a84e4c237190acfb8))
+
+
+### Bug Fixes
+
+*  update body type and use generic as return ([5ca39c7](https://github.com/Invorious/invorious.git/commit/5ca39c763df745fa5ff617cbeb822729a40678d4))
+* **access-control:** change url logo readme ([9cb5939](https://github.com/Invorious/invorious.git/commit/9cb5939375ce93f391ab81136bdada83b7e14cb0))
+* change commitlint.config from js to json ([2f51e14](https://github.com/Invorious/invorious.git/commit/2f51e14e5408472c13e3a5973d63a040f1daa333))
+* **docs:** solve problems of docusaurus ([f312296](https://github.com/Invorious/invorious.git/commit/f31229673f8137423293a51f667d3e0554712dd3))
+* **docs:** solve problems of docusaurus ([7dc7679](https://github.com/Invorious/invorious.git/commit/7dc7679b224c99cdd440a1ba76d25e32eb3a61ac))
+* handle response type on each function instead of hook ([ee3d49a](https://github.com/Invorious/invorious.git/commit/ee3d49ad8b2aead0ae388416b68738e6442481a9))
+* implement a function to handle request error ([391d9f1](https://github.com/Invorious/invorious.git/commit/391d9f1bd735ce3c2829ee5515303094eb62af6f))
+* **multiple:** fix of imports in libraries of npm ([#64](https://github.com/Invorious/invorious.git/issues/64)) ([62e70b3](https://github.com/Invorious/invorious.git/commit/62e70b31e973ac49588c1319150c11c67cd60795))
+* **multiple:** set ethers version to ^5 rather than 6 ([49e3f7e](https://github.com/Invorious/invorious.git/commit/49e3f7e6ba2cd7deee7092ef4e33f170b5988b5e))
+* remove as from bearer auth header ([b2fa5fe](https://github.com/Invorious/invorious.git/commit/b2fa5febfc3135ad9afd37d0228e81186da346d1))
+* remove as from bearer auth header ([b8da2fb](https://github.com/Invorious/invorious.git/commit/b8da2fb74dd328dbc8facda893d94c36423a89b7))
+* remove data from http delete request ([55da1d2](https://github.com/Invorious/invorious.git/commit/55da1d288d036e46c5ca4e7291eef0d1f7341caf))
+* remove unused variable from error handler ([57d0949](https://github.com/Invorious/invorious.git/commit/57d094935bf9b8d4d3f23b7d731b49cfb0ce8592))
+* run nx run many on pre commit husky action ([23ae19f](https://github.com/Invorious/invorious.git/commit/23ae19feac3708cff1b3adb28925bbdc31cd8b8f))
+* run nx run many on pre commit husky action ([276a4e6](https://github.com/Invorious/invorious.git/commit/276a4e6e56abbbf18823eecc01e720f1a3791386))
+* solve dependencies problems ([1bdae88](https://github.com/Invorious/invorious.git/commit/1bdae8898f9e7240320c1dc70714c455084872f0))
+* update http client readme content ([5405324](https://github.com/Invorious/invorious.git/commit/54053247f5431e0ea21679b4b9d6d4253c75c8b0))
+* use interceptor to handle error on http client ([50d145d](https://github.com/Invorious/invorious.git/commit/50d145d7701eddccfc0827839a7affa8fdae83fd))
+* use user management on core rather on each strategy ([e7deb65](https://github.com/Invorious/invorious.git/commit/e7deb65159e3bb1280e4a0c0f1925e5657dcfc30))
+
 ### 0.0.5 (2023-03-23)
 
 
