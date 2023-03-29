@@ -1,4 +1,6 @@
 Changelog
+### [0.0.14](https://github.com/Invorious/invorious.git/compare/access-control.v0.0.13...access-control.v0.0.14) (2023-03-29)
+
 ### 0.0.13 (2023-03-29)
 
 
