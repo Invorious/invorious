@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { IHttpClient } from '../types/http-client';
 import { IHttpClientConfig } from '../types/http-client-config';
 import { RequestError } from '../types/request-error';
@@ -16,51 +16,62 @@ export function useHttpClient(props: IHttpClientConfig = {}): IHttpClient {
     (error: AxiosError) => handleError(error),
   );
 
-  async function handleError(error: AxiosError) {
-    const { response } = error;
-    onError?.(error);
-    if (response?.status === 401) {
-      return setRequestError({
-        statusCode: response.status,
-        message: `Unathorized, make sure you're currently logged in`,
-      });
-    }
+  const handleError = useCallback(
+    async (error: AxiosError) => {
+      const { response } = error;
+      onError?.(error);
+      if (response?.status === 401) {
+        return setRequestError({
+          statusCode: response.status,
+          message: `Unathorized, make sure you're currently logged in`,
+        });
+      }
 
-    if (response?.status && response.status >= 500) {
-      return setRequestError({
-        statusCode: response.status,
-        message: 'Server error',
-      });
-    }
-    setRequestError(
-      response
-        ? { statusCode: response.status, message: response.statusText }
-        : undefined,
-    );
-    return Promise.reject(error);
-  }
+      if (response?.status && response.status >= 500) {
+        return setRequestError({
+          statusCode: response.status,
+          message: 'Server error',
+        });
+      }
+      setRequestError(
+        response
+          ? { statusCode: response.status, message: response.statusText }
+          : undefined,
+      );
+      return Promise.reject(error);
+    },
+    [onError],
+  );
 
-  async function handleResponse<T>(response: AxiosResponse<T>) {
+  const handleResponse = useCallback(async <T>(response: AxiosResponse<T>) => {
     setRequestError(undefined);
     return Promise.resolve(response.data);
-  }
+  }, []);
 
-  async function get<T>(url: string, query?: Record<string, string>) {
-    const params = new URLSearchParams(query);
-    return instance.get<T>(url, { params }).then(handleResponse);
-  }
+  const get = useCallback(
+    async <T>(url: string, query?: Record<string, string>) => {
+      const params = new URLSearchParams(query);
+      return instance.get<T>(url, { params }).then(handleResponse);
+    },
+    [handleResponse, instance],
+  );
 
-  async function post<T>(url: string, body?: object) {
-    return instance.post<T>(url, body).then(handleResponse);
-  }
+  const post = useCallback(
+    async <T>(url: string, body?: object) =>
+      instance.post<T>(url, body).then(handleResponse),
+    [handleResponse, instance],
+  );
 
-  async function put<T>(url: string, body?: object) {
-    return instance.put<T>(url, body).then(handleResponse);
-  }
+  const put = useCallback(
+    async <T>(url: string, body?: object) =>
+      instance.put<T>(url, body).then(handleResponse),
+    [handleResponse, instance],
+  );
 
-  async function deleteRequest<T>(url: string) {
-    return instance.delete<T>(url).then(handleResponse);
-  }
+  const deleteRequest = useCallback(
+    async <T>(url: string) => instance.delete<T>(url).then(handleResponse),
+    [handleResponse, instance],
+  );
 
   return {
     requestError,
