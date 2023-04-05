@@ -1,4 +1,11 @@
 Changelog
+### [0.0.8](https://github.com/Invorious/invorious.git/compare/access-control-front.v0.0.7...access-control-front.v0.0.8) (2023-04-05)
+
+
+### Bug Fixes
+
+* **http-client-front:** moving functions to useCallback of react ([d295004](https://github.com/Invorious/invorious.git/commit/d295004d227c17aaf43c96243cecb4a9158df966))
+
 ### [0.0.7](https://github.com/Invorious/invorious.git/compare/access-control-front.v0.0.6...access-control-front.v0.0.7) (2023-03-31)
 
 
