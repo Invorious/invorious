@@ -1,6 +1,6 @@
 {
   "name": "@invorious/access-control-front",
-  "version": "0.0.5",
+  "version": "0.0.8",
   "scripts": {
     "release": "standard-version",
     "release:major": "standard-version --release-as major",

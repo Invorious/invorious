@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { verifyMessage } from 'ethers';
+import * as ethers from 'ethers';
 
 import { SignedRequestDto } from '../types/signed-request.dto';
 import { IMetamaskUserEntity } from '../types/metamask-user';
@@ -18,7 +18,7 @@ export class MetamaskStrategyService<K extends IJwtPayload> {
 
   async connect(connectDto: SignedRequestDto) {
     const { signature } = connectDto;
-    const recoveredAddress = verifyMessage(
+    const recoveredAddress = ethers.utils.verifyMessage(
       this.metamaskUserService.loginMessage,
       signature,
     );
